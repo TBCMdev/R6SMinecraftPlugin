@@ -45,9 +45,19 @@ public class OperatorHandler {
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
                     break;
+                case "ash":
+                case "finka":
+                    GameLogic.finka = sender.getName();
+                    Main.PlayerOperators.put(GameLogic.finka,(Player) sender);
+                    GameLogic.PickedOperators++;
+                    sender.sendMessage(ChatColor.GREEN + "you have chosen finka! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"finka",GameLogic.PickedOperators,1);
+                    getLogger().info("operator picked");
+                    Main.PlayersWOP.add(sender.getName().toString());
                 default:
                     sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / tachanka]");
                     break;
+
             }
             GameLogic.ResendTeleportRed();
             GameLogic.ResendTeleportBlue();

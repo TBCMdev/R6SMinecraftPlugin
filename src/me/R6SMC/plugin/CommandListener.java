@@ -86,6 +86,7 @@ public class CommandListener implements CommandExecutor {
             if(args[0].equalsIgnoreCase("finka")) {
                 GameLogic.finka = sender.getName().toString();
                 if(!Main.PlayersWOP.contains(sender.getName().toString())) {
+                    CheckCommand((Player)sender,args,"finka");
                     sender.sendMessage(ChatColor.GREEN + "you have chosen finka! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
                     GameChat.sendActionbar((Player) sender,"to use finkas ability, please hold the ability item in your hotbar and click!");
                     GameLogic.PickedOperators ++;
