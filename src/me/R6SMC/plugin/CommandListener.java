@@ -1,6 +1,7 @@
 package me.R6SMC.plugin;
 
 import com.sun.istack.internal.NotNull;
+import me.R6SMC.plugin.Operators.OperatorHandler;
 import me.R6SMC.plugin.Operators.OperatorHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +15,7 @@ public class CommandListener implements CommandExecutor {
         if(args[0].equalsIgnoreCase(CheckString)){
             if(!GameChat.GetAllPlayers().contains((Player) sender)) {
 
-                OperatorHolder.PickOperator(CheckString,sender);
+                OperatorHandler.PickOperator(CheckString,sender);
             }else{
                 sender.sendMessage(ChatColor.RED + "you have already chosen an operator!");
             }

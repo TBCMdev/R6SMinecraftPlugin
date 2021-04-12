@@ -35,7 +35,6 @@ public class GameLogic implements Listener
     public static World world = Bukkit.getWorld("world");
     public static Location DefaultPos = new Location(world,740,30,-678,45.5f,26.5f);
     public static BossBar B = Bukkit.createBossBar("TIME LEFT", BarColor.WHITE, BarStyle.SOLID);
-
     public static List<Player> BlueTeam = new ArrayList<>();
     public static List<Player> RedTeam = new ArrayList<>();
     public static List<Player> DeadPlayers = new ArrayList<>();
