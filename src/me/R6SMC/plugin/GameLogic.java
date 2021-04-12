@@ -74,8 +74,8 @@ public class GameLogic implements Listener
     }
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
-
-        if(GameLogic.GameStarted) {
+        DevConsole.SendDevMessage(event.getPlayer(),"player Clicked",DevConsole.TESTING);
+        if(GameStarted) {
             if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE) {
                 Doc doc = new Doc(OperatorHolder.GetOperator(event.getPlayer()));
                 doc.activateAbility();
