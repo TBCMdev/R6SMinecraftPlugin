@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="R6SMinecraft:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/R6SMinecraft_jar2</output-path>
+    <root id="archive" name="R6SMinecraft.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$USER_HOME$/Desktop/MCCODINGSERVER/plugins/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="R6SMinecraft" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-stdlib.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-reflect.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-test.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/MCCODINGSERVER/spigot-1.16.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/craftbukkit-1.16.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
