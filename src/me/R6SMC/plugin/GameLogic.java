@@ -1,6 +1,7 @@
 package me.R6SMC.plugin;
 
 import me.R6SMC.plugin.Operators.Doc;
+import me.R6SMC.plugin.Operators.Finka;
 import me.R6SMC.plugin.Operators.Operator;
 import me.R6SMC.plugin.Operators.OperatorHolder;
 import me.R6SMC.plugin.menu.PickDefenseOperatorMenu;
@@ -74,16 +75,19 @@ public class GameLogic implements Listener
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
 
+        if(GameLogic.GameStarted) {
+            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE) {
+                Doc doc = new Doc(OperatorHolder.GetOperator(event.getPlayer()));
+                doc.activateAbility();
 
-        if(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE) {
-            Doc doc = new Doc(OperatorHolder.GetOperator(event.getPlayer()));
-            doc.activateAbility();
 
-
-
-        }
-        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)/*HasItem*/) {
-            //brokeRight = true;
+            }
+            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.BROWN_STAINED_GLASS_PANE) {
+                //kristian picks a class, and picks finka.it will check if we have allready created an operator, and if we HAVE, we create a new Finka with the old value.
+                //if we havent, we will create a NEW finka, and return the new one
+                Finka finka = new Finka(OperatorHolder.GetOperator(event.getPlayer()));
+                finka.activateAbility();
+            }
         }
     }
     public static void TryEndGame(Player p){

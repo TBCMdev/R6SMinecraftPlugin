@@ -12,14 +12,12 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class OperatorAbilityListener implements Listener {
     @EventHandler
     public void OnAshAbil(ProjectileHitEvent event, Entity hitEntity, Block hitBlock, BlockFace hitFace){
         Entity e = event.getEntity();
-        if(e instanceof Snowball){
-
-        }
     }
 
 }
