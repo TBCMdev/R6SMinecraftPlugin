@@ -21,7 +21,7 @@ public class Timer extends BukkitRunnable {
         TimeElapsed = 0;
         Bukkit.getLogger().info(ChatColor.RED + "FULL TIME: " + FullTime + " TIME BETWEEN DECREASE: " + TimeBetweenDecrease);
     }
-    public void  startTimer() {
+    public void startTimer() {
         Initialize((long)TimerDelay,(long)TimerPeriod);
         GameLogic.GameTime = 1f;
         GameLogic.GameStarted = true;

@@ -11,9 +11,11 @@ public class Doc extends Operator {
     public Player player;
     public PlayerClass playerClass;
     public String ClassName = "doc";
-    public int Stims = 3;
+    public int Stims;
     public Doc(OperatorUtility ou){
         super(3,ou.getOwner(),ou.getOwnerClass(),"doc");
+        player = ou.getOwner();
+        playerClass = ou.getOwnerClass();
     }
 
 
@@ -32,7 +34,7 @@ public class Doc extends Operator {
     @Override
     public void activateAbility() {
         if(GameLogic.GameStarted) {
-            if (playerClass.Name == player.getName().toString()) {
+
                 Sounds.PlaySound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, player);
                 //if(p.getHealth() <= (double)10 && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName() == "ability" && stims > 0) {
                 if (player.getHealth() <= (double) 10 && player.getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE && Stims > 0) {
@@ -46,7 +48,7 @@ public class Doc extends Operator {
                 } else {
                     player.sendMessage(ChatColor.RED + "you are out of stim shots!");
                 }
-            }
+
         }
     }
 }

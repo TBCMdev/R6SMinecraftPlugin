@@ -26,6 +26,10 @@ public class OperatorHandler {
                     GameChat.sendActionbar((Player) sender, ChatColor.BLUE + "click to activate docs healing effect");
                     getLogger().info("operator picked.");
                     Main.PlayersWOP.add(sender.getName().toString());
+                    if(!CurrentOperators.CurrentOperators.containsKey(player)){
+                        CurrentOperators.Add(player,1);
+                    }
+
                     break;
                 case "rook":
                     GameLogic.rook = sender.getName().toString();
