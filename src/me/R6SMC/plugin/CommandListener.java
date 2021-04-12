@@ -13,7 +13,8 @@ import org.bukkit.entity.Player;
 public class CommandListener implements CommandExecutor {
     public static void CheckCommand(CommandSender sender,String[] args,String CheckString){
         if(args[0].equalsIgnoreCase(CheckString)){
-            if(!GameChat.GetAllPlayers().contains((Player) sender)) {
+            if(GameChat.GetAllPlayers().size() <=0) return;
+            if(GameChat.GetAllPlayers().contains((Player) sender)) {
 
                 OperatorHandler.PickOperator(CheckString,sender);
             }else{

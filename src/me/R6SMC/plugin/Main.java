@@ -114,7 +114,7 @@ public class Main extends JavaPlugin implements Listener {
 
 
 
-    void GameStart(Player p){
+    public static void GameStart(){
         GameLogic.HasGivenBooks = false;
         TextComponent defenseTxt = new TextComponent(ChatColor.BLUE + "*DEFENSE*");
         TextComponent hoverTextDEF = new TextComponent(ChatColor.BLUE +"CLICK TO JOIN THE DEFENDING TEAM");

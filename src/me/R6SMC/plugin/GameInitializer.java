@@ -21,8 +21,8 @@ public class GameInitializer {
         GameLogic.RedTeamCount = 0;
         GameLogic.counterA = 0;
         GameLogic.BlueTeamCount = 0;
-        GameLogic.StartGame();
         GameChat.BroadcastMessage("your game is starting. please pick a team to be on and an operator to play." +
                 " the game will start when ALL players in the server have picked a team AND an operator", ChatColor.DARK_GREEN);
+        Main.GameStart();
     }
 }

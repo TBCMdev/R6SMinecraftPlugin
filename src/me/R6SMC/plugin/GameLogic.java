@@ -1,5 +1,6 @@
 package me.R6SMC.plugin;
 
+import com.sun.org.apache.xml.internal.security.Init;
 import me.R6SMC.plugin.Operators.Doc;
 import me.R6SMC.plugin.Operators.Finka;
 import me.R6SMC.plugin.Operators.Operator;
@@ -221,8 +222,13 @@ public class GameLogic implements Listener
 
             //DEPRECATED CODE REMOVED FOR TESTING
             TeleportPlayersRED(team);
+            InitGame();
         }
 
+    }
+    public static void InitGame(){
+        StartGame();
+        StartTimer();
     }
     public static void TeleportPlayersRED(int team) {
 
