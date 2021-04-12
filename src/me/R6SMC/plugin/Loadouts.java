@@ -1,5 +1,6 @@
 package me.R6SMC.plugin;
 
+import me.R6SMC.plugin.Operators.Ash;
 import me.R6SMC.plugin.Operators.Doc;
 import me.R6SMC.plugin.Operators.OperatorHolder;
 import org.bukkit.Bukkit;
@@ -142,6 +143,11 @@ public class Loadouts {
             case "tachanka":
                 return 3;
             case "ash":
+                try {
+                    new Ash(OperatorHolder.GetOperator(player.getPlayer()));
+                }catch (Exception e){
+                    DevConsole.SendDevMessage(player.getPlayer(),"could not instantiate Ash class.",DevConsole.TESTING);
+                }
                 return 4;
             case "capitao":
                 return 5;

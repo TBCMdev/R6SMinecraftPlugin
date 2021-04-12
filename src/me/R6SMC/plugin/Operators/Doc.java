@@ -21,12 +21,12 @@ public class Doc extends Operator {
 
     @Override
     public void ResetAbility() {
-
+        Stims = 3;
     }
 
     @Override
     public void SetAbility() {
-
+        Stims = 3;
     }
 
     @Override

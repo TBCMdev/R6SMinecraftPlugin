@@ -1,5 +1,6 @@
 package me.R6SMC.plugin;
 import me.R6SMC.plugin.Listeners.MenuListener;
+import me.R6SMC.plugin.Operators.OperatorAbilityListener;
 import org.bukkit.plugin.PluginManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -23,9 +24,7 @@ import java.util.regex.PatternSyntaxException;
 
 
 public class Main extends JavaPlugin implements Listener {
-    public boolean brokeLeft,brokeRight,HasItem = false;
     public World world;
-    public static String[] OPERATORS = {"ash","capitao","finka","doc","rook","tachanka"};
     public int
             players
             ,joinedPlayers
@@ -35,7 +34,6 @@ public class Main extends JavaPlugin implements Listener {
             ,counterA = 0;
 
     public static ArrayList<String> PlayersWOP = new ArrayList<>();
-    public BossBar B = Bukkit.createBossBar("TIME LEFT", BarColor.WHITE, BarStyle.SOLID);
     final Collection<? extends Player> PlayerList = Bukkit.getServer().getOnlinePlayers();
 
     public ArrayList<Player> RedTeam = new ArrayList<>();
@@ -51,17 +49,7 @@ public class Main extends JavaPlugin implements Listener {
     public String doc = "";
     public String rook = "";
     public String tachanka = "";
-    public float GameTime = 1;
     public ItemStack docAbil = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
-    public ItemStack rookAbil = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
-    public ItemStack tachankaAbil = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-    public ItemStack ashAbil = new ItemStack(Material.BROWN_STAINED_GLASS_PANE);
-    public ItemStack finkaAbil = new ItemStack(Material.BROWN_STAINED_GLASS_PANE);
-    public ItemStack capitaoAbil = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-
-
-
-
     //ENDVARS
     @Override
 
@@ -69,6 +57,7 @@ public class Main extends JavaPlugin implements Listener {
         PluginManager manager = getServer().getPluginManager();
         manager.registerEvents(new GameLogic(), this);
         manager.registerEvents(new MenuListener(),this);
+        manager.registerEvents(new OperatorAbilityListener(),this);
         Bukkit.getServer().getLogger().info("plugin `test plugin` is loaded and ready to use!");
         GameChat.BroadcastMessage("R6S MC loaded.");
         GameLogic.mainThread = this;
@@ -78,90 +67,13 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("tbcm-dc").setExecutor(new DevConsole());
         getCommand("showPageBlue").setExecutor(new CustomBookCommands());
         getCommand("showPageRed").setExecutor(new CustomBookCommands());
-    }
-
-
-
-    public void JoinTeamRed(Player p) {
-        if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
-            RedTeam.add(p);
-            GameLogic.RedTeam.add(p);
-            joinedPlayers ++;
-            RedTeamCount ++;
-        }
-        /*String[] AttackOPTextContents = new String[]{"*ASH*","*CAPITAO*","*FINKA*"};
-        String[] AttackHoverContents = new String[]{"CLICK TO USE ASH","CLICK TO USE CAPITAO","CLICK TO USE FINKA"};
-        String[] AttackClickCommands = new String[]{"/attkoperator ash","/attkoperator capitao","/attkoperator finka"};
-
-        TextComponent[] AttackOPTexts = GameChat.CreateTextComponents(new TextComponent[2],AttackOPTextContents,ChatColor.RED);
-
-        GameChat.CreateHoverEvents(HoverEvent.Action.SHOW_TEXT, AttackOPTexts, AttackHoverContents);
-        GameChat.CreateClickEvents(ClickEvent.Action.RUN_COMMAND,AttackOPTexts,AttackClickCommands);
-
-        GameChat.SendAllTextEvents(AttackOPTexts,p);
-        //GIVE THE BOOK
-        //SET POSITIONS AND DISALLOW MOVEMENT
-        */
-
-        int team = 2;//ATTACK TEAM IS VALUED AT 2
-        GameChat.SendMessage(ChatColor.DARK_RED + "you joined the attacking team!",p);
-
-
-        if(joinedPlayers >= PlayerList.size() && PickedOperators >= PlayerList.size()) {
-            getLogger().info("players: " + PlayerList.size());
-
-            //DEPRECATED CODE REMOVED FOR TESTING
-            //TeleportPlayersRED(team);
-        }
-
-    }
-
-
-
-
-    public boolean GameStarted = false;
-
-    public void EndGame() {
-
-    }
-
-    void TeleportPlayersBLUE(int team) {
-        for(Player EachPlayer : BlueTeam) {
-            AlivePlayers.add(EachPlayer);
-            getLogger().info("player found with name of:" + EachPlayer.getName().toString());
-            players ++;
-            boolean TeamEqual = true;
-            if(doc == EachPlayer.getName().toString()) {
-                getLogger().info("giving player specifed ability item");
-                docAbil.getItemMeta().setDisplayName("ability");
-                EachPlayer.getInventory().addItem(docAbil);
-
-
+        for(String s : Commands.GetCommands(new String[]{"tbcm-dc","showPageBlue","showPageRed"}))//THESE ARE COMMANDS THAT DO NOT TAKE COMMAND LISTENER AS THEIR DEFAULT LISTENER
+        {
+            try{
+                getCommand(s).setExecutor(new CommandListener());
+            }catch (Exception e){
+                DevConsole.BroadCastDevMessage("ERROR INITIALIZING COMMAND EXECUTOR(Command): " + s);
             }
-            if(EachPlayer.getDisplayName().toString() == rook) {
-                getLogger().info("giving player specifed ability item");
-
-            }
-            if(EachPlayer.getDisplayName().toString() == tachanka) {
-                getLogger().info("giving player specifed ability item");
-
-            }
-
-            //CHECK FOR UNEVEN TEAMS
-
-
-
-            Location defaultspawndef = new Location(world,723,15,-662,0f,1.2f);
-
-
-            PositionList.add(defaultspawndef);
-            getLogger().info("blue team: " + EachPlayer);
-            EachPlayer.teleport(defaultspawndef);
-
-
-            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            Bukkit.dispatchCommand(console, "test");
-            Bukkit.broadcastMessage(ChatColor.RED + "The Game Has Begun!");
 
         }
     }

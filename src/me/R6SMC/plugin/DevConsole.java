@@ -1,5 +1,6 @@
 package me.R6SMC.plugin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +28,13 @@ public class DevConsole implements CommandExecutor {
     public static String GetDevTestingPrefix(){
         return DevTestingPrefix;
     }
-
+    public static void BroadCastDevMessage(String Content){
+        if(DevConsole.TESTING) {
+            Bukkit.broadcastMessage(DevPrefix + DevTestingPrefix + Content);
+        }else{
+            Bukkit.broadcastMessage(DevPrefix + Content);
+        }
+    }
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         Player p = (Player) commandSender;

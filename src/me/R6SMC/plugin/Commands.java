@@ -1,5 +1,6 @@
 package me.R6SMC.plugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -32,5 +33,16 @@ public class Commands {
             return false;
         }
         return false;
+    }
+    public static List<String> GetCommands(String[] ExceptCommands){
+        List<String> retCommands = new ArrayList<>();
+        for(String s : CommandArgs.keySet()){
+            for(String st : ExceptCommands){
+                if(s != st){
+                    retCommands.add(s);
+                }
+            }
+        }
+        return retCommands;
     }
 }
