@@ -4,6 +4,7 @@ import me.R6SMC.plugin.*;
 import me.R6SMC.plugin.Books.CustomBooks;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
+import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Finka;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Operators.Operatorhandling.Operator;
@@ -75,31 +76,6 @@ public class GameLogic implements Listener
     public void PlayerMoveEvent(PlayerMoveEvent event){
         if(!PlayersCanMove){
             event.getPlayer().teleport(new Location(world,event.getFrom().getBlockX(),event.getFrom().getBlockY(),event.getFrom().getBlockZ(),45.5f,26.5f));
-        }
-    }
-    @EventHandler
-    public void PlayerMBclick(PlayerInteractEvent event) {
-        if(GameStarted) {
-            if(event.getPlayer().getInventory().getItemInMainHand() == null) return;
-            DevConsole.SendDevMessage(event.getPlayer(),"player Clicked",DevConsole.TESTING);
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE) {
-                try {
-                    if(CurrentOperators.Add(event.getPlayer(),1)){
-                        Operator doc = CurrentOperators.CurrentOperators.get(event.getPlayer());
-                        doc.activateAbility();
-                        //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
-                    }
-                }catch (Exception e){
-
-                }
-
-            }
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.BROWN_STAINED_GLASS_PANE) {
-                //kristian picks a class, and picks finka.it will check if we have allready created an operator, and if we HAVE, we create a new Finka with the old value.
-                //if we havent, we will create a NEW finka, and return the new one
-                Finka finka = new Finka(OperatorHolder.GetOperator(event.getPlayer()));
-                finka.activateAbility();
-            }
         }
     }
     public static void TryEndGame(Player p){
