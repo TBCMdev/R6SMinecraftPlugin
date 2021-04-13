@@ -1,10 +1,7 @@
 package me.R6SMC.plugin;
 
 import com.sun.org.apache.xml.internal.security.Init;
-import me.R6SMC.plugin.Operators.Doc;
-import me.R6SMC.plugin.Operators.Finka;
-import me.R6SMC.plugin.Operators.Operator;
-import me.R6SMC.plugin.Operators.OperatorHolder;
+import me.R6SMC.plugin.Operators.*;
 import me.R6SMC.plugin.menu.PickDefenseOperatorMenu;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -79,9 +76,15 @@ public class GameLogic implements Listener
             if(event.getPlayer().getInventory().getItemInMainHand() == null) return;
             DevConsole.SendDevMessage(event.getPlayer(),"player Clicked",DevConsole.TESTING);
             if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE) {
-                Doc doc = new Doc(OperatorHolder.GetOperator(event.getPlayer()));
-                doc.activateAbility();
+                try {
+                    if(CurrentOperators.Add(event.getPlayer(),1)){
+                        Operator doc = CurrentOperators.CurrentOperators.get(event.getPlayer());
+                        doc.activateAbility();
+                        //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
+                    }
+                }catch (Exception e){
 
+                }
 
             }
             if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.BROWN_STAINED_GLASS_PANE) {
