@@ -1,13 +1,11 @@
 package me.R6SMC.plugin.Listeners;
 
-import me.R6SMC.plugin.Menu;
+import me.R6SMC.plugin.menu.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
-
-import java.util.List;
 
 public class MenuListener implements Listener {
 

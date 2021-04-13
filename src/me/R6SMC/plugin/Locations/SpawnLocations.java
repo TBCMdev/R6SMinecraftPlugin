@@ -1,11 +1,10 @@
 package me.R6SMC.plugin.Locations;
 
-import me.R6SMC.plugin.DevConsole;
+import me.R6SMC.plugin.DevConsole.DevConsole;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class SpawnLocations {
 

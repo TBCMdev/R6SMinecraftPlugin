@@ -1,26 +1,26 @@
 package me.R6SMC.plugin;
+import me.R6SMC.plugin.Chat.GameChat;
+import me.R6SMC.plugin.CommandClasses.CommandListener;
+import me.R6SMC.plugin.CommandClasses.Commands;
+import me.R6SMC.plugin.CommandClasses.CustomBookCommands;
+import me.R6SMC.plugin.DevConsole.DevConsole;
+import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Listeners.MenuListener;
-import me.R6SMC.plugin.Operators.OperatorAbilityListener;
+import me.R6SMC.plugin.Operators.Operatorhandling.OperatorAbilityListener;
 import org.bukkit.plugin.PluginManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.*;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.*;
-import java.util.regex.PatternSyntaxException;
 
 
 public class Main extends JavaPlugin implements Listener {
