@@ -50,12 +50,19 @@ public class OperatorHandler {
                     Main.PlayersWOP.add(sender.getName().toString());
                     break;
                 case "ash":
+                    GameLogic.ash = sender.getName();
+                    Main.PlayerOperators.put(GameLogic.ash,(Player) sender);
+                    GameLogic.PickedOperators++;
+                    sender.sendMessage(ChatColor.GREEN + "you have chosen ash! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"ash",GameLogic.PickedOperators,2);
+                    getLogger().info("operator picked");
+                    Main.PlayersWOP.add(sender.getName().toString());
                 case "finka":
                     GameLogic.finka = sender.getName();
                     Main.PlayerOperators.put(GameLogic.finka,(Player) sender);
                     GameLogic.PickedOperators++;
                     sender.sendMessage(ChatColor.GREEN + "you have chosen finka! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"finka",GameLogic.PickedOperators,1);
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"finka",GameLogic.PickedOperators,2);
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
                 default:

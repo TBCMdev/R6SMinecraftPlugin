@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class Sounds {
 
 
-
+//https://drive.google.com/drive/folders/1bpqp9UG7nNpT7NZk-fu9y0gBjJanz-TQ
     public static void PlaySound(Sound s, Player p){
         p.playSound(p.getLocation(),s,1,1);
     }

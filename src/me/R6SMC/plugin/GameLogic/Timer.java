@@ -1,6 +1,7 @@
 package me.R6SMC.plugin.GameLogic;
 
 import me.R6SMC.plugin.Loadouts.Loadouts;
+import me.R6SMC.plugin.Sounds.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -36,19 +37,18 @@ public class Timer extends BukkitRunnable {
     @Override
     public void run() {
             if (GameLogic.GameStarted) {
-                if(Seconds == 0){
+                if(Seconds <= 0){
+                    Bukkit.broadcastMessage(ChatColor.RED + "THE GAME HAS ENDED");
+
+                    GameLogic.GameStarted = false;
+                    GameLogic.EndGame();
                     cancel();
                 }
-                GameLogic.GameTime -= Seconds/100;
                 if (GameLogic.GameTime >= 0.01) {
+                    GameLogic.GameTime -= 1/MaxSeconds;
                     Seconds --;
-                    if(Seconds % MaxSeconds == 0 || Seconds <= 10){
+                    if(Seconds <= 15){
                         //PLAY ENDING GAME SOUND
-                        if(Seconds == 1){
-
-                        }else{
-
-                        }
                     }
 
                     GameLogic.B.setProgress(GameLogic.GameTime);
@@ -59,7 +59,6 @@ public class Timer extends BukkitRunnable {
                     GameLogic.GameStarted = false;
                     GameLogic.EndGame();
                     cancel();
-                    return;
 
                 }
 

@@ -62,43 +62,20 @@ public class CommandListener implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.BOLD + ChatColor.GRAY + "usage: /attkoperator [ash / capitao / finka]");
             }
             if(args[0].equalsIgnoreCase("ash")) {
-                GameLogic.ash = sender.getName().toString();
-                if(!Main.PlayersWOP.contains(sender.getName().toString())) {
-                    sender.sendMessage(ChatColor.GREEN + "you have chosen ash! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                    GameLogic.PickedOperators ++;
-                    Bukkit.getLogger().info("operator picked");
-                    Main.PlayersWOP.add(sender.getName().toString());
-                }else {
-                    sender.sendMessage(ChatColor.RED + "you have allready chosen an operator!");
-                }
+                Bukkit.getLogger().info("picking operator...");
+                CheckCommand(sender,args,"ash");
                 GameLogic.ResendTeleportRed();
                 GameLogic.ResendTeleportBlue();
             }
             if(args[0].equalsIgnoreCase("capitao")) {
-                GameLogic.capitao = sender.getName().toString();
-                if(!Main.PlayersWOP.contains(sender.getName().toString())) {
-                    sender.sendMessage(ChatColor.GREEN + "you have chosen ash! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                    GameLogic.PickedOperators ++;
-                    Bukkit.getLogger().info("operator picked");
-                    Main.PlayersWOP.add(sender.getName().toString());
-                }else {
-                    sender.sendMessage(ChatColor.RED + "you have allready chosen an operator!");
-                }
+                Bukkit.getLogger().info("picking operator...");
+                CheckCommand(sender,args,"capitao");
                 GameLogic.ResendTeleportRed();
                 GameLogic.ResendTeleportBlue();
             }
             if(args[0].equalsIgnoreCase("finka")) {
-                GameLogic.finka = sender.getName().toString();
-                if(!Main.PlayersWOP.contains(sender.getName().toString())) {
-                    CheckCommand((Player)sender,args,"finka");
-                    sender.sendMessage(ChatColor.GREEN + "you have chosen finka! to use her abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                    GameChat.sendActionbar((Player) sender,"to use finkas ability, please hold the ability item in your hotbar and click!");
-                    GameLogic.PickedOperators ++;
-                    Bukkit.getLogger().info("operator picked");
-                    Main.PlayersWOP.add(sender.getName().toString());
-                }else {
-                    sender.sendMessage(ChatColor.RED + "you have allready chosen an operator!");
-                }
+                Bukkit.getLogger().info("picking operator...");
+                CheckCommand(sender,args,"finka");
                 GameLogic.ResendTeleportRed();
                 GameLogic.ResendTeleportBlue();
 
@@ -121,7 +98,7 @@ public class CommandListener implements CommandExecutor {
         }
         if(cmd.getName().equalsIgnoreCase("jointeamred")) {
             if(GameLogic.RedTeamCount < GameLogic.BlueTeamCount || GameLogic.RedTeamCount == 0 && GameLogic.BlueTeamCount == 0) {
-                GameLogic.JoinTeamRed((Player) sender);
+                GameLogic.JoinTeam(2,(Player) sender);
             }else{
                 sender.sendMessage(ChatColor.RED + "*ERROR*" + ChatColor.BOLD + ChatColor.GRAY + " Please join the opposing team, to make the teams equal");
             }
@@ -129,7 +106,7 @@ public class CommandListener implements CommandExecutor {
         }
         if(cmd.getName().equalsIgnoreCase("jointeamblue")) {
             if(GameLogic.RedTeamCount > GameLogic.BlueTeamCount || GameLogic.RedTeamCount == 0 && GameLogic.BlueTeamCount == 0) {
-                GameLogic.JoinTeamBlue((Player) sender);
+                GameLogic.JoinTeam(1,(Player) sender);
             }else{
                 sender.sendMessage(ChatColor.RED + "*ERROR*" + ChatColor.BOLD + ChatColor.GRAY + " Please join the opposing team, to make the teams equal");
             }

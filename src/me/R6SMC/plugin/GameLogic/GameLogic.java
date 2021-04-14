@@ -28,6 +28,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.Team;
 
 
 import java.util.ArrayList;
@@ -141,46 +142,7 @@ public class GameLogic implements Listener
 
         }
     }
-    public static void TeleportPlayersBLUE(int team) {
-    for (Player EachPlayer : BlueTeam) {
-        AlivePlayers.add(EachPlayer);
-        Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
-        players++;
-        boolean TeamEqual = true;
-        if (doc.equals(EachPlayer.getName().toString())) {
-            Bukkit.getLogger().info("giving player specifed ability item");
-            docAbil.getItemMeta().setDisplayName("ability");
-            EachPlayer.getInventory().addItem(docAbil);
-
-
-        }
-        if (EachPlayer.getDisplayName().toString().equals(rook)) {
-            Bukkit.getLogger().info("giving player specifed ability item");
-
-        }
-        if (EachPlayer.getDisplayName().toString().equals(tachanka)) {
-            Bukkit.getLogger().info("giving player specifed ability item");
-
-        }
-
-        //CHECK FOR UNEVEN TEAMS
-
-
-        Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
-        PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(EachPlayer));
-        defMenu.Open();
-        PositionList.add(defaultspawndef);
-        Bukkit.getLogger().info("blue team: " + EachPlayer);
-        EachPlayer.teleport(defaultspawndef);
-
-        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        Bukkit.dispatchCommand(console, "test");
-        Bukkit.broadcastMessage(ChatColor.RED + "The Game Has Begun!");
-        StartTimer();
-        StartGame();
-    }
-}
-    public static void JoinTeamRed(Player p) {
+    public static void InitTeamRed(Player p){
         if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
             RedTeam.add(p);
             joinedPlayers ++;
@@ -207,120 +169,141 @@ public class GameLogic implements Listener
         if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
             Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
 
-            //DEPRECATED CODE REMOVED FOR TESTING
-            TeleportPlayersRED(team);
-            InitGame();
         }
-
     }
+    public static void InitTeamBlue(Player p){
+        if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
+            RedTeam.add(p);
+            joinedPlayers ++;
+            RedTeamCount ++;
+        }
+        String[] AttackOPTextContents = new String[]{"*ASH*","*CAPITAO*","*FINKA*"};
+        String[] AttackHoverContents = new String[]{"CLICK TO USE ASH","CLICK TO USE CAPITAO","CLICK TO USE FINKA"};
+        String[] AttackClickCommands = new String[]{"/attkoperator ash","/attkoperator capitao","/attkoperator finka"};
+
+        TextComponent[] AttackOPTexts = GameChat.CreateTextComponents(new TextComponent[2],AttackOPTextContents,ChatColor.RED);
+
+        GameChat.CreateHoverEvents(HoverEvent.Action.SHOW_TEXT, AttackOPTexts, AttackHoverContents);
+        GameChat.CreateClickEvents(ClickEvent.Action.RUN_COMMAND,AttackOPTexts,AttackClickCommands);
+
+        GameChat.SendAllTextEvents(AttackOPTexts,p);
+        //GIVE THE BOOK
+        //SET POSITIONS AND DISALLOW MOVEMENT
+        GameChat.SendMessage(ChatColor.DARK_RED + "you joined the attacking team!",p);
+        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
+            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
+        }
+    }
+    public static void JoinTeam(int Team,Player p){
+        switch (Team){
+            case 1:
+                InitTeamRed(p);
+                break;
+            case 2:
+                InitTeamBlue(p);
+                break;
+        }
+    }
+
     public static void InitGame(){
-        StartGame();
-        StartTimer();
-    }
-    public static void TeleportPlayersRED(int team) {
-
-        for(Player EachPlayer : RedTeam) {
-            AlivePlayers.add(EachPlayer);
-            Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
-            players ++;
-            boolean TeamEqual = true;
-            //CHECK FOR UNEVEN TEAMS
-            if(ash == EachPlayer.getName().toString()) {
-                Bukkit.getLogger().info("giving player specifed ability item");
-                EachPlayer.getInventory().addItem(ashAbil);
-
-            }
-            if(capitao == EachPlayer.getName().toString()) {
-                Bukkit.getLogger().info("giving player specifed ability item");
-
-            }
-            if(finka == EachPlayer.getName().toString()) {
-                Bukkit.getLogger().info("giving player specifed ability item");
-                EachPlayer.getInventory().addItem(finkaAbil);
-
-            }
-
-            Location defaultspawn = new Location(world,767,10,-628,90f,3f);
-
-
-            PositionList.add(defaultspawn);
-
-            Bukkit.getLogger().info("red team: " + EachPlayer);
-            EachPlayer.teleport(defaultspawn);
-
-
-
+        if(!GameStarted) {
+            GameStarted = true;
+            StartGame();
+            StartTimer();
         }
     }
+    public static void TeleportTeams(int team){
+        switch (team) {
+            case 1:
+                for(Player EachPlayer : RedTeam) {
+                    AlivePlayers.add(EachPlayer);
+                    Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
+                    players ++;
+                    boolean TeamEqual = true;
+                    //CHECK FOR UNEVEN TEAMS
+                    if(ash == EachPlayer.getName().toString()) {
+                        Bukkit.getLogger().info("giving player specifed ability item");
+                        EachPlayer.getInventory().addItem(ashAbil);
+
+                    }
+                    if(capitao == EachPlayer.getName().toString()) {
+                        Bukkit.getLogger().info("giving player specifed ability item");
+
+                    }
+                    if(finka == EachPlayer.getName().toString()) {
+                        Bukkit.getLogger().info("giving player specifed ability item");
+                        EachPlayer.getInventory().addItem(finkaAbil);
+
+                    }
+
+                    Location defaultspawn = new Location(world,767,10,-628,90f,3f);
+
+
+                    PositionList.add(defaultspawn);
+
+                    Bukkit.getLogger().info("red team: " + EachPlayer);
+                    EachPlayer.teleport(defaultspawn);
+
+
+
+                }
+                break;
+            case 2:
+                for (Player EachPlayer : BlueTeam) {
+                    AlivePlayers.add(EachPlayer);
+                    Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
+                    players++;
+                    boolean TeamEqual = true;
+                    if (doc.equals(EachPlayer.getName().toString())) {
+                        Bukkit.getLogger().info("giving player specifed ability item");
+                        docAbil.getItemMeta().setDisplayName("ability");
+                        EachPlayer.getInventory().addItem(docAbil);
+
+
+                    }
+                    if (EachPlayer.getDisplayName().toString().equals(rook)) {
+                        Bukkit.getLogger().info("giving player specifed ability item");
+
+                    }
+                    if (EachPlayer.getDisplayName().toString().equals(tachanka)) {
+                        Bukkit.getLogger().info("giving player specifed ability item");
+
+                    }
+
+                    //CHECK FOR UNEVEN TEAMS
+
+
+                    Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
+                    PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(EachPlayer));
+                    defMenu.Open();
+                    PositionList.add(defaultspawndef);
+                    Bukkit.getLogger().info("blue team: " + EachPlayer);
+                    EachPlayer.teleport(defaultspawndef);
+
+
+                }
+                break;
+        }
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+        Bukkit.dispatchCommand(console, "test");
+        Bukkit.broadcastMessage(ChatColor.RED + "The Game Has Begun!");
+        InitGame();
+
+    }
+
     public static void ResendTeleportRed() {
         if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
             Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-            TeleportPlayersRED(2);
+            TeleportTeams(2);
         }
     }
     public static void ResendTeleportBlue() {
         if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
             Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-            TeleportPlayersBLUE(1);
+            TeleportTeams(1);
         }
     }
-    public static void JoinTeamBlue(Player p) {
-        if(RedTeamCount > BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
-            BlueTeam.add(p);
-            joinedPlayers++;
-            Bukkit.getLogger().info("playeradded!!!");
-        }
 
-        TextComponent defenseTxtrook = new TextComponent(ChatColor.BLUE + "*ROOK*");
-        TextComponent hoverTextrook = new TextComponent(ChatColor.BLUE +"CLICK TO USE ROOK");
-
-        TextComponent defenseTxtdoc = new TextComponent(ChatColor.BLUE + "*DOC*");
-        TextComponent hoverTextdoc = new TextComponent(ChatColor.BLUE +"CLICK TO USE DOC");
-
-        TextComponent defenseTxtT = new TextComponent(ChatColor.BLUE + "*TACHANKA*");
-        TextComponent hoverTextT = new TextComponent(ChatColor.BLUE +"CLICK TO USE TACHANKA");
-
-        HoverEvent hoverEventrook = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextrook});
-        HoverEvent hoverEventdoc = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextdoc});
-        HoverEvent hoverEventT = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextT});
-
-        defenseTxtrook.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator rook"));
-        defenseTxtdoc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator doc"));
-        defenseTxtT.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator tachanka"));
-
-        defenseTxtrook.setHoverEvent(hoverEventrook);
-        defenseTxtdoc.setHoverEvent(hoverEventdoc);
-        defenseTxtT.setHoverEvent(hoverEventT);
-
-        p.spigot().sendMessage(defenseTxtrook);
-        p.spigot().sendMessage(defenseTxtdoc);
-        p.spigot().sendMessage(defenseTxtT);
-
-
-        int team = 1;//DEFENSE TEAM IS VALUED AT 1
-        p.sendMessage("you joined the defending team!");
-
-        Bukkit.getLogger().info("players in server:" + GameChat.GetAllPlayers());
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size() + "\n operators picked: " + PickedOperators);
-            TeleportPlayersBLUE(team);
-            /*for(Player pl : GameChat.GetAllPlayers()){
-                pl.teleport(GameLogic.DefaultPos);
-                pl.setGameMode(GameMode.SPECTATOR);
-                GameLogic.PlayersCanMove = false;
-            }
-            ItemStack OperatorChooseBookBlue = CustomBooks.CreateBlueTeamBook();
-            for(Player pl : GameLogic.BlueTeam){
-                pl.getInventory().setItemInMainHand(OperatorChooseBookBlue);
-                pl.openBook(pl.getInventory().getItemInMainHand());
-            }
-            ItemStack OperatorChooseBookRed = CustomBooks.CreateRedTeamBook();
-            for(Player pl : GameLogic.RedTeam){
-                pl.getInventory().setItemInMainHand(OperatorChooseBookRed);
-                pl.openBook(pl.getInventory().getItemInMainHand());
-            }*/
-        }
-    }
     public static boolean HasGivenBooks = false;
     public static void ShowAvailableOperators(){
         if(!HasGivenBooks){
@@ -344,7 +327,7 @@ public static void StartGame(){
 }
 
 
-public static long Seconds,MaxSeconds;
+public static long Seconds = 90,MaxSeconds = 90;
 public static void StartTimer(){
     PlayersCanMove = true;
     Timer timer = new Timer(Seconds,MaxSeconds);

@@ -10,6 +10,8 @@ import me.R6SMC.plugin.PlayerLogic.PlayerClass;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Loadouts {
@@ -48,7 +50,8 @@ public class Loadouts {
         for (int i = 0; i < PlayerOperators.size();i++) {
             Bukkit.getLogger().info("looping...");
                 Bukkit.getLogger().info("SETTING LOADOUTS");
-                Player CurrentPlayer = PlayerOperators.get(i).Player;
+                List<PlayerClass> PlayerOperatorValues = new ArrayList<PlayerClass>(PlayerOperators.values());
+                Player CurrentPlayer = PlayerOperatorValues.get(i).getPlayer();
                 if (GameLogic.PlayerClasses.containsKey(CurrentPlayer.getDisplayName())) {
                     switch (CheckForClass(GameLogic.PlayerClasses.get(CurrentPlayer.getDisplayName()))) {
                         case 1:

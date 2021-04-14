@@ -1,4 +1,4 @@
-package me.R6SMC.plugin.Operators.Operatorhandling;
+package me.R6SMC.plugin.Listeners;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
@@ -6,6 +6,7 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Ash;
 import me.R6SMC.plugin.Operators.OperatorClasses.Capitao;
 import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Finka;
+import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import org.bukkit.GameRule;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -44,6 +45,7 @@ public class OperatorAbilityListener implements Listener {
         }
 
     }
+    @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
         if(GameLogic.GameStarted) {
             if(event.getPlayer().getInventory().getItemInMainHand() == null) return;

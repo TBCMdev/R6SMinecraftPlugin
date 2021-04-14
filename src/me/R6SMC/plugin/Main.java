@@ -6,7 +6,7 @@ import me.R6SMC.plugin.CommandClasses.CustomBookCommands;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Listeners.MenuListener;
-import me.R6SMC.plugin.Operators.Operatorhandling.OperatorAbilityListener;
+import me.R6SMC.plugin.Listeners.OperatorAbilityListener;
 import org.bukkit.plugin.PluginManager;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;

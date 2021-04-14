@@ -29,6 +29,7 @@ public class Finka extends Operator {
     @Override
     public void ResetAbility() {
         Boosts = 3;
+        CanUseAbility = true;
     }
 
     @Override
