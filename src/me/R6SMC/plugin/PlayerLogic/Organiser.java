@@ -23,22 +23,21 @@ public class Organiser{
             }
             if(i.getType() == Material.CARROT_ON_A_STICK){
                 ItemMeta Meta = i.getItemMeta();
-                for(String s : Meta.getLore()){
+                String s = Meta.getDisplayName();
+                    DevConsole.SendDevMessage(p,"iterating through inv",DevConsole.TESTING);
                     for(String PrimaryCheck : AllPrimaryGuns){
-                        if(s.contains(PrimaryCheck.toUpperCase(Locale.ROOT))){
-                            p.getInventory().setHeldItemSlot(0);
-                            p.getInventory().setItemInOffHand(i);
+                        if(s.equalsIgnoreCase(PrimaryCheck.toUpperCase())){
                             p.performCommand("/function mgs_catalog:attachments/acog");
                             p.getInventory().setItemInMainHand(i);
                         }
                     }
                     for(String SecondaryCheck : AllSecondaryGuns){
-                        if(s.contains(SecondaryCheck.toUpperCase(Locale.ROOT))){
+                        if(s.equalsIgnoreCase(SecondaryCheck.toUpperCase())){
                             p.getInventory().setHeldItemSlot(1);
                             p.getInventory().setItemInMainHand(i);
                         }
                     }
-                }
+
             }
             if(KeepAmmo){
                 List<ItemStack> Mags = new ArrayList<>();

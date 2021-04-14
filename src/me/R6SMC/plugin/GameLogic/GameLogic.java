@@ -80,8 +80,8 @@ public class GameLogic implements Listener
         }
     }
     public static void TryEndGame(Player p){
-        if(BlueTeam.contains(p)) {
-            BlueTeam.remove(p);
+        if(AlivePlayers.contains(p)) {
+            AlivePlayers.remove(p);
             DeadPlayers.add(p);
             p.setGameMode(GameMode.SPECTATOR);
             if(AlivePlayers.size() >= 2 && RedTeam.size() == BlueTeam.size() ||
@@ -94,8 +94,8 @@ public class GameLogic implements Listener
                 EndGame();
             }
         }
-        if(RedTeam.contains(p)) {
-            RedTeam.remove(p);
+        if(AlivePlayers.contains(p)) {
+            AlivePlayers.remove(p);
             DeadPlayers.add(p);
             p.setGameMode(GameMode.SPECTATOR);
             if(AlivePlayers.size() >= 2 && RedTeam.size() == BlueTeam.size() ||
@@ -171,36 +171,49 @@ public class GameLogic implements Listener
 
         }
     }
-    public static void InitTeamBlue(Player p){
-        if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
-            RedTeam.add(p);
-            joinedPlayers ++;
-            RedTeamCount ++;
+    public static void InitTeamBlue(Player p) {
+        if (RedTeamCount > BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
+            BlueTeam.add(p);
+            joinedPlayers++;
+            Bukkit.getLogger().info("playeradded!!!");
         }
-        String[] AttackOPTextContents = new String[]{"*ASH*","*CAPITAO*","*FINKA*"};
-        String[] AttackHoverContents = new String[]{"CLICK TO USE ASH","CLICK TO USE CAPITAO","CLICK TO USE FINKA"};
-        String[] AttackClickCommands = new String[]{"/attkoperator ash","/attkoperator capitao","/attkoperator finka"};
 
-        TextComponent[] AttackOPTexts = GameChat.CreateTextComponents(new TextComponent[2],AttackOPTextContents,ChatColor.RED);
+        TextComponent defenseTxtrook = new TextComponent(ChatColor.BLUE + "*ROOK*");
+        TextComponent hoverTextrook = new TextComponent(ChatColor.BLUE + "CLICK TO USE ROOK");
 
-        GameChat.CreateHoverEvents(HoverEvent.Action.SHOW_TEXT, AttackOPTexts, AttackHoverContents);
-        GameChat.CreateClickEvents(ClickEvent.Action.RUN_COMMAND,AttackOPTexts,AttackClickCommands);
+        TextComponent defenseTxtdoc = new TextComponent(ChatColor.BLUE + "*DOC*");
+        TextComponent hoverTextdoc = new TextComponent(ChatColor.BLUE + "CLICK TO USE DOC");
 
-        GameChat.SendAllTextEvents(AttackOPTexts,p);
-        //GIVE THE BOOK
-        //SET POSITIONS AND DISALLOW MOVEMENT
-        GameChat.SendMessage(ChatColor.DARK_RED + "you joined the attacking team!",p);
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-        }
+        TextComponent defenseTxtT = new TextComponent(ChatColor.BLUE + "*TACHANKA*");
+        TextComponent hoverTextT = new TextComponent(ChatColor.BLUE + "CLICK TO USE TACHANKA");
+
+        HoverEvent hoverEventrook = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextrook});
+        HoverEvent hoverEventdoc = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextdoc});
+        HoverEvent hoverEventT = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextT});
+
+        defenseTxtrook.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator rook"));
+        defenseTxtdoc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator doc"));
+        defenseTxtT.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator tachanka"));
+
+        defenseTxtrook.setHoverEvent(hoverEventrook);
+        defenseTxtdoc.setHoverEvent(hoverEventdoc);
+        defenseTxtT.setHoverEvent(hoverEventT);
+
+        p.spigot().sendMessage(defenseTxtrook);
+        p.spigot().sendMessage(defenseTxtdoc);
+        p.spigot().sendMessage(defenseTxtT);
+
+
+        int team = 1;//DEFENSE TEAM IS VALUED AT 1
+        p.sendMessage("you joined the defending team!");
     }
     public static void JoinTeam(int Team,Player p){
         switch (Team){
             case 1:
-                InitTeamRed(p);
+                InitTeamBlue(p);
                 break;
             case 2:
-                InitTeamBlue(p);
+                InitTeamRed(p);
                 break;
         }
     }
@@ -214,7 +227,7 @@ public class GameLogic implements Listener
     }
     public static void TeleportTeams(int team){
         switch (team) {
-            case 1:
+            case 2:
                 for(Player EachPlayer : RedTeam) {
                     AlivePlayers.add(EachPlayer);
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
@@ -248,7 +261,7 @@ public class GameLogic implements Listener
 
                 }
                 break;
-            case 2:
+            case 1:
                 for (Player EachPlayer : BlueTeam) {
                     AlivePlayers.add(EachPlayer);
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
