@@ -7,23 +7,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Timer extends BukkitRunnable {
-    public static float TimerDelay, TimerPeriod;
-    public static float FullTime;
-    public static float TimeElapsed,TimeRemaining;
-    public static float TimeBetweenDecrease;
-    public Timer(long TD,long TP){
-        Initialize(TD,TP);
+    public static float Seconds,MaxSeconds;
+    public Timer(float seconds,float maxseconds){
+        Initialize(seconds,maxseconds);
     }
-    public static void Initialize(long TD,long TP){
-        TimerDelay = (float)TD;
-        TimerPeriod = (float)TP;
-        FullTime = ((TimerDelay / 20) + (TimerPeriod / 20)) * 100;
-        TimeBetweenDecrease = ((TimerDelay / 20) + (TimerPeriod / 20));
-        TimeElapsed = 0;
-        Bukkit.getLogger().info(ChatColor.RED + "FULL TIME: " + FullTime + " TIME BETWEEN DECREASE: " + TimeBetweenDecrease);
+    public static void Initialize(float seconds,float maxseconds){
+        MaxSeconds = maxseconds;
+        Seconds = seconds;
+        Bukkit.getLogger().info(ChatColor.RED + "FULL TIME: " + MaxSeconds);
     }
     public void startTimer() {
-        Initialize((long)TimerDelay,(long)TimerPeriod);
         GameLogic.GameTime = 1f;
         GameLogic.GameStarted = true;
         for(Player p : Bukkit.getOnlinePlayers()) {
@@ -37,17 +30,29 @@ public class Timer extends BukkitRunnable {
             }
         }
         Loadouts.GiveLoadouts(GameLogic.PlayerClasses);
-        this.runTaskTimer(GameLogic.mainThread, (long)TimerDelay,(long)TimerPeriod);
+        this.runTaskTimer(GameLogic.mainThread, 0,20L);
 
     }
+    @Override
     public void run() {
             if (GameLogic.GameStarted) {
-                GameLogic.GameTime -= 0.01f;
+                if(Seconds == 0){
+                    cancel();
+                }
+                GameLogic.GameTime -= Seconds/100;
                 if (GameLogic.GameTime >= 0.01) {
-                    TimeElapsed += TimeBetweenDecrease;
-                    TimeRemaining = FullTime - TimeElapsed;
+                    Seconds --;
+                    if(Seconds % MaxSeconds == 0 || Seconds <= 10){
+                        //PLAY ENDING GAME SOUND
+                        if(Seconds == 1){
+
+                        }else{
+
+                        }
+                    }
+
                     GameLogic.B.setProgress(GameLogic.GameTime);
-                    GameLogic.B.setTitle(" : " + TimeRemaining + " : ");
+                    GameLogic.B.setTitle(" : " + Seconds + " : ");
                 } else {
                     Bukkit.broadcastMessage(ChatColor.RED + "THE GAME HAS ENDED");
 

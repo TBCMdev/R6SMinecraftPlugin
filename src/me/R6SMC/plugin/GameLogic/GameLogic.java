@@ -344,11 +344,10 @@ public static void StartGame(){
 }
 
 
-public static long TimerDelay = 0,
-                   TimerPeriod = 25;
+public static long Seconds,MaxSeconds;
 public static void StartTimer(){
     PlayersCanMove = true;
-    Timer timer = new Timer(TimerDelay,TimerPeriod);
+    Timer timer = new Timer(Seconds,MaxSeconds);
     timer.startTimer();
 }
     public static boolean GameStarted = false;

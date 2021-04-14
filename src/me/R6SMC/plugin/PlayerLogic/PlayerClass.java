@@ -4,12 +4,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PlayerClass {
-    public static Player Player;
-    public static String Name;
-    public static String Class;
-    public static int ID;
-    public static int Points;
-    public static int Team;
+    public Player Player;
+    public String Name;
+    public String Class;
+    public int ID;
+    public int Points;
+    public int Team;
     public PlayerClass(Player p,String n, String C,int id,int t){
         Player = p;
         Name = n;
@@ -17,13 +17,14 @@ public class PlayerClass {
         ID = id;
         Team = t;
     }
-    public static int GetTeam(){
+    public int getPoints(){return Points;}
+    public int GetTeam(){
         return Team;
     }
-    public static String PlayerName(){
+    public String PlayerName(){
         return Player.getDisplayName();
     }
-    public static int PlayerID(){
+    public int PlayerID(){
         return ID;
     }
     public void SetPoints(int points){
