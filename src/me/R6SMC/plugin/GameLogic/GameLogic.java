@@ -114,23 +114,24 @@ public class GameLogic implements Listener
     }
     @EventHandler
     public void onKill(PlayerDeathEvent event) {
-        Bukkit.getLogger().info("Player Has Died");
-        Player Killed = event.getEntity();
-        Player Killer = event.getEntity().getKiller();
-        if(event.getEntityType() == EntityType.PLAYER) {
-            Killed.sendMessage(ChatColor.DARK_RED + "DEATHS " + ChatColor.WHITE + "+1");
-            TryEndGame(Killed);
-        }
-        if(event.getEntity().getKiller().getType() == EntityType.PLAYER) {
-            if(GameChat.GetPlayerClass(Killer).Team == GameChat.GetPlayerClass(Killed).Team) {
-                Killer.sendMessage(ChatColor.DARK_RED + "DO NOT TEAM KILL!! -100 POINTS");
-                PlayerClasses.get(Killer.getDisplayName()).SetPoints(-100);
-            }else{
-                Killer.sendMessage(GameChat.GetTeamColor(PlayerClasses.get(Killer.getDisplayName())) + "KILLS " + ChatColor.WHITE + "+1");
-                PlayerClasses.get(Killer.getDisplayName()).SetPoints(100);
+        if(GameStarted) {
+            Bukkit.getLogger().info("Player Has Died");
+            Player Killed = event.getEntity();
+            Player Killer = event.getEntity().getKiller();
+            if (event.getEntityType() == EntityType.PLAYER) {
+                Killed.sendMessage(ChatColor.DARK_RED + "DEATHS " + ChatColor.WHITE + "+1");
+                TryEndGame(Killed);
+            }
+            if (event.getEntity().getKiller().getType() == EntityType.PLAYER) {
+                if (GameChat.GetPlayerClass(Killer).Team == GameChat.GetPlayerClass(Killed).Team) {
+                    Killer.sendMessage(ChatColor.DARK_RED + "DO NOT TEAM KILL!! -100 POINTS");
+                    PlayerClasses.get(Killer.getDisplayName()).SetPoints(-100);
+                } else {
+                    Killer.sendMessage(GameChat.GetTeamColor(PlayerClasses.get(Killer.getDisplayName())) + "KILLS " + ChatColor.WHITE + "+1");
+                    PlayerClasses.get(Killer.getDisplayName()).SetPoints(100);
+                }
             }
         }
-
     }
     public static void PlayerJoinedTeam(int Team){
 
@@ -150,7 +151,7 @@ public class GameLogic implements Listener
             joinedPlayers ++;
             RedTeamCount ++;
         }
-        String[] AttackOPTextContents = new String[]{"*ASH*","*CAPITAO*","*FINKA*"};
+        /*String[] AttackOPTextContents = new String[]{"*ASH*","*CAPITAO*","*FINKA*"};
         String[] AttackHoverContents = new String[]{"CLICK TO USE ASH","CLICK TO USE CAPITAO","CLICK TO USE FINKA"};
         String[] AttackClickCommands = new String[]{"/attkoperator ash","/attkoperator capitao","/attkoperator finka"};
 
@@ -162,12 +163,13 @@ public class GameLogic implements Listener
         GameChat.SendAllTextEvents(AttackOPTexts,p);
         //GIVE THE BOOK
         //SET POSITIONS AND DISALLOW MOVEMENT
-
+        */
 
         int team = 2;//ATTACK TEAM IS VALUED AT 2
         GameChat.SendMessage(ChatColor.DARK_RED + "you joined the attacking team!",p);
 
-
+        PickAttackOperatorMenu menu = new PickAttackOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
+        menu.Open();
         if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
             Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
 
@@ -179,8 +181,9 @@ public class GameLogic implements Listener
             joinedPlayers++;
             Bukkit.getLogger().info("playeradded!!!");
         }
+        //deprecated as i am trying out the inventory window method for Choosing operators.
 
-        TextComponent defenseTxtrook = new TextComponent(ChatColor.BLUE + "*ROOK*");
+        /*TextComponent defenseTxtrook = new TextComponent(ChatColor.BLUE + "*ROOK*");
         TextComponent hoverTextrook = new TextComponent(ChatColor.BLUE + "CLICK TO USE ROOK");
 
         TextComponent defenseTxtdoc = new TextComponent(ChatColor.BLUE + "*DOC*");
@@ -204,8 +207,10 @@ public class GameLogic implements Listener
         p.spigot().sendMessage(defenseTxtrook);
         p.spigot().sendMessage(defenseTxtdoc);
         p.spigot().sendMessage(defenseTxtT);
+        */
 
-
+        PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
+        defMenu.Open();
         int team = 1;//DEFENSE TEAM IS VALUED AT 1
         p.sendMessage("you joined the defending team!");
     }
@@ -246,8 +251,7 @@ public class GameLogic implements Listener
                         Loadouts.GiveAbilityItem(6, EachPlayer);
 
                         Location defaultspawn = new Location(world, 767, 10, -628, 90f, 3f);
-                        PickAttackOperatorMenu menu = new PickAttackOperatorMenu(PlayerMenus.GetPlayerMenuUtility(EachPlayer));
-                        menu.Open();
+
                         PositionList.add(defaultspawn);
                         Bukkit.getLogger().info("red team: " + EachPlayer);
                         EachPlayer.teleport(defaultspawn);
@@ -271,8 +275,7 @@ public class GameLogic implements Listener
                     }
                     //CHECK FOR UNEVEN TEAMS
                     Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
-                    PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(EachPlayer));
-                    defMenu.Open();
+
                     PositionList.add(defaultspawndef);
                     Bukkit.getLogger().info("blue team: " + EachPlayer);
                     EachPlayer.teleport(defaultspawndef);
@@ -300,6 +303,7 @@ public class GameLogic implements Listener
     }
 
     public static boolean HasGivenBooks = false;
+    @Deprecated
     public static void ShowAvailableOperators(){
         if(!HasGivenBooks){
             ItemStack BlueTeamBook = CustomBooks.CreateBlueTeamBook();
@@ -330,9 +334,6 @@ public static void StartTimer(){
 }
     public static boolean GameStarted = false;
 
-    public static void Organise(Player p){
-
-    }
 
     public static void CreatePlayerClass(Player p , String Name, String Class,int ID,int Team){
         if(!PlayerClasses.containsKey(Name)){
