@@ -139,11 +139,16 @@ public class GameLogic implements Listener
     public static void EndGame(){
         B.removeAll();
         PlayersCanMove = false;
+        List<Location> FinishedNpcLocations = new ArrayList<Location>(){{
+            //PUT NPC POS AND ROT HERE
+        }};
+
         for(Player p : GameChat.GetAllPlayers()){
             p.setGameMode(GameMode.SPECTATOR);
             p.teleport(new Location(world,740,30,-678,45.5f,26.5f));
 
         }
+        PlayerEntities.CreateEntities(GameChat.GetAllPlayers(),FinishedNpcLocations);
     }
     public static void InitTeamRed(Player p){
         if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {

@@ -29,17 +29,12 @@ import java.util.UUID;
 public class PlayerEntities {
     public static EntityType CurrentSpawnType = EntityType.ARMOR_STAND;
     public static void CreateEntities(List<Player> players, List<Location> locations){
-        MinecraftServer server = ((CraftServer)Bukkit.getServer()).getServer();
         List<EntityPlayer> AllPlaceHolders = new ArrayList<>();
         for(int i = 0; i < locations.size();i++) {
             EntityPlayer PlayerPlaceHolder = (EntityPlayer) addNpc((int)locations.get(i).getX(),(int)locations.get(i).getY(),(int)locations.get(i).getZ(),players.get(i));
             AllPlaceHolders.add(PlayerPlaceHolder);
         }
-        for(int i = 0; i < AllPlaceHolders.size();i++){
-                EntityPlayer currentSkeleton = AllPlaceHolders.get(i);
-                Player CurrentPlayer = players.get(i);
-        }
-        //EntityPlayer player = new EntityPlayer(server,GameLogic.world,);
+
     }
     public String[] getFromPlayer(Player playerBukkit) {
         EntityPlayer playerNMS = ((CraftPlayer) playerBukkit).getHandle();
@@ -49,7 +44,7 @@ public class PlayerEntities {
         String signature = property.getSignature();
         return new String[] {texture, signature};
     }
-    public String[] getFromName(String name) {
+    public static String[] getFromName(String name) {
         try {
             URL url_0 = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
             InputStreamReader reader_0 = new InputStreamReader(url_0.openStream());
