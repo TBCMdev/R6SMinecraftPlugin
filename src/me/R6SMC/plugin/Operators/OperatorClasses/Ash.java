@@ -45,6 +45,7 @@ public class Ash extends Operator {
     public void activateAbility() {
         if(GameLogic.GameStarted) {
             if(CanUseAbility) {
+
                 String name = "ASHABIL";
                 Snowball ball = PlayerManager.getOwner().launchProjectile(Snowball.class);
                 ball.setShooter(PlayerManager.getOwner());

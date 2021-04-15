@@ -2,10 +2,7 @@ package me.R6SMC.plugin.Listeners;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
-import me.R6SMC.plugin.Operators.OperatorClasses.Ash;
-import me.R6SMC.plugin.Operators.OperatorClasses.Capitao;
-import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
-import me.R6SMC.plugin.Operators.OperatorClasses.Finka;
+import me.R6SMC.plugin.Operators.OperatorClasses.*;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import org.bukkit.GameRule;
 import org.bukkit.Material;
@@ -19,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.lang.reflect.Type;
 
 public class OperatorAbilityListener implements Listener {
     @EventHandler
@@ -47,9 +46,10 @@ public class OperatorAbilityListener implements Listener {
     }
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
+        Material PlayerItemType = event.getPlayer().getInventory().getItemInMainHand().getType();
         if(GameLogic.GameStarted) {
             if(event.getPlayer().getInventory().getItemInMainHand() == null) return;
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.WHITE_STAINED_GLASS_PANE) {
+            if (PlayerItemType == Material.WHITE_STAINED_GLASS_PANE) {
                 try {
                     if(CurrentOperators.Check(event.getPlayer(),1)){
                         Doc docOP = (Doc)CurrentOperators.CurrentOperators.get(event.getPlayer());
@@ -57,17 +57,58 @@ public class OperatorAbilityListener implements Listener {
                         //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
                     }
                 }catch (Exception e){
-
+                    DevConsole.SendDevMessage(event.getPlayer(),"Could not instantiate class.",DevConsole.TESTING);
                 }
 
             }
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.BROWN_STAINED_GLASS_PANE) {
+            if (PlayerItemType == Material.BROWN_STAINED_GLASS_PANE) {
                 if (CurrentOperators.Check(event.getPlayer(), 5)) {
-                    Finka FinkaOP = (Finka) CurrentOperators.CurrentOperators.get(event.getPlayer());
-                    FinkaOP.activateAbility();
-                    //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
+                    try {
+                        Finka FinkaOP = (Finka) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                        FinkaOP.activateAbility();
+                        //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
+                    }catch(Exception e){
+                        DevConsole.SendDevMessage(event.getPlayer(),"Could not instantiate class.",DevConsole.TESTING);
+
+                    }
                 }
             }
+            if(PlayerItemType == Material.GREEN_STAINED_GLASS_PANE){
+                try {
+                    Ash ash = (Ash) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                    ash.activateAbility();
+                    //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
+                }catch(Exception e){
+                    DevConsole.SendDevMessage(event.getPlayer(),"Could not instantiate class.",DevConsole.TESTING);
+
+                }
+            }
+            if(PlayerItemType == Material.BLUE_STAINED_GLASS_PANE){
+                try {
+                    Rook rook = (Rook) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                    rook.activateAbility();
+                    //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
+                }catch(Exception e){
+                    DevConsole.SendDevMessage(event.getPlayer(),"Could not instantiate class.",DevConsole.TESTING);
+
+                }
+            }
+            if(PlayerItemType == Material.GRAY_STAINED_GLASS_PANE) {
+                try {
+                    Capitao cap = (Capitao) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                    cap.activateAbility();
+                    //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
+                } catch (Exception e) {
+                    DevConsole.SendDevMessage(event.getPlayer(), "Could not instantiate class.", DevConsole.TESTING);
+
+                }
+
+
+}
+
+
+
+
         }
     }
 

@@ -164,4 +164,27 @@ public class Loadouts {
                 return 0;
         }
     }
+    public static boolean GiveAbilityItem(int Operator, Player p){
+        switch (Operator){
+            case 1:
+                p.getInventory().addItem(GameLogic.docAbil);
+                break;
+            case 2:
+                p.getInventory().addItem(GameLogic.rookAbil);
+                break;
+            case 3:
+                p.getInventory().addItem(GameLogic.tachankaAbil);
+                break;
+            case 4:
+                p.getInventory().addItem(GameLogic.ashAbil);
+                break;
+            case 5:
+                p.getInventory().addItem(GameLogic.finkaAbil);
+                break;
+            case 6:
+                p.getInventory().addItem(GameLogic.capitaoAbil);
+                break;
+        }
+        return true;
+    }
 }

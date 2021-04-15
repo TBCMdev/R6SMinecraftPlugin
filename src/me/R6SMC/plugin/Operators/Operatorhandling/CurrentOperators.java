@@ -2,9 +2,7 @@ package me.R6SMC.plugin.Operators.Operatorhandling;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
-import me.R6SMC.plugin.Operators.OperatorClasses.Ash;
-import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
-import me.R6SMC.plugin.Operators.OperatorClasses.Finka;
+import me.R6SMC.plugin.Operators.OperatorClasses.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -38,16 +36,35 @@ public class CurrentOperators {
                 }
                 break;
             case 2:
+                for(Operator o : CurrentOperators.values()){
+                    if(o instanceof Rook){
+                        return true;
+                    }
+                }
                 break;
             case 3:
+
                 break;
             case 4:
-
+                for(Operator o : CurrentOperators.values()){
+                    if(o instanceof Ash){
+                        return true;
+                    }
+                }
                 break;
             case 5:
-
+                for(Operator o : CurrentOperators.values()){
+                    if(o instanceof Finka){
+                        return true;
+                    }
+                }
                 break;
             case 6:
+                for(Operator o : CurrentOperators.values()){
+                    if(o instanceof Capitao){
+                        return true;
+                    }
+                }
                 break;
         }
         return false;

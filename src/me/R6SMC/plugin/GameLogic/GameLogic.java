@@ -4,6 +4,7 @@ import me.R6SMC.plugin.*;
 import me.R6SMC.plugin.Books.CustomBooks;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
+import me.R6SMC.plugin.Loadouts.Loadouts;
 import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Finka;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
@@ -60,7 +61,7 @@ public class GameLogic implements Listener
     public static ItemStack docAbil = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     public static ItemStack rookAbil = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
     public static ItemStack tachankaAbil = new ItemStack(Material.RED_STAINED_GLASS_PANE);
-    public static ItemStack ashAbil = new ItemStack(Material.BROWN_STAINED_GLASS_PANE);
+    public static ItemStack ashAbil = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
     public static ItemStack finkaAbil = new ItemStack(Material.BROWN_STAINED_GLASS_PANE);
     public static ItemStack capitaoAbil = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
 
@@ -267,22 +268,28 @@ public class GameLogic implements Listener
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
                     players++;
                     boolean TeamEqual = true;
-                    if (doc.equals(EachPlayer.getName().toString())) {
-                        Bukkit.getLogger().info("giving player specifed ability item");
-                        docAbil.getItemMeta().setDisplayName("ability");
-                        EachPlayer.getInventory().addItem(docAbil);
+                    if (CurrentOperators.Check(EachPlayer,1)) {
+                        Loadouts.GiveAbilityItem(1,EachPlayer);
 
 
                     }
-                    if (EachPlayer.getDisplayName().toString().equals(rook)) {
-                        Bukkit.getLogger().info("giving player specifed ability item");
+                    if (CurrentOperators.Check(EachPlayer,2)) {
+                        Loadouts.GiveAbilityItem(2,EachPlayer);
 
                     }
-                    if (EachPlayer.getDisplayName().toString().equals(tachanka)) {
-                        Bukkit.getLogger().info("giving player specifed ability item");
+                    if (CurrentOperators.Check(EachPlayer,3)) {
+                        Loadouts.GiveAbilityItem(3,EachPlayer);
 
                     }
-
+                    if(CurrentOperators.Check(EachPlayer,4)){
+                        Loadouts.GiveAbilityItem(4,EachPlayer);
+                    }
+                    if(CurrentOperators.Check(EachPlayer,5)){
+                        Loadouts.GiveAbilityItem(5,EachPlayer);
+                    }
+                    if(CurrentOperators.Check(EachPlayer,6)){
+                        Loadouts.GiveAbilityItem(6,EachPlayer);
+                    }
                     //CHECK FOR UNEVEN TEAMS
 
 
