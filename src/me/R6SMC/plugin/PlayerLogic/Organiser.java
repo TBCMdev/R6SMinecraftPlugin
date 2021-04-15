@@ -27,7 +27,7 @@ public class Organiser{
                     DevConsole.SendDevMessage(p,"iterating through inv",DevConsole.TESTING);
                     for(String PrimaryCheck : AllPrimaryGuns){
                         if(s.equalsIgnoreCase(PrimaryCheck.toUpperCase())){
-                            p.performCommand("/function mgs_catalog:attachments/acog");
+                            p.performCommand("function mgs_catalog:attachments/acog");
                             p.getInventory().setItemInMainHand(i);
                         }
                     }

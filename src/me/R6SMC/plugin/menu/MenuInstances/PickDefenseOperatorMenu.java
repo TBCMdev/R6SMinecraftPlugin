@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
+import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,16 +55,19 @@ public class PickDefenseOperatorMenu extends Menu {
             case WHITE_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
                 //DOC
+                ((Player) e.getWhoClicked()).performCommand("defoperator doc");
                 break;
             case BLUE_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
                 //ROOK
-                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Activated Rooks Ability(Not finished)",DevConsole.TESTING);
+                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"PickedRook(Not finished)",DevConsole.TESTING);
+                ((Player) e.getWhoClicked()).performCommand("defoperator rook");
                 break;
             case RED_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
                 //TACHANKA
                 DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Activated Tachankas Ability(Not finished)",DevConsole.TESTING);
+                ((Player) e.getWhoClicked()).performCommand("defoperator tachanka");
                 break;
         }
     }
@@ -83,8 +86,13 @@ public class PickDefenseOperatorMenu extends Menu {
         DocMeta.setLore(DocItemLore);
         RookMeta.setLore(RookItemLore);
         TachankaMeta.setLore(TachankaItemLore);
-        inventory.setItem(4,Doc);
-        inventory.setItem(5,Rook);
-        inventory.setItem(6,Tachanka);
+        inventory.setItem(1,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(2,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(3,Doc);
+        inventory.setItem(4,Rook);
+        inventory.setItem(5,Tachanka);
+        inventory.setItem(5,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(6,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(7,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
     }
 }

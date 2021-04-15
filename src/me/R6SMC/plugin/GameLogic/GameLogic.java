@@ -11,6 +11,7 @@ import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Operators.Operatorhandling.Operator;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import me.R6SMC.plugin.PlayerLogic.PlayerClass;
+import me.R6SMC.plugin.menu.MenuInstances.PickAttackOperatorMenu;
 import me.R6SMC.plugin.menu.MenuInstances.PickDefenseOperatorMenu;
 import me.R6SMC.plugin.menu.PlayerMenus;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -226,40 +227,31 @@ public class GameLogic implements Listener
             StartTimer();
         }
     }
-    public static void TeleportTeams(int team){
+    public static void TeleportTeams(int team) {
         switch (team) {
             case 2:
-                for(Player EachPlayer : RedTeam) {
+                for (Player EachPlayer : RedTeam) {
                     AlivePlayers.add(EachPlayer);
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
-                    players ++;
+                    players++;
                     boolean TeamEqual = true;
                     //CHECK FOR UNEVEN TEAMS
-                    if(ash == EachPlayer.getName().toString()) {
-                        Bukkit.getLogger().info("giving player specifed ability item");
-                        EachPlayer.getInventory().addItem(ashAbil);
-
+                    if (CurrentOperators.Check(EachPlayer, 4)) {
+                        Loadouts.GiveAbilityItem(4, EachPlayer);
                     }
-                    if(capitao == EachPlayer.getName().toString()) {
-                        Bukkit.getLogger().info("giving player specifed ability item");
-
+                    if (CurrentOperators.Check(EachPlayer, 5)) {
+                        Loadouts.GiveAbilityItem(5, EachPlayer);
                     }
-                    if(finka == EachPlayer.getName().toString()) {
-                        Bukkit.getLogger().info("giving player specifed ability item");
-                        EachPlayer.getInventory().addItem(finkaAbil);
+                    if (CurrentOperators.Check(EachPlayer, 6)) {
+                        Loadouts.GiveAbilityItem(6, EachPlayer);
 
+                        Location defaultspawn = new Location(world, 767, 10, -628, 90f, 3f);
+                        PickAttackOperatorMenu menu = new PickAttackOperatorMenu(PlayerMenus.GetPlayerMenuUtility(EachPlayer));
+                        menu.Open();
+                        PositionList.add(defaultspawn);
+                        Bukkit.getLogger().info("red team: " + EachPlayer);
+                        EachPlayer.teleport(defaultspawn);
                     }
-
-                    Location defaultspawn = new Location(world,767,10,-628,90f,3f);
-
-
-                    PositionList.add(defaultspawn);
-
-                    Bukkit.getLogger().info("red team: " + EachPlayer);
-                    EachPlayer.teleport(defaultspawn);
-
-
-
                 }
                 break;
             case 1:
@@ -268,39 +260,22 @@ public class GameLogic implements Listener
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
                     players++;
                     boolean TeamEqual = true;
-                    if (CurrentOperators.Check(EachPlayer,1)) {
-                        Loadouts.GiveAbilityItem(1,EachPlayer);
-
-
+                    if (CurrentOperators.Check(EachPlayer, 1)) {
+                        Loadouts.GiveAbilityItem(1, EachPlayer);
                     }
-                    if (CurrentOperators.Check(EachPlayer,2)) {
-                        Loadouts.GiveAbilityItem(2,EachPlayer);
-
+                    if (CurrentOperators.Check(EachPlayer, 2)) {
+                        Loadouts.GiveAbilityItem(2, EachPlayer);
                     }
-                    if (CurrentOperators.Check(EachPlayer,3)) {
-                        Loadouts.GiveAbilityItem(3,EachPlayer);
-
-                    }
-                    if(CurrentOperators.Check(EachPlayer,4)){
-                        Loadouts.GiveAbilityItem(4,EachPlayer);
-                    }
-                    if(CurrentOperators.Check(EachPlayer,5)){
-                        Loadouts.GiveAbilityItem(5,EachPlayer);
-                    }
-                    if(CurrentOperators.Check(EachPlayer,6)){
-                        Loadouts.GiveAbilityItem(6,EachPlayer);
+                    if (CurrentOperators.Check(EachPlayer, 3)) {
+                        Loadouts.GiveAbilityItem(3, EachPlayer);
                     }
                     //CHECK FOR UNEVEN TEAMS
-
-
                     Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
                     PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(EachPlayer));
                     defMenu.Open();
                     PositionList.add(defaultspawndef);
                     Bukkit.getLogger().info("blue team: " + EachPlayer);
                     EachPlayer.teleport(defaultspawndef);
-
-
                 }
                 break;
         }
