@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import jdk.nashorn.internal.parser.JSONParser;
+import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.Main;
 import net.minecraft.server.v1_16_R3.*;
@@ -12,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -28,16 +30,14 @@ public class PlayerEntities {
     public static EntityType CurrentSpawnType = EntityType.ARMOR_STAND;
     public static void CreateEntities(List<Player> players, List<Location> locations){
         MinecraftServer server = ((CraftServer)Bukkit.getServer()).getServer();
-        List<Skeleton> AllPlaceHolders = new ArrayList<>();
-        for(Location l : locations) {
-            Skeleton PlayerPlaceHolder = (Skeleton) GameLogic.world.spawnEntity(l,EntityType.SKELETON);
+        List<EntityPlayer> AllPlaceHolders = new ArrayList<>();
+        for(int i = 0; i < locations.size();i++) {
+            EntityPlayer PlayerPlaceHolder = (EntityPlayer) addNpc((int)locations.get(i).getX(),(int)locations.get(i).getY(),(int)locations.get(i).getZ(),players.get(i));
             AllPlaceHolders.add(PlayerPlaceHolder);
         }
         for(int i = 0; i < AllPlaceHolders.size();i++){
-                Skeleton currentSkeleton = AllPlaceHolders.get(i);
+                EntityPlayer currentSkeleton = AllPlaceHolders.get(i);
                 Player CurrentPlayer = players.get(i);
-                currentSkeleton.setCustomName(CurrentPlayer.getDisplayName());
-                currentSkeleton.setAI(false);
         }
         //EntityPlayer player = new EntityPlayer(server,GameLogic.world,);
     }
@@ -68,23 +68,26 @@ public class PlayerEntities {
             return null;
         }
     }
-    public void addNpc(int x, int y, int z) {
-        String[] a = getFromName("notch");
+    public static EntityPlayer addNpc(int x, int y, int z,Player p) {
+        String[] a = getFromName(p.getDisplayName());
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+        WorldServer Worldserver = ((CraftWorld) GameLogic.world).getHandle();
         GameProfile profile = new GameProfile(UUID.randomUUID(), "notchy");
         profile.getProperties().put("textures", new Property("textures", a[0], a[1]));
-        EntityPlayer npc = new EntityPlayer(server, GameLogic.world, profile, new PlayerInteractManager(Bukkit.getServer()));
+        EntityPlayer npc = new EntityPlayer(server, Worldserver, profile, new PlayerInteractManager(Worldserver));
         npc.setPosition(x, y, z);
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : GameChat.GetAllPlayers()) {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
-            Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
+            /*Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
                 @Override
                 public void run() {
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc));
                 }
-            }, 5);
+            }, 5);*/
+
         }
+        return npc;
     }
 
 }
