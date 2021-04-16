@@ -64,10 +64,11 @@ public class PlayerEntities {
         }
     }
     public static EntityPlayer addNpc(int x, int y, int z,Player p) {
+        EntityPlayer playerNMS = ((CraftPlayer) p).getHandle();
         String[] a = getFromName(p.getDisplayName());
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer Worldserver = ((CraftWorld) GameLogic.world).getHandle();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "notchy");
+        GameProfile profile = playerNMS.getProfile();
         profile.getProperties().put("textures", new Property("textures", a[0], a[1]));
         EntityPlayer npc = new EntityPlayer(server, Worldserver, profile, new PlayerInteractManager(Worldserver));
         npc.setPosition(x, y, z);
