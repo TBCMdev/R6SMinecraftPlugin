@@ -1,6 +1,9 @@
 package me.R6SMC.plugin.GameLogic;
 
 import me.R6SMC.plugin.Chat.GameChat;
+import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
+import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHandler;
+import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -12,6 +15,10 @@ public class GameRounds {
     public static int BlueTeamRounds = 0,RedTeamRounds = 0;
     public static boolean IsOvertime = false;
     public static boolean GameFinished = false;
+    public static boolean GameShouldContinue = false;
+    public static boolean getShouldContinue(){
+        return GameShouldContinue;
+    }
     public static boolean NewRound(){
         try{
             if(CheckToContinueGame()){
@@ -33,6 +40,7 @@ public class GameRounds {
             return true;
         }else if(BlueTeamRounds >= 4 && !IsOvertime || RedTeamRounds >= 4 && !IsOvertime){
         //END GAME
+            GameShouldContinue = false;
             endGame();
             return false;
         }else if(RedTeamRounds > BlueTeamRounds && RedTeamRounds == 3){
@@ -72,7 +80,10 @@ public class GameRounds {
         }
     }
     public static void CreateNewRound(){
-
+        CurrentOperators.ResetOperators();
+        for(Player p : GameChat.GetAllPlayers()){
+            p.getInventory().clear();
+        }
     }
     public static void NewGame(){
 

@@ -11,7 +11,14 @@ import java.util.HashMap;
 public class CurrentOperators {
 
     public static HashMap<Player,Operator> CurrentOperators = new HashMap<>();
-
+    public static boolean ResetOperators(){
+        try{
+            CurrentOperators.clear();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
     public static boolean CheckToCreateOperator(Player p){
         if(GameLogic.PlayerClasses.containsKey(p.getDisplayName())){
             if(CurrentOperators.containsKey(p)){

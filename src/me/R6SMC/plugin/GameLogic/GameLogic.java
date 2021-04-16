@@ -150,6 +150,9 @@ public class GameLogic implements Listener
         }
         PlayerEntities.CreateEntities(GameChat.GetAllPlayers(),FinishedNpcLocations);
     }
+    public static void EndRound(){
+
+    }
     public static void InitTeamRed(Player p){
         if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
             RedTeam.add(p);
@@ -324,15 +327,15 @@ public class GameLogic implements Listener
             return;
         }
 }
-public static void StartGame(){
+    public static void StartGame(){
         for(Player p : GameChat.GetAllPlayers()){
             p.setGameMode(GameMode.ADVENTURE);
         }
-}
+    }
 
 
-public static long Seconds = 90,MaxSeconds = 90;
-public static void StartTimer(){
+    public static long Seconds = 90,MaxSeconds = 90;
+    public static void StartTimer(){
     PlayersCanMove = true;
     Timer timer = new Timer(Seconds,MaxSeconds);
     timer.startTimer();
