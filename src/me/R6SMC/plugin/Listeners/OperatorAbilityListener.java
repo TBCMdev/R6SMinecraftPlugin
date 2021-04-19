@@ -56,6 +56,8 @@ public class OperatorAbilityListener implements Listener {
                     Aruni aruniOP = (Aruni)CurrentOperators.CurrentOperators.get(event.getPlayer());
                     aruniOP.HoldAbility();
                 }
+            }catch (Exception e){
+                DevConsole.SendDevMessage(event.getPlayer(),"Could not Activate Arunis HoldAbility Function",DevConsole.TESTING);
             }
         }
     }
