@@ -2,9 +2,13 @@ package me.R6SMC.plugin.Listeners;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
-import me.R6SMC.plugin.Operators.OperatorClasses.*;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Finka;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
-import org.bukkit.GameRule;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -16,8 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.lang.reflect.Type;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 
 public class OperatorAbilityListener implements Listener {
     @EventHandler
@@ -43,6 +46,18 @@ public class OperatorAbilityListener implements Listener {
             }
         }
 
+    }
+    @EventHandler
+    public void OnAbilityHold(PlayerItemHeldEvent event){
+        Material PlayerItemType = event.getPlayer().getInventory().getItemInMainHand().getType();
+        if(PlayerItemType == Material.RED_STAINED_GLASS_PANE){
+            try{
+                if(CurrentOperators.Check(event.getPlayer(),3)){
+                    Aruni aruniOP = (Aruni)CurrentOperators.CurrentOperators.get(event.getPlayer());
+                    aruniOP.HoldAbility();
+                }
+            }
+        }
     }
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {

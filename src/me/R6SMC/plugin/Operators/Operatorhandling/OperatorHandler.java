@@ -40,12 +40,12 @@ public class OperatorHandler {
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
                     break;
-                case "tachanka":
-                    GameLogic.tachanka = sender.getName().toString();
-                    Main.PlayerOperators.put(GameLogic.tachanka,(Player) sender);
+                case "Aruni":
+                    GameLogic.Aruni = sender.getName().toString();
+                    Main.PlayerOperators.put(GameLogic.Aruni,(Player) sender);
                     GameLogic.PickedOperators ++;
-                    sender.sendMessage(ChatColor.GREEN + "you have chosen tachanka! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"tachanka",GameLogic.PickedOperators,1);
+                    sender.sendMessage(ChatColor.GREEN + "you have chosen Aruni! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"Aruni",GameLogic.PickedOperators,1);
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
                     break;
@@ -66,7 +66,7 @@ public class OperatorHandler {
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
                 default:
-                    sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / tachanka]");
+                    sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / Aruni]");
                     break;
 
             }

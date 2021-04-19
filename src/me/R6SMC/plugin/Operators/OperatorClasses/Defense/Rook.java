@@ -1,4 +1,4 @@
-package me.R6SMC.plugin.Operators.OperatorClasses;
+package me.R6SMC.plugin.Operators.OperatorClasses.Defense;
 
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Operators.Operatorhandling.Operator;
@@ -17,6 +17,12 @@ public class Rook extends Operator {
         super(3, ou.getOwner(),ou.getOwnerClass(),"rook");
         PlayerManager = ou;
     }
+
+    @Override
+    public void HoldAbility() {
+
+    }
+
     @Override
     public void AbilityCooldown() {
         CanUseAbility = false;

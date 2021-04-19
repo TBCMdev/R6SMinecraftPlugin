@@ -1,4 +1,4 @@
-package me.R6SMC.plugin.Operators.OperatorClasses;
+package me.R6SMC.plugin.Operators.OperatorClasses.Defense;
 
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.GameLogic.GameLogic;
@@ -16,7 +16,6 @@ public class Doc extends Operator {
 
     public Player player;
     public PlayerClass playerClass;
-    public String ClassName = "doc";
     public int Stims;
     private boolean CanUseAbility = true;
     public Doc(OperatorUtility ou){
@@ -26,6 +25,11 @@ public class Doc extends Operator {
         Stims = 3;
     }
 
+
+    @Override
+    public void HoldAbility() {
+
+    }
 
     @Override
     public void AbilityCooldown() {

@@ -51,7 +51,7 @@ public class CustomBookCommands implements CommandExecutor {
                                 GameChat.SendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " Command argument 2 does not reach any requirements in switch block. error in func:" + CustomBooks.CheckForValidPage(0,1), p);
                             }
                             break;
-                        case "tachanka":
+                        case "Aruni":
                             if (args[1].equals("4") && CustomBooks.CheckForValidPage(2,1))
                             {
                                 ItemStack BlueBook = p.getInventory().getItemInMainHand();

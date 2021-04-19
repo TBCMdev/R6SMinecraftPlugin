@@ -16,7 +16,7 @@ public class GameInitializer {
         GameLogic.finka = "";
         GameLogic.doc = "";
         GameLogic.rook = "";
-        GameLogic.tachanka = "";
+        GameLogic.Aruni = "";
         GameLogic.PositionList.clear();
         GameLogic.joinedPlayers = 0;
         GameLogic.players = 0;

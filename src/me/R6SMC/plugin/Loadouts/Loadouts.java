@@ -2,8 +2,8 @@ package me.R6SMC.plugin.Loadouts;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
-import me.R6SMC.plugin.Operators.OperatorClasses.Ash;
-import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import me.R6SMC.plugin.PlayerLogic.Organiser;
 import me.R6SMC.plugin.PlayerLogic.PlayerClass;
@@ -25,7 +25,7 @@ public class Loadouts {
                     "function give:mp5",
                     "function give:desert_eagle"
             };
-    public static String[] LoadoutTachanka =
+    public static String[] LoadoutAruni =
             {
                     "function give:m500",
                     "function give:mac10"
@@ -81,7 +81,7 @@ public class Loadouts {
                         case 3:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
                             if (CurrentPlayer != null) {
-                                for (String cmmd : LoadoutTachanka) {
+                                for (String cmmd : LoadoutAruni) {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
                                         CurrentPlayer.performCommand(cmmd);
@@ -147,7 +147,7 @@ public class Loadouts {
                 return 1;
             case "rook":
                 return 2;
-            case "tachanka":
+            case "Aruni":
                 return 3;
             case "ash":
                 try {
@@ -173,7 +173,7 @@ public class Loadouts {
                 p.getInventory().addItem(GameLogic.rookAbil);
                 break;
             case 3:
-                p.getInventory().addItem(GameLogic.tachankaAbil);
+                p.getInventory().addItem(GameLogic.AruniAbil);
                 break;
             case 4:
                 p.getInventory().addItem(GameLogic.ashAbil);

@@ -16,6 +16,8 @@ public abstract class Operator {
         this.playerClass = pC;
         this.Name = name;
     }
+
+    public abstract void HoldAbility();
     public abstract void AbilityCooldown();
     public abstract void ResetAbility();
     public abstract void SetAbility();

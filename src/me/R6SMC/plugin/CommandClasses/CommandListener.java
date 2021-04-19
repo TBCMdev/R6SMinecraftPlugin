@@ -31,11 +31,11 @@ public class CommandListener implements CommandExecutor {
         if(cmd.getName().equalsIgnoreCase("defoperator")) {
 
             if(args.length == 0) {
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / tachanka]");
+                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / Aruni]");
                 return true;
             }
-            if(!args[0].equalsIgnoreCase("doc") && !args[0].equalsIgnoreCase("rook") && !args[0].equalsIgnoreCase("tachanka")) {
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / tachanka]");
+            if(!args[0].equalsIgnoreCase("doc") && !args[0].equalsIgnoreCase("rook") && !args[0].equalsIgnoreCase("Aruni")) {
+                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / Aruni]");
             }
             if(args[0].equalsIgnoreCase("doc")) {
                 Bukkit.getLogger().info("picking operator...");
@@ -45,9 +45,9 @@ public class CommandListener implements CommandExecutor {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"rook");
             }
-            if(args[0].equalsIgnoreCase("tachanka")) {
+            if(args[0].equalsIgnoreCase("Aruni")) {
                 Bukkit.getLogger().info("picking operator...");
-                CheckCommand(sender,args,"tachanka");
+                CheckCommand(sender,args,"Aruni");
             }
         }
         if(cmd.getName().equalsIgnoreCase("attkoperator")) {

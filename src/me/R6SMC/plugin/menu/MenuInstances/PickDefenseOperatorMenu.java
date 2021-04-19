@@ -27,7 +27,7 @@ public class PickDefenseOperatorMenu extends Menu {
         add("for everyone, but it can only be used");
         add("once.");
     }};
-    private List<String> TachankaItemLore = new ArrayList<String>(){{
+    private List<String> AruniItemLore = new ArrayList<String>(){{
         add("NULL");
         add("NULL");
         add("NULL");
@@ -65,9 +65,9 @@ public class PickDefenseOperatorMenu extends Menu {
                 break;
             case RED_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
-                //TACHANKA
-                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Activated Tachankas Ability(Not finished)",DevConsole.TESTING);
-                ((Player) e.getWhoClicked()).performCommand("defoperator tachanka");
+                //Aruni
+                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Activated Arunis Ability(Not finished)",DevConsole.TESTING);
+                ((Player) e.getWhoClicked()).performCommand("defoperator Aruni");
                 break;
         }
     }
@@ -76,21 +76,21 @@ public class PickDefenseOperatorMenu extends Menu {
     public void setMenuItems() {
         ItemStack Doc = new ItemStack(GameLogic.docAbil.getType(),1);
         ItemStack Rook = new ItemStack(GameLogic.rookAbil.getType(),1);
-        ItemStack Tachanka = new ItemStack(GameLogic.tachankaAbil.getType(),1);
+        ItemStack Aruni = new ItemStack(GameLogic.AruniAbil.getType(),1);
         ItemMeta DocMeta = Doc.getItemMeta();
         ItemMeta RookMeta = Rook.getItemMeta();
-        ItemMeta TachankaMeta = Tachanka.getItemMeta();
+        ItemMeta AruniMeta = Aruni.getItemMeta();
         DocMeta.setDisplayName(ChatColor.BLUE + "DOC");
         RookMeta.setDisplayName(ChatColor.BLUE + "ROOK");
-        TachankaMeta.setDisplayName(ChatColor.BLUE + "TACHANKA");
+        AruniMeta.setDisplayName(ChatColor.BLUE + "Aruni");
         DocMeta.setLore(DocItemLore);
         RookMeta.setLore(RookItemLore);
-        TachankaMeta.setLore(TachankaItemLore);
+        AruniMeta.setLore(AruniItemLore);
         inventory.setItem(1,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(2,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(3,Doc);
         inventory.setItem(4,Rook);
-        inventory.setItem(5,Tachanka);
+        inventory.setItem(5,Aruni);
         inventory.setItem(5,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(6,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(7,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));

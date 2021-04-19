@@ -28,7 +28,7 @@ public class CustomBooks {
         ComponentBuilder page1 = new ComponentBuilder("__PICK AN OPERATOR__\n");
         ComponentBuilder page2 = new ComponentBuilder("__DOCS ABILITIES__\n");
         ComponentBuilder page3 = new ComponentBuilder("__ROOKS ABILITIES__\n");
-        ComponentBuilder page4 = new ComponentBuilder("__TACHANKAS ABILITIES__\n");
+        ComponentBuilder page4 = new ComponentBuilder("__AruniS ABILITIES__\n");
         BaseComponent DOC = new TextComponent(ChatColor.BLUE + "DOC\n");
         DOC.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("CLICK TO USE DOC")));
         DOC.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator doc"));
@@ -37,9 +37,9 @@ public class CustomBooks {
         BaseComponent ROOK = new TextComponent(ChatColor.BLUE + "ROOK\n");
         ROOK.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("CLICK TO USE ROOK")));
         ROOK.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator rook"));
-        BaseComponent TACHANKA = new TextComponent(ChatColor.BLUE + "TACHANKA\n");
-        TACHANKA.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("CLICK TO USE TACHANKA")));
-        TACHANKA.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator tachanka"));
+        BaseComponent Aruni = new TextComponent(ChatColor.BLUE + "Aruni\n");
+        Aruni.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("CLICK TO USE Aruni")));
+        Aruni.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/defoperator Aruni"));
 
         TextComponent DocAbilInfo = GameChat.CreateTextComponent(Abilities);
         DocAbilInfo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text(("Info on Docs Abilities!"))));
@@ -49,10 +49,10 @@ public class CustomBooks {
         RookAbilInfo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("Info on Rooks Abilities!")));
         RookAbilInfo.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/showPageBlue rook 3"));
         ROOK.addExtra(RookAbilInfo);
-        TextComponent TachankaAbilInfo = GameChat.CreateTextComponent(Abilities);
-        TachankaAbilInfo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("Info on tachankas Abilities!")));
-        TachankaAbilInfo.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/showPageBlue tachanka 4"));
-        TACHANKA.addExtra(TachankaAbilInfo);
+        TextComponent AruniAbilInfo = GameChat.CreateTextComponent(Abilities);
+        AruniAbilInfo.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new Text("Info on Arunis Abilities!")));
+        AruniAbilInfo.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/showPageBlue Aruni 4"));
+        Aruni.addExtra(AruniAbilInfo);
         //PAGE 1 COMPLETE
         BaseComponent DocAbilityInfo = new TextComponent(ChatColor.GRAY + "Doc has an ability that Heals himself by 40hp,\n this is useful for clutch situations but \n be careful! he only has 3 of them...\n\n\n");
         BaseComponent DocAbilityReturn = new TextComponent(ChatColor.DARK_BLUE + "Return to Operator Select");

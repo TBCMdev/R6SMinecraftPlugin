@@ -10,6 +10,7 @@ import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.Main;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
 import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
@@ -28,6 +29,10 @@ import java.util.UUID;
 
 public class PlayerEntities {
     public static EntityType CurrentSpawnType = EntityType.ARMOR_STAND;
+    public static void CreateEntity(Player p, Location l){
+        addNpc((int)l.getX(),(int)l.getY(),(int)l.getZ(),p);
+        DevConsole.SendDevMessage(p,"Creating entity at: " + ChatColor.GREEN + l.getX() + " , " + l.getY() + " , " + l.getZ(),DevConsole.TESTING);
+    }
     public static void CreateEntities(List<Player> players, List<Location> locations){
         List<EntityPlayer> AllPlaceHolders = new ArrayList<>();
         for(int i = 0; i < locations.size();i++) {

@@ -13,9 +13,9 @@ public class Commands {
         put("jointeamblue",new String[0]);
         put("ability",new String[0]);
         put("attkoperator",new String[]{"ash","capitao","finka"});
-        put("defoperator",new String[]{"doc","rook", "tachanka"});
+        put("defoperator",new String[]{"doc","rook", "Aruni"});
         put("override",new String[]{"movement || true | false"});
-        put("showPageBlue",new String[]{"default | 0","doc | 1","rook | 2", "tachanka | 3"});
+        put("showPageBlue",new String[]{"default | 0","doc | 1","rook | 2", "Aruni | 3"});
         put("showPageRed",new String[]{"default | 0","ash | 1","capitao | 2","finka | 3"});
     }};
     private static String[] COMMANDS;

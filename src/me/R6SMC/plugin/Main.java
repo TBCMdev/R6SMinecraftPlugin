@@ -1,5 +1,6 @@
 package me.R6SMC.plugin;
 import me.R6SMC.plugin.Chat.GameChat;
+import me.R6SMC.plugin.CommandClasses.CommandCompleter;
 import me.R6SMC.plugin.CommandClasses.CommandListener;
 import me.R6SMC.plugin.CommandClasses.Commands;
 import me.R6SMC.plugin.CommandClasses.CustomBookCommands;
@@ -48,7 +49,7 @@ public class Main extends JavaPlugin implements Listener {
     public String finka = "";
     public String doc = "";
     public String rook = "";
-    public String tachanka = "";
+    public String Aruni = "";
     public ItemStack docAbil = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     //ENDVARS
     @Override
@@ -64,7 +65,9 @@ public class Main extends JavaPlugin implements Listener {
         world = Bukkit.getWorld("world");
 
         //ENABLE COMMANDS
+
         getCommand("tbcm-dc").setExecutor(new DevConsole());
+        getCommand("tbcm-dc").setTabCompleter(new CommandCompleter());
         getCommand("showPageBlue").setExecutor(new CustomBookCommands());
         getCommand("showPageRed").setExecutor(new CustomBookCommands());
         for(String s : Commands.GetCommands(new String[]{"tbcm-dc","showPageBlue","showPageRed"}))//THESE ARE COMMANDS THAT DO NOT TAKE COMMAND LISTENER AS THEIR DEFAULT LISTENER
@@ -173,17 +176,17 @@ public class Main extends JavaPlugin implements Listener {
                 getLogger().info("operator picked");
                 PlayersWOP.add(sender.getName().toString());
                 break;
-            case "tachanka":
-                tachanka = sender.getName().toString();
-                PlayerOperators.put(tachanka,(Player) sender);
+            case "Aruni":
+                Aruni = sender.getName().toString();
+                PlayerOperators.put(Aruni,(Player) sender);
                 GameLogic.PickedOperators ++;
-                sender.sendMessage(ChatColor.GREEN + "you have chosen tachanka! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"tachanka",PickedOperators,1);
+                sender.sendMessage(ChatColor.GREEN + "you have chosen Aruni! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
+                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"Aruni",PickedOperators,1);
                 getLogger().info("operator picked");
                 PlayersWOP.add(sender.getName().toString());
                 break;
             default:
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / tachanka]");
+                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / Aruni]");
                 break;
         }
         GameLogic.ResendTeleportRed();

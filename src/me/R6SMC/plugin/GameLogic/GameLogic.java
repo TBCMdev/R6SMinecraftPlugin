@@ -3,20 +3,12 @@ package me.R6SMC.plugin.GameLogic;
 import me.R6SMC.plugin.*;
 import me.R6SMC.plugin.Books.CustomBooks;
 import me.R6SMC.plugin.Chat.GameChat;
-import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.Loadouts.Loadouts;
-import me.R6SMC.plugin.Operators.OperatorClasses.Doc;
-import me.R6SMC.plugin.Operators.OperatorClasses.Finka;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
-import me.R6SMC.plugin.Operators.Operatorhandling.Operator;
-import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import me.R6SMC.plugin.PlayerLogic.PlayerClass;
 import me.R6SMC.plugin.menu.MenuInstances.PickAttackOperatorMenu;
 import me.R6SMC.plugin.menu.MenuInstances.PickDefenseOperatorMenu;
 import me.R6SMC.plugin.menu.PlayerMenus;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -27,10 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.Team;
 
 
 import java.util.ArrayList;
@@ -55,13 +45,13 @@ public class GameLogic implements Listener
     public static String finka = "";
     public static String doc = "";
     public static String rook = "";
-    public static String tachanka = "";
+    public static String Aruni = "";
 
     public static ArrayList<Object> PositionList = new ArrayList<Object>();
 
     public static ItemStack docAbil = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     public static ItemStack rookAbil = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
-    public static ItemStack tachankaAbil = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+    public static ItemStack AruniAbil = new ItemStack(Material.RED_STAINED_GLASS_PANE);
     public static ItemStack ashAbil = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
     public static ItemStack finkaAbil = new ItemStack(Material.BROWN_STAINED_GLASS_PANE);
     public static ItemStack capitaoAbil = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
@@ -197,8 +187,8 @@ public class GameLogic implements Listener
         TextComponent defenseTxtdoc = new TextComponent(ChatColor.BLUE + "*DOC*");
         TextComponent hoverTextdoc = new TextComponent(ChatColor.BLUE + "CLICK TO USE DOC");
 
-        TextComponent defenseTxtT = new TextComponent(ChatColor.BLUE + "*TACHANKA*");
-        TextComponent hoverTextT = new TextComponent(ChatColor.BLUE + "CLICK TO USE TACHANKA");
+        TextComponent defenseTxtT = new TextComponent(ChatColor.BLUE + "*Aruni*");
+        TextComponent hoverTextT = new TextComponent(ChatColor.BLUE + "CLICK TO USE Aruni");
 
         HoverEvent hoverEventrook = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextrook});
         HoverEvent hoverEventdoc = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextdoc});
@@ -206,7 +196,7 @@ public class GameLogic implements Listener
 
         defenseTxtrook.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator rook"));
         defenseTxtdoc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator doc"));
-        defenseTxtT.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator tachanka"));
+        defenseTxtT.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator Aruni"));
 
         defenseTxtrook.setHoverEvent(hoverEventrook);
         defenseTxtdoc.setHoverEvent(hoverEventdoc);

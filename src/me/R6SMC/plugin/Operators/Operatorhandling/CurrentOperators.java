@@ -2,7 +2,11 @@ package me.R6SMC.plugin.Operators.Operatorhandling;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
-import me.R6SMC.plugin.Operators.OperatorClasses.*;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Finka;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

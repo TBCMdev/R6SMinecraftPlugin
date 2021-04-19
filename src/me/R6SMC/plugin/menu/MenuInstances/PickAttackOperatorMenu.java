@@ -65,7 +65,7 @@ public class PickAttackOperatorMenu extends Menu {
                 break;
             case GRAY_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
-                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked Tachanka by Menu(Not Finished)",DevConsole.TESTING);
+                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked Aruni by Menu(Not Finished)",DevConsole.TESTING);
                 ((Player) e.getWhoClicked()).performCommand("attkoperator capitao");
                 break;
         }
