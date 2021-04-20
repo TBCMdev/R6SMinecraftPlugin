@@ -24,7 +24,12 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class OperatorAbilityListener implements Listener {
+    private static List<Player> PlayersTryingToRemoveDOKKEffect = new ArrayList<>();
     @EventHandler
     public void OnAbil(ProjectileHitEvent event, Entity hitEntity, Block hitBlock, BlockFace hitFace){
         if(event.getEntity() == null) return;
@@ -62,12 +67,21 @@ public class OperatorAbilityListener implements Listener {
                 DevConsole.SendDevMessage(event.getPlayer(),"Could not Activate Arunis HoldAbility Function",DevConsole.TESTING);
             }
         }
-    }
+    }//NOTES FOR DOKKAEBI:
+    //make it so the players trying to remove the effect have to hold down the button to disable
+    //the ability and also listen for if the player switches slots.
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
         Material PlayerItemType = event.getPlayer().getInventory().getItemInMainHand().getType();
         if(GameLogic.GameStarted) {
             if(event.getPlayer().getInventory().getItemInMainHand() == null) return;
+            if(PlayerItemType == Material.BLACK_STAINED_GLASS_PANE){
+                if(GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName()).GetTeam() == 1){
+                    if(!PlayersTryingToRemoveDOKKEffect.contains())
+                    //make sure that we are not doing this to attacking players
+
+                }
+            }
             if (PlayerItemType == Material.WHITE_STAINED_GLASS_PANE) {
                 try {
                     if(CurrentOperators.Check(event.getPlayer(),1)){
