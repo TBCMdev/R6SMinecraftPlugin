@@ -6,18 +6,20 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Finka;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -119,14 +121,25 @@ public class OperatorAbilityListener implements Listener {
                     DevConsole.SendDevMessage(event.getPlayer(), "Could not instantiate class.", DevConsole.TESTING);
 
                 }
-
-
 }
-
-
-
-
         }
     }
-
+    @EventHandler
+    public void BanditDestroy(EntityDeathEvent e){
+        if(e.getEntity().getType() == EntityType.SILVERFISH){
+            if(GameLogic.GameStarted){
+                Silverfish charge = (Silverfish) e.getEntity();
+                if(charge.getCustomName().contains("BANDIT CHARGE ")){
+                    Player killer = e.getEntity().getKiller();
+                    try {
+                        int index = Integer.parseInt(charge.getCustomName().split(" ")[1]);
+                        Bandit bandit = (Bandit)CurrentOperators.CurrentOperators.get(killer);
+                        bandit.CurrentCharges.get(index).Destroy();
+                    }catch (Exception ex){
+                        killer.sendMessage(ChatColor.RED + "could not remove the bandit charge.");
+                    }
+                }
+            }
+        }
+    }
 }
