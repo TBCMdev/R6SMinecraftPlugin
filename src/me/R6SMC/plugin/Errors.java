@@ -76,6 +76,8 @@ public class Errors {
                 return Capitao.class;
             case "bandit":
                 return Bandit.class;
+            case "dokkaebi":
+                return Dokkaebi.class;
         }
         return null;
     }

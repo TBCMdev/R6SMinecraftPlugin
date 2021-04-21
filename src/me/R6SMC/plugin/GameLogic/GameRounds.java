@@ -6,12 +6,13 @@ import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHandler;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameRounds {
 
     public static int MaxRounds;
     public static int OvertimeRounds;
-    public static int CurrentRound;
+    public static int CurrentRound = 1;
     public static int BlueTeamRounds = 0,RedTeamRounds = 0;
     public static boolean IsOvertime = false;
     public static boolean GameFinished = false;
@@ -19,12 +20,11 @@ public class GameRounds {
     public static boolean getShouldContinue(){
         return GameShouldContinue;
     }
-    public static boolean NewRound(){
+    public static boolean NewRound(int winningTeam){
         try{
-            if(CheckToContinueGame()){
-                CreateNewRound();
-            }
+            CreateNewRound(winningTeam);
             return true;
+
         }catch (Exception e){
             return false;
         }
@@ -62,6 +62,11 @@ public class GameRounds {
                 }
             }
             return true;
+        }else if (RedTeamRounds < 4 && BlueTeamRounds < 4 && !IsOvertime){
+            for(Player p : GameChat.GetAllPlayers()){
+                p.sendMessage(ChatColor.RED + " CURRENT ROUND: "+ChatColor.WHITE+"ROUND " + CurrentRound);
+            }
+            return true;
         }
         return false;
     }
@@ -69,20 +74,30 @@ public class GameRounds {
     }
     public static void endRound(int WinningTeam){
         if(!GameFinished) {
+            CurrentRound ++;
             if (WinningTeam == 1) {
                 //RED
                 RedTeamRounds++;
-                CheckToContinueGame();
             } else if (WinningTeam == 2) {
                 BlueTeamRounds++;
-                CheckToContinueGame();
             }
         }
     }
-    public static void CreateNewRound(){
+    public static void CreateNewRound(int winningTeam) {
+        endRound(winningTeam);
         CurrentOperators.ResetOperators();
-        for(Player p : GameChat.GetAllPlayers()){
-            p.getInventory().clear();
+        if (CheckToContinueGame()) {
+            for (Player p : GameChat.GetAllPlayers()) {
+                p.getInventory().clear();
+            }
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    GameLogic.TeleportPlayersPickingOPS();
+                    GameLogic.GiveWindowsAfterInit();
+                }
+            }.runTaskLater(GameLogic.mainThread, 100);
         }
     }
     public static void NewGame(){

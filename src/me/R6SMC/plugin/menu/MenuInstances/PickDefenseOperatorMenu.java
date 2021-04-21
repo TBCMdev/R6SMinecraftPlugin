@@ -67,7 +67,7 @@ public class PickDefenseOperatorMenu extends Menu {
                 e.getWhoClicked().closeInventory();
                 //Aruni
                 DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Activated Arunis Ability(Not finished)",DevConsole.TESTING);
-                ((Player) e.getWhoClicked()).performCommand("defoperator Aruni");
+                ((Player) e.getWhoClicked()).performCommand("defoperator aruni");
                 break;
         }
     }
@@ -82,17 +82,18 @@ public class PickDefenseOperatorMenu extends Menu {
         ItemMeta AruniMeta = Aruni.getItemMeta();
         DocMeta.setDisplayName(ChatColor.BLUE + "DOC");
         RookMeta.setDisplayName(ChatColor.BLUE + "ROOK");
-        AruniMeta.setDisplayName(ChatColor.BLUE + "Aruni");
+        AruniMeta.setDisplayName(ChatColor.BLUE + "ARUNI");
         DocMeta.setLore(DocItemLore);
         RookMeta.setLore(RookItemLore);
         AruniMeta.setLore(AruniItemLore);
-        inventory.setItem(1,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
-        inventory.setItem(2,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(0,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
+        inventory.setItem(1,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
+        inventory.setItem(2,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
         inventory.setItem(3,Doc);
         inventory.setItem(4,Rook);
         inventory.setItem(5,Aruni);
-        inventory.setItem(5,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
-        inventory.setItem(6,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
-        inventory.setItem(7,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(6,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
+        inventory.setItem(7,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
+        inventory.setItem(8,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
     }
 }

@@ -8,6 +8,7 @@ import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import me.R6SMC.plugin.PlayerLogic.Organiser;
 import me.R6SMC.plugin.PlayerLogic.PlayerClass;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -50,19 +51,25 @@ public class Loadouts {
         for (int i = 0; i < PlayerOperators.size();i++) {
             Bukkit.getLogger().info("looping...");
                 Bukkit.getLogger().info("SETTING LOADOUTS");
-                List<PlayerClass> PlayerOperatorValues = new ArrayList<PlayerClass>(PlayerOperators.values());
+                List<PlayerClass> PlayerOperatorValues = new ArrayList<>(PlayerOperators.values());
                 Player CurrentPlayer = PlayerOperatorValues.get(i).getPlayer();
-                if (GameLogic.PlayerClasses.containsKey(CurrentPlayer.getDisplayName())) {
-                    switch (CheckForClass(GameLogic.PlayerClasses.get(CurrentPlayer.getDisplayName()))) {
+
+                if (PlayerOperators.containsKey(CurrentPlayer.getDisplayName())) {
+                    switch (CheckForClass(PlayerOperators.get(CurrentPlayer.getDisplayName()))) {
                         case 1:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
                             if (CurrentPlayer != null) {
-                                for (String cmmd : Loadoutdoc) {
-                                    if (cmmd != null) {
-                                        Bukkit.getLogger().info(cmmd);
-                                        CurrentPlayer.performCommand(cmmd);
-                                        Organiser.Organise(CurrentPlayer, DevConsole.KEEPAMMO);
+                                if(CurrentPlayer.getGameMode() != GameMode.SPECTATOR) {
+                                    for (String cmmd : Loadoutdoc) {
+                                        if (cmmd != null) {
+                                            Bukkit.getLogger().info(cmmd);
+                                            Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
+                                            CurrentPlayer.performCommand(cmmd);
+                                            //Organiser.Organise(CurrentPlayer, DevConsole.KEEPAMMO);
+                                        }
                                     }
+                                }else{
+                                    DevConsole.SendDevMessage(CurrentPlayer,"you are in spectator.",DevConsole.TESTING);
                                 }
                             }
                             break;
@@ -73,7 +80,7 @@ public class Loadouts {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
                                         CurrentPlayer.performCommand(cmmd);
-                                        Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
+                                        //Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
                                     }
                                 }
                             }
@@ -128,6 +135,8 @@ public class Loadouts {
                             break;
 
                     }
+                }else{
+                    DevConsole.SendDevMessage(CurrentPlayer,"Could not give you your loadout! ERROR",DevConsole.TESTING);
                 }
 
         }

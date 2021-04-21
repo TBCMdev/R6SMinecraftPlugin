@@ -83,24 +83,13 @@ public class GameLogic implements Listener
                 int randPlayer = 0 + (int)(Math.random() * (BlueTeam.size() - 0));
                 p.setSpectatorTarget(BlueTeam.get(randPlayer));
             }else {
-                EndGame();
+                if(RedTeam.size() > 0 && BlueTeam.size() <= 0 && GameStarted) {
+                    EndGame(2);
+                }else if(BlueTeam.size() > 0 && RedTeam.size() <= 0 && GameStarted){
+                    EndGame(1);
+                }
             }
         }
-        if(AlivePlayers.contains(p)) {
-            AlivePlayers.remove(p);
-            DeadPlayers.add(p);
-            p.setGameMode(GameMode.SPECTATOR);
-            if(AlivePlayers.size() >= 2 && RedTeam.size() == BlueTeam.size() ||
-                    AlivePlayers.size() > 2 && RedTeam.size() > BlueTeam.size() ||
-                    AlivePlayers.size() > 2 && RedTeam.size() < BlueTeam.size()) {
-
-                int randPlayer = 0 + (int)(Math.random() * (RedTeam.size() - 0));
-                p.setSpectatorTarget(RedTeam.get(randPlayer));
-            }else {
-                EndGame();
-            }
-        }
-
     }
     @EventHandler
     public void onKill(PlayerDeathEvent event) {
@@ -123,11 +112,12 @@ public class GameLogic implements Listener
             }
         }
     }
-    public static void PlayerJoinedTeam(int Team){
-
-    }
-    public static void EndGame(){
+    public static void EndGame(int WinningTeam){
         B.removeAll();
+        //CHECK TO END GAME OR TO CONTINUE
+        if(GameRounds.NewRound(WinningTeam)){
+            return;
+        }
         PlayersCanMove = false;
         List<Location> FinishedNpcLocations = new ArrayList<Location>(){{
             //PUT NPC POS AND ROT HERE
@@ -140,8 +130,13 @@ public class GameLogic implements Listener
         }
         PlayerEntities.CreateEntities(GameChat.GetAllPlayers(),FinishedNpcLocations);
     }
-    public static void EndRound(){
+    public static void TeleportPlayersPickingOPS(){
+        PlayersCanMove = false;
+        for(Player p : GameChat.GetAllPlayers()){
+            p.setGameMode(GameMode.SPECTATOR);
+            p.teleport(new Location(world,740,30,-678,45.5f,26.5f));
 
+        }
     }
     public static void InitTeamRed(Player p){
         if(RedTeamCount < BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
@@ -162,10 +157,8 @@ public class GameLogic implements Listener
         //GIVE THE BOOK
         //SET POSITIONS AND DISALLOW MOVEMENT
         */
-
-        int team = 2;//ATTACK TEAM IS VALUED AT 2
         GameChat.SendMessage(ChatColor.DARK_RED + "you joined the attacking team!",p);
-
+        TeleportPlayersPickingOPS();
         PickAttackOperatorMenu menu = new PickAttackOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
         menu.Open();
         if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
@@ -206,7 +199,7 @@ public class GameLogic implements Listener
         p.spigot().sendMessage(defenseTxtdoc);
         p.spigot().sendMessage(defenseTxtT);
         */
-
+        TeleportPlayersPickingOPS();
         PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
         defMenu.Open();
         int team = 1;//DEFENSE TEAM IS VALUED AT 1
@@ -222,7 +215,16 @@ public class GameLogic implements Listener
                 break;
         }
     }
-
+    public static void GiveWindowsAfterInit(){
+        for(Player p : BlueTeam){
+            PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
+            defMenu.Open();
+        }
+        for(Player p : RedTeam){
+            PickAttackOperatorMenu attkMenu = new PickAttackOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
+            attkMenu.Open();
+        }
+    }
     public static void InitGame(){
         if(!GameStarted) {
             GameStarted = true;
@@ -317,15 +319,15 @@ public class GameLogic implements Listener
             return;
         }
 }
-    public static void StartGame(){
+public static void StartGame(){
         for(Player p : GameChat.GetAllPlayers()){
             p.setGameMode(GameMode.ADVENTURE);
         }
-    }
+}
 
 
-    public static long Seconds = 90,MaxSeconds = 90;
-    public static void StartTimer(){
+public static long Seconds = 100,MaxSeconds = 100;
+public static void StartTimer(){
     PlayersCanMove = true;
     Timer timer = new Timer(Seconds,MaxSeconds);
     timer.startTimer();

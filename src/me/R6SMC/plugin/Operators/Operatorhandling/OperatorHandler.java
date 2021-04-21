@@ -39,15 +39,21 @@ public class OperatorHandler {
                     GameLogic.CreatePlayerClass(player, player.getDisplayName(),"rook",GameLogic.PickedOperators,1);
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
+                    if(!CurrentOperators.CurrentOperators.containsKey(player)){
+                        CurrentOperators.Add(player,2);
+                    }
                     break;
-                case "Aruni":
+                case "aruni":
                     GameLogic.Aruni = sender.getName().toString();
                     Main.PlayerOperators.put(GameLogic.Aruni,(Player) sender);
                     GameLogic.PickedOperators ++;
                     sender.sendMessage(ChatColor.GREEN + "you have chosen Aruni! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"Aruni",GameLogic.PickedOperators,1);
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"aruni",GameLogic.PickedOperators,1);
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
+                    if(!CurrentOperators.CurrentOperators.containsKey(player)){
+                        CurrentOperators.Add(player,3);
+                    }
                     break;
                 case "ash":
                     GameLogic.ash = sender.getName();
@@ -57,6 +63,9 @@ public class OperatorHandler {
                     GameLogic.CreatePlayerClass(player, player.getDisplayName(),"ash",GameLogic.PickedOperators,2);
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
+                    if(!CurrentOperators.CurrentOperators.containsKey(player)){
+                        CurrentOperators.Add(player,4);
+                    }
                 case "finka":
                     GameLogic.finka = sender.getName();
                     Main.PlayerOperators.put(GameLogic.finka,(Player) sender);
@@ -65,6 +74,9 @@ public class OperatorHandler {
                     GameLogic.CreatePlayerClass(player, player.getDisplayName(),"finka",GameLogic.PickedOperators,2);
                     getLogger().info("operator picked");
                     Main.PlayersWOP.add(sender.getName().toString());
+                    if(!CurrentOperators.CurrentOperators.containsKey(player)){
+                        CurrentOperators.Add(player,5);
+                    }
                 default:
                     sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / Aruni]");
                     break;

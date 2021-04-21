@@ -28,24 +28,15 @@ public class CommandListener implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-        if(args[0].equalsIgnoreCase("class_reload")){
-            if(args[1] != null){
-                String ClassName = args[1];
-                if(Errors.getClassReloadFunc(ClassName)){
-                    sender.sendMessage(ChatColor.GREEN + "reloading...");
-                }else{
-                    sender.sendMessage(ChatColor.DARK_RED + Errors.getError(Errors.getClassByName(ClassName),"*R_E"));
-                }
-            }
-        }
+
         if(cmd.getName().equalsIgnoreCase("defoperator")) {
 
             if(args.length == 0) {
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / Aruni]");
+                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / aruni]");
                 return true;
             }
-            if(!args[0].equalsIgnoreCase("doc") && !args[0].equalsIgnoreCase("rook") && !args[0].equalsIgnoreCase("Aruni")) {
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / Aruni]");
+            if(!args[0].equalsIgnoreCase("doc") && !args[0].equalsIgnoreCase("rook") && !args[0].equalsIgnoreCase("aruni")) {
+                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + "usage: /defoperator [doc / rook / aruni]");
             }
             if(args[0].equalsIgnoreCase("doc")) {
                 Bukkit.getLogger().info("picking operator...");
@@ -55,9 +46,9 @@ public class CommandListener implements CommandExecutor {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"rook");
             }
-            if(args[0].equalsIgnoreCase("Aruni")) {
+            if(args[0].equalsIgnoreCase("aruni")) {
                 Bukkit.getLogger().info("picking operator...");
-                CheckCommand(sender,args,"Aruni");
+                CheckCommand(sender,args,"aruni");
             }
         }
         if(cmd.getName().equalsIgnoreCase("attkoperator")) {

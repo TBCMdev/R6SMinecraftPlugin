@@ -49,7 +49,7 @@ public class Main extends JavaPlugin implements Listener {
     public String finka = "";
     public String doc = "";
     public String rook = "";
-    public String Aruni = "";
+    public String tachanka = "";
     public ItemStack docAbil = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
     //ENDVARS
     @Override
@@ -65,7 +65,6 @@ public class Main extends JavaPlugin implements Listener {
         world = Bukkit.getWorld("world");
 
         //ENABLE COMMANDS
-
         getCommand("tbcm-dc").setExecutor(new DevConsole());
         getCommand("tbcm-dc").setTabCompleter(new CommandCompleter());
         getCommand("showPageBlue").setExecutor(new CustomBookCommands());
@@ -176,17 +175,17 @@ public class Main extends JavaPlugin implements Listener {
                 getLogger().info("operator picked");
                 PlayersWOP.add(sender.getName().toString());
                 break;
-            case "Aruni":
-                Aruni = sender.getName().toString();
-                PlayerOperators.put(Aruni,(Player) sender);
+            case "tachanka":
+                tachanka = sender.getName().toString();
+                PlayerOperators.put(tachanka,(Player) sender);
                 GameLogic.PickedOperators ++;
-                sender.sendMessage(ChatColor.GREEN + "you have chosen Aruni! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"Aruni",PickedOperators,1);
+                sender.sendMessage(ChatColor.GREEN + "you have chosen tachanka! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
+                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"tachanka",PickedOperators,1);
                 getLogger().info("operator picked");
                 PlayersWOP.add(sender.getName().toString());
                 break;
             default:
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / Aruni]");
+                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / tachanka]");
                 break;
         }
         GameLogic.ResendTeleportRed();

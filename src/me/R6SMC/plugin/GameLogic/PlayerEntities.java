@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.sun.istack.internal.NotNull;
 import jdk.nashorn.internal.parser.JSONParser;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
@@ -30,7 +31,11 @@ import java.util.UUID;
 public class PlayerEntities {
     public static EntityType CurrentSpawnType = EntityType.ARMOR_STAND;
     public static void CreateEntity(Player p, Location l){
-        addNpc((int)l.getX(),(int)l.getY(),(int)l.getZ(),p);
+            addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), p);
+        DevConsole.SendDevMessage(p,"Creating entity at: " + ChatColor.GREEN + l.getX() + " , " + l.getY() + " , " + l.getZ(),DevConsole.TESTING);
+    }
+    public static void CreateEntity(Player p, Location l,String Name){
+        addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), Name,p);
         DevConsole.SendDevMessage(p,"Creating entity at: " + ChatColor.GREEN + l.getX() + " , " + l.getY() + " , " + l.getZ(),DevConsole.TESTING);
     }
     public static void CreateEntities(List<Player> players, List<Location> locations){
@@ -77,7 +82,29 @@ public class PlayerEntities {
         profile.getProperties().put("textures", new Property("textures", a[0], a[1]));
         EntityPlayer npc = new EntityPlayer(server, Worldserver, profile, new PlayerInteractManager(Worldserver));
         npc.setPosition(x, y, z);
-        for (Player player : GameChat.GetAllPlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
+            /*Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
+                @Override
+                public void run() {
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc));
+                }
+            }, 5);*/
+
+        }
+        return npc;
+    }
+    public static EntityPlayer addNpc(int x, int y, int z, @NotNull String playerName,Player sender){
+        EntityPlayer playerNMS = ((CraftPlayer) sender).getHandle();
+        String[] a = getFromName(playerName);
+        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+        WorldServer Worldserver = ((CraftWorld) GameLogic.world).getHandle();
+        GameProfile profile = playerNMS.getProfile();
+        profile.getProperties().put("textures", new Property("textures", a[0], a[1]));
+        EntityPlayer npc = new EntityPlayer(server, Worldserver, profile, new PlayerInteractManager(Worldserver));
+        npc.setPosition(x, y, z);
+        for (Player player : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
             /*Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {

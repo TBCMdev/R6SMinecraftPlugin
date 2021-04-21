@@ -18,6 +18,67 @@ public class CommandCompleter implements TabCompleter {
                 List<String> Commands = new ArrayList<>(DevConsole.getCommands());
                 return Commands;
             }
+            if(args[0].equalsIgnoreCase("class_reload")) {
+                if (args.length == 2) {
+                    return new ArrayList<String>() {{
+                        add("Dokkaebi");
+                        add("Ash");
+                        add("Capitao");
+                        add("Finka");
+                        add("Aruni");
+                        add("Bandit");
+                        add("Doc");
+                        add("Rook");
+                    }};
+                }
+            }
+                if(args[0].equalsIgnoreCase("error_config")){
+                    if(args.length == 2){
+                        return new ArrayList<String>(){{add("reload");add("state");add("get");}};
+                    }else if(args.length == 3){
+                        if(args[1].equalsIgnoreCase("state")){
+                            return new ArrayList<String>(){{add(Integer.toString(1));add(Integer.toString(2));add(Integer.toString(3));}};
+                        }
+                        if(args[1].equalsIgnoreCase("get")){
+                            return new ArrayList<String>() {{
+                                add("Dokkaebi");
+                                add("Ash");
+                                add("Capitao");
+                                add("Finka");
+                                add("Aruni");
+                                add("Bandit");
+                                add("Doc");
+                                add("Rook");
+                            }};
+
+                        }
+                    }
+                    else if(args.length == 4){
+                        if(args[1].equalsIgnoreCase("get")){
+                            List<String> Operators = new ArrayList<String>() {{
+                                add("Dokkaebi");
+                                add("Ash");
+                                add("Capitao");
+                                add("Finka");
+                                add("Aruni");
+                                add("Bandit");
+                                add("Doc");
+                                add("Rook");
+                            }};
+
+                            for(String st : Operators){
+                                if(args[2].equalsIgnoreCase(st)){
+                                    return new ArrayList<String>() {{
+                                        add("*ABIL_S");
+                                        add("*U_EX");
+                                        add("*R_E");
+                                        add("*ABIL_W");
+                                    }};
+                                }
+                            }
+                        }
+                    }
+                }
 
             if(args[0].equalsIgnoreCase("npc")) {
                 if (args.length == 2) {

@@ -10,12 +10,13 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
-import me.R6SMC.plugin.PlayerLogic.PlayerClass;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,12 +26,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class OperatorAbilityListener implements Listener {
-    private static List<Player> PlayersTryingToRemoveDOKKEffect = new ArrayList<>();
     @EventHandler
     public void OnAbil(ProjectileHitEvent event, Entity hitEntity, Block hitBlock, BlockFace hitFace){
         if(event.getEntity() == null) return;
@@ -57,55 +53,45 @@ public class OperatorAbilityListener implements Listener {
     }
     @EventHandler
     public void OnAbilityHold(PlayerItemHeldEvent event){
+        if(GameLogic.GameStarted) {
+            try {
+                @Nullable Material PlayerItemType = event.getPlayer().getInventory().getItem(event.getNewSlot()).getType();
+                if (PlayerItemType == Material.RED_STAINED_GLASS_PANE) {
+                    DevConsole.SendDevMessage(event.getPlayer(), "holding pane", DevConsole.TESTING);
 
-
-        Material PlayerItemType = event.getPlayer().getInventory().getItemInMainHand().getType();
-
-
-
-        if(GameLogic.GameStarted){
-            if(PlayerItemType != Material.BLACK_STAINED_GLASS_PANE){
-                if(GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName()).GetTeam() == 1){
-                    if(PlayersTryingToRemoveDOKKEffect.contains(event.getPlayer())) {
-                        PlayerClass p = GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName());
-                        PlayersTryingToRemoveDOKKEffect.remove(event.getPlayer());
-                        p.FailedToDisableCall();
+                    try {
+                        if (CurrentOperators.Check(event.getPlayer(), 3)) {
+                            Aruni aruniOP = (Aruni) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                            aruniOP.HoldAbility();
+                        }
+                    } catch (Exception e) {
+                        DevConsole.SendDevMessage(event.getPlayer(), "Could not Activate Arunis Hold Ability Function", DevConsole.TESTING);
                     }
                 }
-            }else{
-                DevConsole.SendDevMessage(event.getPlayer(), "Could not Remove you from the " + ChatColor.GOLD + "PlayersTryingToRemoveDokkEffect " + ChatColor.GRAY +"list as you are still holding a " + ChatColor.GREEN + "BLACK_STAINED_GLASS_PANE",DevConsole.TESTING);
-            }
-        }
-        if(PlayerItemType == Material.RED_STAINED_GLASS_PANE){
-            try{
-                if(CurrentOperators.Check(event.getPlayer(),3)){
-                    Aruni aruniOP = (Aruni)CurrentOperators.CurrentOperators.get(event.getPlayer());
-                    aruniOP.HoldAbility();
-                }
             }catch (Exception e){
-                DevConsole.SendDevMessage(event.getPlayer(),"Could not Activate Arunis HoldAbility Function",DevConsole.TESTING);
+
+            }
+            if(event.getPlayer().getInventory().getItem(event.getNewSlot()) == null){
+                DevConsole.SendDevMessage(event.getPlayer(),"not holding pane",DevConsole.TESTING);
+                if(CurrentOperators.Check(event.getPlayer(),3)){
+                    Aruni aruniOP = (Aruni) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                    aruniOP.CancelHoldAbility();
+                }
             }
         }
-    }//NOTES FOR DOKKAEBI:
-    //make it so the players trying to remove the effect have to hold the item for 5 seconds to disable
-    //the ability and also listen for if the player switches slots.
+
+    }
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
         Material PlayerItemType = event.getPlayer().getInventory().getItemInMainHand().getType();
         if(GameLogic.GameStarted) {
             if(event.getPlayer().getInventory().getItemInMainHand() == null) return;
-            if(PlayerItemType == Material.BLACK_STAINED_GLASS_PANE){
-                if(GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName()).GetTeam() == 1){
-                    if(!PlayersTryingToRemoveDOKKEffect.contains(event.getPlayer())){
-                        PlayersTryingToRemoveDOKKEffect.add(event.getPlayer());
-                        PlayerClass p = GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName());
-                        if(p.DokkaebiCallRecieved && !p.DokkaebiCallDenied){
-                            p.TryToRemoveDokkaebiCall(true);
-                        }
+            if(PlayerItemType == Material.RED_STAINED_GLASS_PANE){
+                    if(CurrentOperators.Check(event.getPlayer(),3)){
+                        Aruni aruniOP = (Aruni) CurrentOperators.CurrentOperators.get(event.getPlayer());
+                        aruniOP.activateAbility();
+                        //NOTE FOR SELF:Testing to see if this code can return the doc class and call ability, mostly unlikely so change if it does not work as intended.
                     }
-                    //make sure that we are not doing this to attacking players
-
-                }
             }
             if (PlayerItemType == Material.WHITE_STAINED_GLASS_PANE) {
                 try {

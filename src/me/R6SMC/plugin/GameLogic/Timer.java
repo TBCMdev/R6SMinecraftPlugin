@@ -38,14 +38,14 @@ public class Timer extends BukkitRunnable {
     @Override
     public void run() {
             if (GameLogic.GameStarted) {
-                if(Seconds <= 0){
-                    Bukkit.broadcastMessage(ChatColor.RED + "THE GAME HAS ENDED");
-
-                    GameLogic.GameStarted = false;
-                    GameLogic.EndGame();
-                    cancel();
-                }
                 if (GameLogic.GameTime >= 0.01) {
+                    if(Seconds <= 0){
+                        Bukkit.broadcastMessage(ChatColor.RED + "THE GAME HAS ENDED");
+
+                        GameLogic.GameStarted = false;
+                        GameLogic.EndGame(1);
+                        cancel();
+                    }
                     GameLogic.GameTime -= 1/MaxSeconds;
                     Seconds --;
                     RedBar = !RedBar;
@@ -64,7 +64,7 @@ public class Timer extends BukkitRunnable {
                 } else {
                     Bukkit.broadcastMessage(ChatColor.RED + "THE GAME HAS ENDED");
                     GameLogic.GameStarted = false;
-                    GameLogic.EndGame();
+                    GameLogic.EndGame(1);
                     cancel();
 
                 }

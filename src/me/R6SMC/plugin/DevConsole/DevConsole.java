@@ -1,6 +1,7 @@
 package me.R6SMC.plugin.DevConsole;
 
 import me.R6SMC.plugin.CommandClasses.Commands;
+import me.R6SMC.plugin.Errors;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.GameLogic.PlayerEntities;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public class DevConsole implements CommandExecutor {
         }
     }
     public static List<String> getCommands(){
-        return new ArrayList<String>(){{add("testing");add("keepammo");add("npc");}};
+        return new ArrayList<String>(){{add("testing");add("keepammo");add("npc");add("error_config");add("class_reload");}};
     }
     public static boolean GetTester(){
         return TESTING;
@@ -66,30 +67,77 @@ public class DevConsole implements CommandExecutor {
                         if(args[1].equalsIgnoreCase("create")){
                             if(args[2] != null){
                                 String name = args[2];
-                                if(args[3].equalsIgnoreCase("L: ")){
+                                commandSender.sendMessage(args[3]);
+                                if(args[3].equalsIgnoreCase("L:")){
                                     if(args[4] != null && args[5] != null && args[6] != null){
-                                        try{
-                                            Location l = new Location(GameLogic.world,Integer.parseInt(args[3]),Integer.parseInt(args[4]),Integer.parseInt(args[5]));
-                                            PlayerEntities.CreateEntity((Player) commandSender,l);
-                                        }catch (Exception e){
-                                            ((Player)commandSender).sendMessage(ChatColor.RED + "Could not Instantiate Entity.");
-                                        }
 
-                                    }else{
-
-                                        ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: " + ChatColor.GRAY + "/tbcm-dc create [Name] L: [X] [Y] [Z]");
+                                            Location l = new Location(GameLogic.world,Integer.parseInt(args[4]),Integer.parseInt(args[5]),Integer.parseInt(args[6]));
+                                            PlayerEntities.CreateEntity((Player) commandSender,l,name);
+                                            //((Player)commandSender).sendMessage(ChatColor.RED + "Could not Instantiate Entity.");
+                                            //Bukkit.getLogger().info(e.toString() + "\n\n" + e.getCause() + "\n\n" + e.getMessage());
                                     }
                                  }else{
-                                    ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: " + ChatColor.GRAY + "/tbcm-dc create [Name] L: [X] [Y] [Z]");
+                                    ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: (1)" + ChatColor.GRAY + "/tbcm-dc npc create [Name] L: [X] [Y] [Z]");
                                 }
-                            }else{
-                                ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: " + ChatColor.GRAY + "/tbcm-dc create [Name] L: [X] [Y] [Z]");
                             }
                         }else{
-                            ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: " + ChatColor.GRAY + "/tbcm-dc create [Name] L: [X] [Y] [Z]");
+                            ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: (2)" + ChatColor.GRAY + "/tbcm-dc npc create [Name] L: [X] [Y] [Z]");
                         }
-                    }else{
-                        ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: " + ChatColor.GRAY + "/tbcm-dc create [Name] L: [X] [Y] [Z]");
+                    }
+                }
+                if(args[0].equalsIgnoreCase("class_reload")){
+                    if(args[1] != null){
+                        String ClassName = args[1];
+                        if(Errors.getClassReloadFunc(ClassName)){
+                            commandSender.sendMessage(ChatColor.GREEN + "reloading...");
+                        }else{
+                            try {
+                                commandSender.sendMessage(ChatColor.DARK_RED + Errors.getError(Errors.getClassByName(ClassName), "*R_E"));
+                            }catch (Exception e){
+
+                            }
+                        }
+                    }
+                }
+                if(args[0].equalsIgnoreCase("error_config")){
+                    if(args[1] != null) {
+                        if (args[1].equalsIgnoreCase("get")) {
+                            List<String> Operators = new ArrayList<String>() {{
+                                add("Dokkaebi");
+                                add("Ash");
+                                add("Capitao");
+                                add("Finka");
+                                add("Aruni");
+                                add("Bandit");
+                                add("Doc");
+                                add("Rook");
+                            }};
+                            for(String st : Operators){
+                                if(args[2].equalsIgnoreCase(st)){
+                                    String OperatorName = args[2];
+                                    List<String> prefixes = new ArrayList<String>() {{
+                                        add("*ABIL_S");
+                                        add("*U_EX");
+                                        add("*R_E");
+                                        add("*ABIL_W");
+                                    }};
+                                    for(String str : prefixes){
+                                        if(args[3].equalsIgnoreCase(str)){
+                                            String prefix = args[3];
+                                            try {
+                                                if(Errors.getError(Errors.getClassByName(OperatorName), prefix) != null) {
+                                                    commandSender.sendMessage(ChatColor.GRAY + "error: " + ChatColor.RED + Errors.getError(Errors.getClassByName(OperatorName), prefix));
+                                                }else{
+                                                    commandSender.sendMessage(ChatColor.RED + "that error message did not exist.");
+                                                }
+                                            }catch (Exception e){
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
