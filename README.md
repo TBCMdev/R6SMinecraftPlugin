@@ -14,35 +14,35 @@ COMMANDS
 ---------------------
 
 all commands for the plugin are listed here!:
-
-`start:
-    usage: /<command>
-    description: starts the game
-  jointeamred:
-    usage: </command>
-    description: joins red team
-  jointeamblue:
-    usage: </command>
-    description: joins blue team
-  ability:
-    usage: </command>
-    description: gives ability obj
-  attkoperator:
-    usage: </command> [ash|capitao|finka]
-    description: picks attack operator of users choice
-  defoperator:
-    usage: </command> [doc|rook|aruni]
-    description: picks defense operator of users choice
-  override:
-    usage: </command> [movement] [true|false]
-    description: overrides a parameter to a given value
-  showPageBlue:
-    usage: </command> [default|doc|rook|Aruni] [1|2|3]
-  showPageRed:
-    usage: </command> [ash|capitao|finka] [1|2|3]
-  tbcm-dc:
-    usage: </command> [KEEPAMMO|TESTING|error_config|class_reload] [true|false|get|className] [className] [indexer]
-    description: a development command used for testing. (IN BETA)`
+    
+    start:
+        usage: /<command>
+            description: starts the game
+      jointeamred:
+        usage: </command>
+        description: joins red team
+    jointeamblue:
+        usage: </command>
+        description: joins blue team
+    ability:
+        usage: </command>
+        description: gives ability obj
+    attkoperator:
+        usage: </command> [ash|capitao|finka]
+        description: picks attack operator of users choice
+    defoperator:
+        usage: </command> [doc|rook|aruni]
+        description: picks defense operator of users choice
+    override:
+        usage: </command> [movement] [true|false]
+        description: overrides a parameter to a given value
+    showPageBlue:
+        usage: </command> [default|doc|rook|Aruni] [1|2|3]
+    showPageRed:
+        usage: </command> [ash|capitao|finka] [1|2|3]
+    tbcm-dc:
+        usage: </command> [KEEPAMMO|TESTING|error_config|class_reload] [true|false|get|className] [className] [indexer]
+        description: a development command used for testing. (IN BETA)
 
 ---------------------
 INSTALLATION
