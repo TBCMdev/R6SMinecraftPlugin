@@ -8,6 +8,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.swing.plaf.synth.Region;
+
 public class PlayerClass {
     public boolean DokkaebiCallDenied = false;
     public boolean DokkaebiCallRecieved = false;
@@ -48,14 +50,49 @@ public class PlayerClass {
     public Player getPlayer(){
         return this.Player;
     }
+    //region DokkaebiCall
+    private boolean IsTryingToRemoveCall = false;
+    private int ResetCallCounter = 0;
+
+
+    public void TryToRemoveDokkaebiCall(boolean isHolding){
+        if(!IsTryingToRemoveCall) {
+            IsTryingToRemoveCall = true;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if(IsTryingToRemoveCall) {
+                        ResetCallCounter ++;
+                        GameChat.sendActionbar(Player,ChatColor.DARK_GREEN + "" + (ResetCallCounter / 10) * 100 + "%");
+                        if(ResetCallCounter >= 10) {
+                            ResetCallCounter = 0;
+                            DokkaebiCallDenied = true;
+                            IsTryingToRemoveCall = false;
+                            cancel();
+                        }
+                    }else{
+                        ResetCallCounter = 0;
+                        IsTryingToRemoveCall = false;
+                        cancel();
+                    }
+
+                }
+            }.runTaskTimer(GameLogic.mainThread,0,10);
+        }
+    }
+    public void FailedToDisableCall(){
+        IsTryingToRemoveCall = false;
+    }
     public void dokkaebiCall(){
         DokkaebiCallRecieved = true;
         new BukkitRunnable() {
             @Override
             public void run() {
                 if(!DokkaebiCallDenied){
-                    Sounds.PlaySound(Sound.BLOCK_ANVIL_LAND,Player);
-                    GameChat.sendActionbar(Player,ChatColor.DARK_RED + "PRESS AND HOLD THE DOKKAEBI ICON IN YOUR HOTBAR TO REMOVE THE EFFECT");
+                    Sounds.PlaySound(Sound.BLOCK_ANVIL_LAND, Player);
+                    if(!IsTryingToRemoveCall) {
+                        GameChat.sendActionbar(Player, ChatColor.DARK_RED + "PRESS AND HOLD THE DOKKAEBI ICON IN YOUR HOTBAR TO REMOVE THE EFFECT");
+                    }
                 }else{
                     DokkaebiCallDenied = false;
                     DokkaebiCallRecieved = false;
@@ -65,4 +102,5 @@ public class PlayerClass {
             }
         }.runTaskTimer(GameLogic.mainThread,0,10);
     }
+    //endregion
 }

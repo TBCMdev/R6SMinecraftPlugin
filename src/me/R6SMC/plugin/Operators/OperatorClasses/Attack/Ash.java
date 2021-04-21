@@ -18,7 +18,9 @@ public class Ash extends Operator {
         super(3,ou.getOwner(),ou.getOwnerClass(),"ash");
         PlayerManager = ou;
     }
+    public static void ReloadClass(){
 
+    }
     @Override
     public void HoldAbility() {
 

@@ -32,7 +32,7 @@ commands:
   showPageRed:
     usage: </command/> [ash|capitao|finka] [1|2|3]
   tbcm-dc:
-    usage: </command> [KEEPAMMO|TESTING] [true,false]
+    usage: </command> [KEEPAMMO|TESTING|error_config|class_reload] [true,false|reload|className]
     description: a development command used for testing. (IN BETA)
 
 

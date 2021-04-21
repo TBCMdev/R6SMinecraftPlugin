@@ -18,6 +18,7 @@ public class CommandCompleter implements TabCompleter {
                 List<String> Commands = new ArrayList<>(DevConsole.getCommands());
                 return Commands;
             }
+
             if(args[0].equalsIgnoreCase("npc")) {
                 if (args.length == 2) {
                     List<String> NpcOptions = new ArrayList<String>() {{

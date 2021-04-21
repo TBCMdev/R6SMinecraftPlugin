@@ -18,7 +18,9 @@ public class Capitao extends Operator {
         super(3, ou.getOwner(),ou.getOwnerClass(),"finka");
         PlayerManager = ou;
     }
+    public static void ReloadClass(){
 
+    }
     @Override
     public void HoldAbility() {
 

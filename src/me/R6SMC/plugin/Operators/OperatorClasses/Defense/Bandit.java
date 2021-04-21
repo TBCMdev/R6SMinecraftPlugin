@@ -34,7 +34,9 @@ public class Bandit extends Operator {
         AbilityCounter = 0;
         Charges = 4;
     }
+    public static void ReloadClass(){
 
+    }
     @Override
     public void HoldAbility() {
 

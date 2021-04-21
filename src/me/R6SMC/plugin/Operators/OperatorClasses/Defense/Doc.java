@@ -25,7 +25,9 @@ public class Doc extends Operator {
         Stims = 3;
     }
 
+    public static void ReloadClass(){
 
+    }
     @Override
     public void HoldAbility() {
 

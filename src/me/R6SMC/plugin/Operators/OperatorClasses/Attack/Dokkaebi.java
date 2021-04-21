@@ -36,6 +36,9 @@ public class Dokkaebi extends Operator {
     public void SetAbility() {
 
     }
+    public static void ReloadClass(){
+
+    }
     @Override
     public void activateAbility() {
         CallIndicator.getItemMeta().setDisplayName("DOKKAEBI CALL");

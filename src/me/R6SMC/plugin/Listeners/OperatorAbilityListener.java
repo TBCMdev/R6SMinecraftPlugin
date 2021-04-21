@@ -10,6 +10,7 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
+import me.R6SMC.plugin.PlayerLogic.PlayerClass;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -56,7 +57,25 @@ public class OperatorAbilityListener implements Listener {
     }
     @EventHandler
     public void OnAbilityHold(PlayerItemHeldEvent event){
+
+
         Material PlayerItemType = event.getPlayer().getInventory().getItemInMainHand().getType();
+
+
+
+        if(GameLogic.GameStarted){
+            if(PlayerItemType != Material.BLACK_STAINED_GLASS_PANE){
+                if(GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName()).GetTeam() == 1){
+                    if(PlayersTryingToRemoveDOKKEffect.contains(event.getPlayer())) {
+                        PlayerClass p = GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName());
+                        PlayersTryingToRemoveDOKKEffect.remove(event.getPlayer());
+                        p.FailedToDisableCall();
+                    }
+                }
+            }else{
+                DevConsole.SendDevMessage(event.getPlayer(), "Could not Remove you from the " + ChatColor.GOLD + "PlayersTryingToRemoveDokkEffect " + ChatColor.GRAY +"list as you are still holding a " + ChatColor.GREEN + "BLACK_STAINED_GLASS_PANE",DevConsole.TESTING);
+            }
+        }
         if(PlayerItemType == Material.RED_STAINED_GLASS_PANE){
             try{
                 if(CurrentOperators.Check(event.getPlayer(),3)){
@@ -68,7 +87,7 @@ public class OperatorAbilityListener implements Listener {
             }
         }
     }//NOTES FOR DOKKAEBI:
-    //make it so the players trying to remove the effect have to hold down the button to disable
+    //make it so the players trying to remove the effect have to hold the item for 5 seconds to disable
     //the ability and also listen for if the player switches slots.
     @EventHandler
     public void PlayerMBclick(PlayerInteractEvent event) {
@@ -77,7 +96,13 @@ public class OperatorAbilityListener implements Listener {
             if(event.getPlayer().getInventory().getItemInMainHand() == null) return;
             if(PlayerItemType == Material.BLACK_STAINED_GLASS_PANE){
                 if(GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName()).GetTeam() == 1){
-                    if(!PlayersTryingToRemoveDOKKEffect.contains())
+                    if(!PlayersTryingToRemoveDOKKEffect.contains(event.getPlayer())){
+                        PlayersTryingToRemoveDOKKEffect.add(event.getPlayer());
+                        PlayerClass p = GameLogic.PlayerClasses.get(event.getPlayer().getDisplayName());
+                        if(p.DokkaebiCallRecieved && !p.DokkaebiCallDenied){
+                            p.TryToRemoveDokkaebiCall(true);
+                        }
+                    }
                     //make sure that we are not doing this to attacking players
 
                 }

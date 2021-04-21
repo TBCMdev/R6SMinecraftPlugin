@@ -28,6 +28,16 @@ public class CommandListener implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
+        if(args[0].equalsIgnoreCase("class_reload")){
+            if(args[1] != null){
+                String ClassName = args[1];
+                if(Errors.getClassReloadFunc(ClassName)){
+                    sender.sendMessage(ChatColor.GREEN + "reloading...");
+                }else{
+                    sender.sendMessage(ChatColor.DARK_RED + Errors.getError(Errors.getClassByName(ClassName),"*R_E"));
+                }
+            }
+        }
         if(cmd.getName().equalsIgnoreCase("defoperator")) {
 
             if(args.length == 0) {

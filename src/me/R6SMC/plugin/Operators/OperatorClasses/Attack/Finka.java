@@ -18,7 +18,9 @@ public class Finka extends Operator {
     public void HoldAbility() {
 
     }
+    public static void ReloadClass(){
 
+    }
     @Override
     public void AbilityCooldown() {
         CanUseAbility = false;

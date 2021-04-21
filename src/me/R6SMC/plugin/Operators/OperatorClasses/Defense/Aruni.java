@@ -68,7 +68,9 @@ public class Aruni extends Operator {
     public void SetAbility() {
 
     }
+    public static void ReloadClass(){
 
+    }
     public int PlayerIsLookingAtDoor(Player p){
         BlockIterator Checker = new BlockIterator(p,5);
         while(Checker.hasNext()){
