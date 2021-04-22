@@ -26,6 +26,22 @@ import java.util.function.Function;
 public class Errors {
     private static String r = "" + ChatColor.RED;
     private static int ErrorUsage = 1;
+    public static Map<String,Integer> ErrorIndexes = new HashMap<String,Integer>(){{
+        put("*R_E", 1);
+        put("*ABIL_P", 2);
+        put("*ABIL_S", 3);
+        put("*U_EX", 4);
+        put("*IN_DE", 5);
+        put("*IN_AE", 6);
+        put("*CF_L", 7);
+        put("*NP_UC", 8);
+        put("*NPC_C", 9);
+        put("*NPC_R", 10);
+        put("*PN_AC", 11);
+        put("*CL_C", 12);
+
+
+    }};
     public static Map<Pair<Class,String>, String> Errors = new HashMap<Pair<Class,String>,String>(){{
         //Dokkaebi errors
         //region ReloadErrors
@@ -45,6 +61,11 @@ public class Errors {
         //region Ash
         put(new Pair<>(Ash.class,"*ABIL_W"),"Ash Ability Error at Destroying wall." + r);
         //endregion
+        //region Camera
+        //endregion
+
+
+
         put(new Pair<>(Dokkaebi.class,"*"),"" + r);
         put(new Pair<>(Dokkaebi.class,"*"),"" + r);
         put(new Pair<>(Dokkaebi.class,"*"),"" + r);
@@ -137,7 +158,7 @@ public class Errors {
     }
     public static String getError(@NotNull Class type, String indexer){
         try{
-            return Errors.get(new Pair<>(type,indexer.toUpperCase()));
+            return Errors.get(new Pair<>(type,indexer.toUpperCase())) + " Error Index:" + ErrorIndexes.get(indexer);
         }catch (Exception e){
 
         }
@@ -145,7 +166,7 @@ public class Errors {
     }
     public static String getError(@NotNull Class type, String indexer,int LineOfExpectedError){
         try{
-            return Errors.get(new Pair<>(type,indexer.toUpperCase())) +" at line: "+ LineOfExpectedError;
+            return Errors.get(new Pair<>(type,indexer.toUpperCase())) +" at line: "+ LineOfExpectedError+ ", Error Index:" + ErrorIndexes.get(indexer);
         }catch (Exception e){
         }
         return null;

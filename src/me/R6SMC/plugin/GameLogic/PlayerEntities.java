@@ -25,14 +25,19 @@ import org.bukkit.entity.Skeleton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class PlayerEntities {
+    private static HashMap<String,EntityPlayer> CurrentNPCs = new HashMap<>();
     public static EntityType CurrentSpawnType = EntityType.ARMOR_STAND;
     public static void CreateEntity(Player p, Location l){
-            addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), p);
+        addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), p);
         DevConsole.SendDevMessage(p,"Creating entity at: " + ChatColor.GREEN + l.getX() + " , " + l.getY() + " , " + l.getZ(),DevConsole.TESTING);
+    }
+    public static void RemoveEntity(Player p,Location l){
+        removeNpc(p);
     }
     public static void CreateEntity(Player p, Location l,String Name){
         addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), Name,p);
@@ -73,6 +78,49 @@ public class PlayerEntities {
             return null;
         }
     }
+    public static Location getEntityLocation(Player p){
+        try{
+            return ((Entity)CurrentNPCs.get(p.getDisplayName())).getLocation();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public static boolean removeNpc(Player player){
+        try {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
+                @Override
+                public void run() {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, CurrentNPCs.get(player.getDisplayName())));
+                    }
+                }
+
+            }, 5);
+            CurrentNPCs.remove(player.getDisplayName());
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+    public static boolean removeNpc(Player player,String playerName){
+        try {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
+                @Override
+                public void run() {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, CurrentNPCs.get(playerName)));
+                    }
+                }
+
+            }, 5);
+            CurrentNPCs.remove(playerName);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
     public static EntityPlayer addNpc(int x, int y, int z,Player p) {
         EntityPlayer playerNMS = ((CraftPlayer) p).getHandle();
         String[] a = getFromName(p.getDisplayName());
@@ -85,13 +133,9 @@ public class PlayerEntities {
         for (Player player : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
-            /*Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
-                @Override
-                public void run() {
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc));
-                }
-            }, 5);*/
-
+        }
+        if(!CurrentNPCs.containsKey(p.getDisplayName())){
+            CurrentNPCs.put(p.getDisplayName(),npc);
         }
         return npc;
     }
@@ -114,6 +158,9 @@ public class PlayerEntities {
                 }
             }, 5);*/
 
+        }
+        if(!CurrentNPCs.containsKey(playerName)){
+            CurrentNPCs.put(playerName,npc);
         }
         return npc;
     }
