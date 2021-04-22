@@ -111,15 +111,17 @@ public class DevConsole implements CommandExecutor {
                                 add("Bandit");
                                 add("Doc");
                                 add("Rook");
+                                add("Camera");
+                                add("Camera_Utility");
+                                add("Camera_Listener");
                             }};
                             for(String st : Operators){
                                 if(args[2].equalsIgnoreCase(st)){
                                     String OperatorName = args[2];
                                     List<String> prefixes = new ArrayList<String>() {{
-                                        add("*ABIL_S");
-                                        add("*U_EX");
-                                        add("*R_E");
-                                        add("*ABIL_W");
+                                        for(String st : Errors.ErrorIndexes.keySet()){
+                                            add(st);
+                                        }
                                     }};
                                     for(String str : prefixes){
                                         if(args[3].equalsIgnoreCase(str)){

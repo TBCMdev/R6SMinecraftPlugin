@@ -4,6 +4,7 @@ import com.mojang.datafixers.types.Func;
 import com.sun.istack.internal.NotNull;
 import javafx.util.Pair;
 import me.R6SMC.plugin.Cameras.Camera;
+import me.R6SMC.plugin.Cameras.CameraUtility;
 import me.R6SMC.plugin.Listeners.CameraListener;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
@@ -64,16 +65,16 @@ public class Errors {
         put(new Pair<>(Ash.class,"*ABIL_W"),"Ash Ability Error at Destroying wall." + r);
         //endregion
         //region Camera
-        put(new Pair<>(Camera.class,"IN_DE"),"Camera error while leaving camera. Index Doesnt Exist. " + r);
-        put(new Pair<>(Camera.class,"IN_AE"),"Camera error while accessing camera. Index Already exists. " + r);
-        put(new Pair<>(Camera.class,"CF_L"),"Camera error while Initiating leave camera feed." + r);
-        put(new Pair<>(Camera.class,"CF_A"),"Camera error while Initiating activate camera feed" + r);
-        put(new Pair<>(Camera.class,"NPC_C"),"Camera error while creating NPC. " + r);
-        put(new Pair<>(Camera.class,"NP_UC"),"Camera error. No player using camera. "  +r);
-        put(new Pair<>(Camera.class,"NPC_C"),"Camera error while trying to create an npc. " + r);
-        put(new Pair<>(Camera.class,"NPC_R"),"Camera error while trying to remove an npc. " + r);
-        put(new Pair<>(CameraListener.class,"PN_AC"),"CameraListener error. Player did not get added to cooldown. " + r);
-        put(new Pair<>(CameraListener.class,"CL_C"),"CameraListener error. Player cannot leave camera. " + r);
+        put(new Pair<>(Camera.class,"*IN_DE"),"Camera error while leaving camera. Index Doesnt Exist. " + r);
+        put(new Pair<>(Camera.class,"*IN_AE"),"Camera error while accessing camera. Index Already exists. " + r);
+        put(new Pair<>(Camera.class,"*CF_L"),"Camera error while Initiating leave camera feed." + r);
+        put(new Pair<>(Camera.class,"*CF_A"),"Camera error while Initiating activate camera feed" + r);
+        put(new Pair<>(Camera.class,"*NPC_C"),"Camera error while creating NPC. " + r);
+        put(new Pair<>(Camera.class,"*NP_UC"),"Camera error. No player using camera. "  +r);
+        put(new Pair<>(Camera.class,"*NPC_C"),"Camera error while trying to create an npc. " + r);
+        put(new Pair<>(Camera.class,"*NPC_R"),"Camera error while trying to remove an npc. " + r);
+        put(new Pair<>(CameraListener.class,"*PN_AC"),"CameraListener error. Player did not get added to cooldown. " + r);
+        put(new Pair<>(CameraListener.class,"*CL_C"),"CameraListener error. Player cannot leave camera. " + r);
         //endregion
 
 
@@ -96,6 +97,12 @@ public class Errors {
                 return Bandit.class;
             case "dokkaebi":
                 return Dokkaebi.class;
+            case "camera":
+                return Camera.class;
+            case "camera_utility":
+                return CameraUtility.class;
+            case "camera_listener":
+                return CameraListener.class;
         }
         return null;
     }

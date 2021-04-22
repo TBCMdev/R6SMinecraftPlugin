@@ -1,14 +1,18 @@
 package me.R6SMC.plugin.CommandClasses;
 
+import javafx.util.Pair;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
+import me.R6SMC.plugin.Errors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CommandCompleter implements TabCompleter {
     @Override
@@ -49,6 +53,9 @@ public class CommandCompleter implements TabCompleter {
                                 add("Bandit");
                                 add("Doc");
                                 add("Rook");
+                                add("Camera");
+                                add("Camera_Utility");
+                                add("Camera_Listener");
                             }};
 
                         }
@@ -64,15 +71,22 @@ public class CommandCompleter implements TabCompleter {
                                 add("Bandit");
                                 add("Doc");
                                 add("Rook");
+                                add("Camera");
+                                add("Camera_Utility");
+                                add("Camera_Listener");
                             }};
 
                             for(String st : Operators){
                                 if(args[2].equalsIgnoreCase(st)){
                                     return new ArrayList<String>() {{
-                                        add("*ABIL_S");
-                                        add("*U_EX");
-                                        add("*R_E");
-                                        add("*ABIL_W");
+                                        for(int i = 0; i < Errors.Errors.size();i++){
+                                            Set<Pair<Class,String>> classes = Errors.Errors.keySet();
+                                            for(Pair<Class,String> pair : classes){
+                                                if(pair.getKey().getSimpleName().equalsIgnoreCase(st)){
+                                                    add(pair.getValue());
+                                                }
+                                            }
+                                        }
                                     }};
                                 }
                             }
