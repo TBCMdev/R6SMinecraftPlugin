@@ -9,6 +9,9 @@ R6s for minecraft!
 INFO
 ---------------------
 
+To start playing the game ater you have installed
+
+
 ---------------------
 COMMANDS
 ---------------------
