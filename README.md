@@ -33,7 +33,7 @@ after everyone has picked then the game starts. the Round system is in early bet
 7. BANDIT : (NYR)(Beta) 4 bandit charges that can electrify walls.
 8. DOKKAEBI : (In no stage useable)(NYR)(Beta) 2 Calls that disrupt the enemy with annoying sounds(will stop defenders from going on cams in future)
 
-
+if for some reason you tried to pick your operator and it did not register, please enter the command _/defoperator OperatorName_ || _/attkoperator OperatorName_
 
 
 ---------------------
