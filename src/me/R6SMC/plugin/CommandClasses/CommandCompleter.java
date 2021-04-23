@@ -72,22 +72,21 @@ public class CommandCompleter implements TabCompleter {
                                 add("Doc");
                                 add("Rook");
                                 add("Camera");
-                                add("Camera_Utility");
-                                add("Camera_Listener");
+                                add("CameraUtility");
+                                add("CameraListener");
                             }};
 
                             for(String st : Operators){
                                 if(args[2].equalsIgnoreCase(st)){
-                                    return new ArrayList<String>() {{
-                                        for(int i = 0; i < Errors.Errors.size();i++){
+                                    List<String> list =  new ArrayList<String>() {{
                                             Set<Pair<Class,String>> classes = Errors.Errors.keySet();
                                             for(Pair<Class,String> pair : classes){
                                                 if(pair.getKey().getSimpleName().equalsIgnoreCase(st)){
                                                     add(pair.getValue());
                                                 }
                                             }
-                                        }
                                     }};
+                                    return list;
                                 }
                             }
                         }

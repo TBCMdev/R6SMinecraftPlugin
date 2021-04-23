@@ -92,7 +92,7 @@ public class DevConsole implements CommandExecutor {
                             commandSender.sendMessage(ChatColor.GREEN + "reloading...");
                         }else{
                             try {
-                                commandSender.sendMessage(ChatColor.DARK_RED + Errors.getError(Errors.getClassByName(ClassName), "*R_E"));
+                                commandSender.sendMessage(ChatColor.DARK_RED + Errors.getError(Errors.getClassByName(ClassName,commandSender), "*R_E"));
                             }catch (Exception e){
 
                             }
@@ -112,8 +112,8 @@ public class DevConsole implements CommandExecutor {
                                 add("Doc");
                                 add("Rook");
                                 add("Camera");
-                                add("Camera_Utility");
-                                add("Camera_Listener");
+                                add("CameraUtility");
+                                add("CameraListener");
                             }};
                             for(String st : Operators){
                                 if(args[2].equalsIgnoreCase(st)){
@@ -127,8 +127,8 @@ public class DevConsole implements CommandExecutor {
                                         if(args[3].equalsIgnoreCase(str)){
                                             String prefix = args[3];
                                             try {
-                                                if(Errors.getError(Errors.getClassByName(OperatorName), prefix) != null) {
-                                                    commandSender.sendMessage(ChatColor.GRAY + "error: " + ChatColor.RED + Errors.getError(Errors.getClassByName(OperatorName), prefix));
+                                                if(Errors.getError(Errors.getClassByName(OperatorName,commandSender), prefix) != null) {
+                                                    commandSender.sendMessage(ChatColor.GRAY + "error: " + ChatColor.RED + Errors.getError(Errors.getClassByName(OperatorName,commandSender), prefix));
                                                 }else{
                                                     commandSender.sendMessage(ChatColor.RED + "that error message did not exist.");
                                                 }

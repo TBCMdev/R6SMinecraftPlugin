@@ -276,19 +276,16 @@ public class GameLogic implements Listener
                     //CHECK FOR UNEVEN TEAMS
                     Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
 
-                    PositionList.add(defaultspawndef);
                     Bukkit.getLogger().info("blue team: " + EachPlayer);
                     EachPlayer.teleport(defaultspawndef);
                 }
                 break;
         }
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        Bukkit.dispatchCommand(console, "test");
-        Bukkit.broadcastMessage(ChatColor.RED + "The Game Has Begun!");
+        Bukkit.broadcastMessage(ChatColor.RED + "ROUND "  + GameRounds.getCurrentRound());
         InitGame();
 
     }
-
     public static void ResendTeleportRed() {
         if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
             Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
@@ -301,7 +298,6 @@ public class GameLogic implements Listener
             TeleportTeams(1);
         }
     }
-
     public static boolean HasGivenBooks = false;
     @Deprecated
     public static void ShowAvailableOperators(){
@@ -319,22 +315,18 @@ public class GameLogic implements Listener
             return;
         }
 }
-public static void StartGame(){
+    public static void StartGame(){
         for(Player p : GameChat.GetAllPlayers()){
             p.setGameMode(GameMode.ADVENTURE);
         }
 }
-
-
-public static long Seconds = 100,MaxSeconds = 100;
-public static void StartTimer(){
+    public static long Seconds = 100,MaxSeconds = 100;
+    public static void StartTimer(){
     PlayersCanMove = true;
     Timer timer = new Timer(Seconds,MaxSeconds);
     timer.startTimer();
 }
     public static boolean GameStarted = false;
-
-
     public static void CreatePlayerClass(Player p , String Name, String Class,int ID,int Team){
         if(!PlayerClasses.containsKey(Name)){
             PlayerClasses.put(Name,new PlayerClass(p,Name,Class,ID,Team));

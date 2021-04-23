@@ -3,6 +3,7 @@ package me.R6SMC.plugin.Loadouts;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import me.R6SMC.plugin.PlayerLogic.Organiser;
@@ -58,7 +59,6 @@ public class Loadouts {
                     switch (CheckForClass(PlayerOperators.get(CurrentPlayer.getDisplayName()))) {
                         case 1:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
-                            if (CurrentPlayer != null) {
                                 if(CurrentPlayer.getGameMode() != GameMode.SPECTATOR) {
                                     for (String cmmd : Loadoutdoc) {
                                         if (cmmd != null) {
@@ -71,11 +71,9 @@ public class Loadouts {
                                 }else{
                                     DevConsole.SendDevMessage(CurrentPlayer,"you are in spectator.",DevConsole.TESTING);
                                 }
-                            }
                             break;
                         case 2:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
-                            if (CurrentPlayer != null) {
                                 for (String cmmd : LoadoutRook) {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
@@ -83,11 +81,9 @@ public class Loadouts {
                                         //Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
                                     }
                                 }
-                            }
                             break;
                         case 3:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
-                            if (CurrentPlayer != null) {
                                 for (String cmmd : LoadoutAruni) {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
@@ -95,11 +91,9 @@ public class Loadouts {
                                         Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
                                     }
                                 }
-                            }
                             break;
                         case 4:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
-                            if (CurrentPlayer != null) {
                                 for (String cmmd : LoadoutAsh) {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
@@ -107,11 +101,9 @@ public class Loadouts {
                                         Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
                                     }
                                 }
-                            }
                             break;
                         case 5:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
-                            if (CurrentPlayer != null) {
                                 for (String cmmd : LoadoutCapitao) {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
@@ -119,11 +111,9 @@ public class Loadouts {
                                         Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
                                     }
                                 }
-                            }
                             break;
                         case 6:
                             Bukkit.getLogger().info(CurrentPlayer.getDisplayName());
-                            if (CurrentPlayer != null) {
                                 for (String cmmd : LoadoutFinka) {
                                     if (cmmd != null) {
                                         Bukkit.getLogger().info(cmmd);
@@ -131,7 +121,6 @@ public class Loadouts {
                                         Organiser.Organise(CurrentPlayer,DevConsole.KEEPAMMO);
                                     }
                                 }
-                            }
                             break;
 
                     }
@@ -156,7 +145,12 @@ public class Loadouts {
                 return 1;
             case "rook":
                 return 2;
-            case "Aruni":
+            case "aruni":
+                try {
+                    new Aruni(OperatorHolder.GetOperator(player.getPlayer()));
+                }catch (Exception e){
+                    DevConsole.SendDevMessage(player.getPlayer(),"could not instantiate Aruni class.",DevConsole.TESTING);
+                }
                 return 3;
             case "ash":
                 try {

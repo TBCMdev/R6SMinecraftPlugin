@@ -36,6 +36,7 @@ public class BanditCharge {
     }
     public void Destroy(){
         EntityCharge.remove();
+        GameLogic.world.getBlockAt(position).setType(Material.AIR);
     }
     public void Place(){
         if(EntityCharge == null){

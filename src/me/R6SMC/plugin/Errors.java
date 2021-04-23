@@ -16,6 +16,7 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
 import org.apache.logging.log4j.core.util.KeyValuePair;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
@@ -42,7 +43,7 @@ public class Errors {
         put("*NPC_R", 10);
         put("*PN_AC", 11);
         put("*CL_C", 12);
-
+        put("GC_BN",13);
 
     }};
     public static Map<Pair<Class,String>, String> Errors = new HashMap<Pair<Class,String>,String>(){{
@@ -77,32 +78,15 @@ public class Errors {
         put(new Pair<>(CameraListener.class,"*CL_C"),"CameraListener error. Player cannot leave camera. " + r);
         //endregion
 
-
+        //region Error_Fails
+        put(new Pair<>(Errors.class,"*GN_BN"),"Error class could not retrieve error class by name." + r);
+        //end region
     }};
-    public static Class getClassByName(String name){
-        switch (name.toLowerCase()){
-            case "doc":
-                return Doc.class;
-            case "rook":
-                return Rook.class;
-            case "aruni":
-                return Aruni.class;
-            case "ash":
-                return Ash.class;
-            case "finka":
-                return Finka.class;
-            case "capitao":
-                return Capitao.class;
-            case "bandit":
-                return Bandit.class;
-            case "dokkaebi":
-                return Dokkaebi.class;
-            case "camera":
-                return Camera.class;
-            case "camera_utility":
-                return CameraUtility.class;
-            case "camera_listener":
-                return CameraListener.class;
+    public static Class getClassByName(String name, CommandSender sender){
+        try{
+            Class<?> c = Class.forName(name);
+        } catch (ClassNotFoundException e) {
+            sender.sendMessage(Errors.get(new Pair<Class,String>(Errors.class,"*GC_BN")));
         }
         return null;
     }
