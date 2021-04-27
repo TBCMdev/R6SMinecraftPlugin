@@ -14,6 +14,7 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
+import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import org.apache.logging.log4j.core.util.KeyValuePair;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -47,7 +48,6 @@ public class Errors {
 
     }};
     public static Map<Pair<Class,String>, String> Errors = new HashMap<Pair<Class,String>,String>(){{
-        //Dokkaebi errors
         //region ReloadErrors
         put(new Pair<>(Dokkaebi.class,"*R_E"/*reload_error*/),"Dokkaebi Reload Error. try entering a correct class name or reloading the class." + r);
         put(new Pair<>(Doc.class,"*R_E"),"doc Reload Error. try entering a correct class name or reloading the class." + r);
@@ -72,19 +72,30 @@ public class Errors {
         put(new Pair<>(Camera.class,"*CF_A"),"Camera error while Initiating activate camera feed" + r);
         put(new Pair<>(Camera.class,"*NPC_C"),"Camera error while creating NPC. " + r);
         put(new Pair<>(Camera.class,"*NP_UC"),"Camera error. No player using camera. "  +r);
-        put(new Pair<>(Camera.class,"*NPC_C"),"Camera error while trying to create an npc. " + r);
         put(new Pair<>(Camera.class,"*NPC_R"),"Camera error while trying to remove an npc. " + r);
         put(new Pair<>(CameraListener.class,"*PN_AC"),"CameraListener error. Player did not get added to cooldown. " + r);
         put(new Pair<>(CameraListener.class,"*CL_C"),"CameraListener error. Player cannot leave camera. " + r);
         //endregion
+        put(new Pair<>(CurrentOperators.class,"*CG_O"),"Cannot get operator." + r);
+        put(new Pair<>(CurrentOperators.class,"*CI_O"),"Cannot instantiate operator.");
 
         //region Error_Fails
         put(new Pair<>(Errors.class,"*GN_BN"),"Error class could not retrieve error class by name." + r);
         //end region
     }};
+    public static Type getClassTypeByClass(Class c,CommandSender sender){
+        try{
+            Type t = c;
+            return t;
+        } catch (Exception e) {
+            sender.sendMessage(Errors.get(new Pair<Class,String>(Errors.class,"*GC_BN")));
+        }
+        return null;
+    }
     public static Class getClassByName(String name, CommandSender sender){
         try{
             Class<?> c = Class.forName(name);
+            return c;
         } catch (ClassNotFoundException e) {
             sender.sendMessage(Errors.get(new Pair<Class,String>(Errors.class,"*GC_BN")));
         }

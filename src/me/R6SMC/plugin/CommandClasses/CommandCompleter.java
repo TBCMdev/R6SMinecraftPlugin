@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.Errors;
+import me.R6SMC.plugin.Sounds.Sounds;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -36,7 +37,7 @@ public class CommandCompleter implements TabCompleter {
                     }};
                 }
             }
-                if(args[0].equalsIgnoreCase("error_config")){
+            if(args[0].equalsIgnoreCase("error_config")){
                     if(args.length == 2){
                         return new ArrayList<String>(){{add("reload");add("state");add("get");}};
                     }else if(args.length == 3){
@@ -92,7 +93,6 @@ public class CommandCompleter implements TabCompleter {
                         }
                     }
                 }
-
             if(args[0].equalsIgnoreCase("npc")) {
                 if (args.length == 2) {
                     List<String> NpcOptions = new ArrayList<String>() {{
@@ -123,6 +123,16 @@ public class CommandCompleter implements TabCompleter {
                     }};
                     return PlayerPosZ;
                 }
+            }
+            if(args[0].equalsIgnoreCase("sound")){
+                if(args.length == 1) {
+                    return new ArrayList<String>() {{
+                        add("play");
+                    }};
+                }else if(args.length == 2){
+                    return new ArrayList<>(Sounds.Playable_Sounds_Str.keySet());
+                }
+
             }
         }
 

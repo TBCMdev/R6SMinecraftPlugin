@@ -108,6 +108,8 @@ public class GameLogic implements Listener
                 } else {
                     Killer.sendMessage(GameChat.GetTeamColor(PlayerClasses.get(Killer.getDisplayName())) + "KILLS " + ChatColor.WHITE + "+1");
                     PlayerClasses.get(Killer.getDisplayName()).SetPoints(100);
+                    GameChat.sendActionbar(Killer,ChatColor.GOLD + "YOU KILLED " + ChatColor.ITALIC +  Killed.getDisplayName());
+
                 }
             }
         }

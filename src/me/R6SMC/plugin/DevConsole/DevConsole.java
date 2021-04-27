@@ -4,9 +4,12 @@ import me.R6SMC.plugin.CommandClasses.Commands;
 import me.R6SMC.plugin.Errors;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.GameLogic.PlayerEntities;
+import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
+import me.R6SMC.plugin.Sounds.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,7 +31,7 @@ public class DevConsole implements CommandExecutor {
         }
     }
     public static List<String> getCommands(){
-        return new ArrayList<String>(){{add("testing");add("keepammo");add("npc");add("error_config");add("class_reload");}};
+        return new ArrayList<String>(){{add("testing");add("keepammo");add("npc");add("error_config");add("class_reload");add("operator_create");add("sound");}};
     }
     public static boolean GetTester(){
         return TESTING;
@@ -137,6 +140,50 @@ public class DevConsole implements CommandExecutor {
                                             }
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+                if(args[0].equalsIgnoreCase("operator_create")){
+                    if(args[1] != null){
+                        try{
+                            int OperatorInt = Integer.parseInt(args[0]);
+                            if(args[2] != null) {
+                                try {
+                                    float time_alive = Float.parseFloat(args[1]);
+                                    CurrentOperators.CheckToCreateTestOperator((Player) commandSender, time_alive,OperatorInt);
+                                }catch (Exception e){
+                                        commandSender.sendMessage(ChatColor.RED + "could not parse arguments.");
+                                }
+                            }
+                        }catch (Exception e){
+                                commandSender.sendMessage(ChatColor.RED + "Please use valid arguments!(" + ChatColor.GRAY + "/tbcm-dc operator_create [num] " + ChatColor.RED + ")");
+                        }
+                    }
+                }
+                if(args[0].equalsIgnoreCase("sound")){
+                    if(args[1].equalsIgnoreCase("play")){
+                        if(args[2] != null){
+                            try{
+                                for(String st : Sounds.Playable_Sounds_Str.keySet()){
+                                    if(st.equalsIgnoreCase(args[2])){
+                                        Sound sound = Sounds.Playable_Sounds_Str.get(args[2]);
+                                        ((Player)commandSender).playSound(((Player) commandSender).getLocation(),sound,1,1);
+
+                                    }
+                                }
+                            }catch (Exception e){
+                                try{
+                                    int i = Integer.parseInt(args[2]);
+                                    if(i < Sounds.Playable_Sounds_Int.size()){
+                                        Sound sound = Sounds.Playable_Sounds_Int.get(i);
+                                        ((Player)commandSender).playSound(((Player) commandSender).getLocation(),sound,1,1);
+                                    }else{
+                                        commandSender.sendMessage(ChatColor.RED + "that sound does not exist. try using a number between 0 and " + Sounds.Playable_Sounds_Int.size());
+                                    }
+                                }catch (Exception ex){
+
                                 }
                             }
                         }

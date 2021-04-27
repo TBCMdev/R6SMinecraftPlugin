@@ -5,6 +5,7 @@ import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.Overrider;
 import me.R6SMC.plugin.GameLogic.GameInitializer;
 import me.R6SMC.plugin.GameLogic.GameLogic;
+import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -124,6 +125,7 @@ public class CommandListener implements CommandExecutor {
         if(cmd.getName().equalsIgnoreCase("start")){
             GameInitializer.Start();
         }
+
         return true;
     }
 }
