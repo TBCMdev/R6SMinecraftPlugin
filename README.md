@@ -1,5 +1,5 @@
 # R6SMinecraftPlugin
-R6s for minecraft!
+Rainbow Six Siege for minecraft!
 
 
 
@@ -34,6 +34,24 @@ after everyone has picked then the game starts. the Round system is in early bet
 8. DOKKAEBI : (In no stage useable)(NYR)(Beta) 2 Calls that disrupt the enemy with annoying sounds(will stop defenders from going on cams in future)
 
 if for some reason you tried to pick your operator and it did not register, please enter the command _/defoperator OperatorName_ || _/attkoperator OperatorName_
+
+
+
+---------------------
+CAMERAS
+---------------------
+
+in this plugin there is a feature where you can use cameras. when spawned into the game you will recieve an item that is labelled "camera". this will enter a random camera when entered, and when in a camera if you drop the item it will return you to your spot. if you are on a camera and get damaged, you will be teleported back(as it takes some time to leave the camera). if you want to cycle cameras, right click the item in your hand to cycle to the next camera.
+
+cameras can be shot by attackers, and will have particles near them when someone is using a camera.
+
+hopefully when this plugin comes out there will be features or ideas to add drones to it, but that is another giant wall to climb.
+
+planned features for cameras:
+1. _drones_
+2. _being able to look at a player on a camera and scan him, then the defending team knowing his location._
+3. _camera destruction_
+
 
 
 ---------------------
@@ -142,7 +160,16 @@ more info is in the text document link below.
 
 if you run the command to reload a class, and you receive this message:
 
-**_`Reloading class failed. Best course of action is to /reload your server or restart it.`_**`
+**_`Reloading class failed. Best course of action is to /reload your server or restart it.`_**
 
 PLEASE follow the instructions the command gives you.
+
+
+
+-------------------
+Useful info
+-------------------
+
+1. when in game and the _/reload_ command is used, your operator reload commands will NOT WORK. their data has allready been reset from the _/reload_ command and will not be able to get rid of their gadgets. they will unfortunately have to be removed manually.
+
 
