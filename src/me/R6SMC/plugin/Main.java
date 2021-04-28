@@ -6,6 +6,7 @@ import me.R6SMC.plugin.CommandClasses.Commands;
 import me.R6SMC.plugin.CommandClasses.CustomBookCommands;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
+import me.R6SMC.plugin.Listeners.CameraListener;
 import me.R6SMC.plugin.Listeners.MenuListener;
 import me.R6SMC.plugin.Listeners.OperatorAbilityListener;
 import org.bukkit.plugin.PluginManager;
@@ -56,9 +57,11 @@ public class Main extends JavaPlugin implements Listener {
 
     public void onEnable() {
         PluginManager manager = getServer().getPluginManager();
+        manager.registerEvents(new CameraListener(),this);
         manager.registerEvents(new GameLogic(), this);
         manager.registerEvents(new MenuListener(),this);
         manager.registerEvents(new OperatorAbilityListener(),this);
+        manager.registerEvents(new CameraListener(),this);
         Bukkit.getServer().getLogger().info("plugin `test plugin` is loaded and ready to use!");
         GameChat.BroadcastMessage("R6S MC loaded.");
         GameLogic.mainThread = this;

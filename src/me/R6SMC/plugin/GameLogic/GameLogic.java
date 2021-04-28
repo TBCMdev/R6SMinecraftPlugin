@@ -71,7 +71,7 @@ public class GameLogic implements Listener
             event.getPlayer().teleport(new Location(world,event.getFrom().getBlockX(),event.getFrom().getBlockY(),event.getFrom().getBlockZ(),45.5f,26.5f));
         }
     }
-    public static void TryEndGame(Player p){
+    public static boolean TryEndGame(Player p){
         if(AlivePlayers.contains(p)) {
             AlivePlayers.remove(p);
             DeadPlayers.add(p);
@@ -82,34 +82,50 @@ public class GameLogic implements Listener
 
                 int randPlayer = 0 + (int)(Math.random() * (BlueTeam.size() - 0));
                 p.setSpectatorTarget(BlueTeam.get(randPlayer));
+                return false;
             }else {
                 if(RedTeam.size() > 0 && BlueTeam.size() <= 0 && GameStarted) {
                     EndGame(2);
+                    return true;
                 }else if(BlueTeam.size() > 0 && RedTeam.size() <= 0 && GameStarted){
                     EndGame(1);
+                    return true;
                 }
             }
         }
+        return false;
     }
     @EventHandler
     public void onKill(PlayerDeathEvent event) {
+        boolean setTarget = true;
         if(GameStarted) {
             Bukkit.getLogger().info("Player Has Died");
             Player Killed = event.getEntity();
             Player Killer = event.getEntity().getKiller();
             if (event.getEntityType() == EntityType.PLAYER) {
                 Killed.sendMessage(ChatColor.DARK_RED + "DEATHS " + ChatColor.WHITE + "+1");
-                TryEndGame(Killed);
+                if(TryEndGame(Killed)){
+                    setTarget = false;
+                }else{
+                    setTarget = true;
+                }
             }
             if (event.getEntity().getKiller().getType() == EntityType.PLAYER) {
+                assert Killer != null;
                 if (GameChat.GetPlayerClass(Killer).Team == GameChat.GetPlayerClass(Killed).Team) {
                     Killer.sendMessage(ChatColor.DARK_RED + "DO NOT TEAM KILL!! -100 POINTS");
                     PlayerClasses.get(Killer.getDisplayName()).SetPoints(-100);
                 } else {
                     Killer.sendMessage(GameChat.GetTeamColor(PlayerClasses.get(Killer.getDisplayName())) + "KILLS " + ChatColor.WHITE + "+1");
                     PlayerClasses.get(Killer.getDisplayName()).SetPoints(100);
+                    GameChat.sendActionbar(Killer,ChatColor.GOLD + "YOU KILLED " + ChatColor.ITALIC +  Killed.getDisplayName());
+
                 }
             }
+            if(setTarget) {
+                Spectate.SetPlayerTarget(event.getEntity().getPlayer(), PlayerClasses.get(event.getEntity().getPlayer().getDisplayName()).GetTeam());
+            }
+            AlivePlayers.remove(event.getEntity().getPlayer());
         }
     }
     public static void EndGame(int WinningTeam){
@@ -249,13 +265,13 @@ public class GameLogic implements Listener
                     }
                     if (CurrentOperators.Check(EachPlayer, 6)) {
                         Loadouts.GiveAbilityItem(6, EachPlayer);
-
+                    }
                         Location defaultspawn = new Location(world, 767, 10, -628, 90f, 3f);
 
                         PositionList.add(defaultspawn);
                         Bukkit.getLogger().info("red team: " + EachPlayer);
                         EachPlayer.teleport(defaultspawn);
-                    }
+
                 }
                 break;
             case 1:
@@ -276,32 +292,40 @@ public class GameLogic implements Listener
                     //CHECK FOR UNEVEN TEAMS
                     Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
 
-                    PositionList.add(defaultspawndef);
                     Bukkit.getLogger().info("blue team: " + EachPlayer);
                     EachPlayer.teleport(defaultspawndef);
                 }
                 break;
         }
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        Bukkit.dispatchCommand(console, "test");
-        Bukkit.broadcastMessage(ChatColor.RED + "The Game Has Begun!");
+        Bukkit.broadcastMessage(ChatColor.RED + "ROUND "  + GameRounds.getCurrentRound());
         InitGame();
+        tryingToTeleportRed = false;
+        tryingToTeleportBlue = false;
+        //these bools are here to ensure that Resending teleportation only occurs when noone else is trying to teleport.
+        //this might not work, so try it and if it doesnt remove lines 302,303,311,309,319,321, and 323.
 
     }
-
+    private static boolean tryingToTeleportRed = false;
     public static void ResendTeleportRed() {
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-            TeleportTeams(2);
+        if(!tryingToTeleportRed) {
+            if (joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
+                tryingToTeleportRed = true;
+                Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
+                TeleportTeams(2);
+            }
         }
     }
+    private static boolean tryingToTeleportBlue = false;
     public static void ResendTeleportBlue() {
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-            TeleportTeams(1);
+        if(!tryingToTeleportBlue) {
+            if (joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
+                tryingToTeleportBlue = true;
+                Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
+                TeleportTeams(1);
+            }
         }
     }
-
     public static boolean HasGivenBooks = false;
     @Deprecated
     public static void ShowAvailableOperators(){
@@ -319,22 +343,18 @@ public class GameLogic implements Listener
             return;
         }
 }
-public static void StartGame(){
+    public static void StartGame(){
         for(Player p : GameChat.GetAllPlayers()){
             p.setGameMode(GameMode.ADVENTURE);
         }
 }
-
-
-public static long Seconds = 100,MaxSeconds = 100;
-public static void StartTimer(){
+    public static long Seconds = 100,MaxSeconds = 100;
+    public static void StartTimer(){
     PlayersCanMove = true;
     Timer timer = new Timer(Seconds,MaxSeconds);
     timer.startTimer();
 }
     public static boolean GameStarted = false;
-
-
     public static void CreatePlayerClass(Player p , String Name, String Class,int ID,int Team){
         if(!PlayerClasses.containsKey(Name)){
             PlayerClasses.put(Name,new PlayerClass(p,Name,Class,ID,Team));

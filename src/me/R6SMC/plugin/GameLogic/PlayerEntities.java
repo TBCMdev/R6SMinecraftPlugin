@@ -25,14 +25,19 @@ import org.bukkit.entity.Skeleton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class PlayerEntities {
+    private static HashMap<String,EntityPlayer> CurrentNPCs = new HashMap<>();
     public static EntityType CurrentSpawnType = EntityType.ARMOR_STAND;
     public static void CreateEntity(Player p, Location l){
-            addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), p);
+        addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), p);
         DevConsole.SendDevMessage(p,"Creating entity at: " + ChatColor.GREEN + l.getX() + " , " + l.getY() + " , " + l.getZ(),DevConsole.TESTING);
+    }
+    public static void RemoveEntity(Player p,Location l){
+        removeNpc(p);
     }
     public static void CreateEntity(Player p, Location l,String Name){
         addNpc((int) l.getX(), (int) l.getY(), (int) l.getZ(), Name,p);
@@ -46,6 +51,7 @@ public class PlayerEntities {
         }
 
     }
+
     public String[] getFromPlayer(Player playerBukkit) {
         EntityPlayer playerNMS = ((CraftPlayer) playerBukkit).getHandle();
         GameProfile profile = playerNMS.getProfile();
@@ -73,25 +79,82 @@ public class PlayerEntities {
             return null;
         }
     }
+    public static Location Vec3DToLocation(Vec3D v){
+        try{
+            Location l = new Location(GameLogic.world,0,0,0);
+            l.setX(v.getX());
+            l.setY(v.getY());
+            l.setZ(v.getZ());
+            return l;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public static Location getEntityLocation(Player p){
+        try{
+            return Vec3DToLocation(CurrentNPCs.get(p.getDisplayName()).getPositionVector());
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public static boolean removeNpc(Player player){
+        try {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
+                @Override
+                public void run() {
+                    player.sendMessage(ChatColor.GREEN + "trying to remove npc: " + CurrentNPCs.get(player.getDisplayName()));
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, CurrentNPCs.get(player.getDisplayName())));
+                        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(CurrentNPCs.get(player.getDisplayName()).getId()));
+                    }
+                    CurrentNPCs.remove(player.getDisplayName());
+                }
+
+            }, 5);
+            return true;
+        }catch (Exception e){
+            player.sendMessage(ChatColor.RED + "could not remove NPC.");
+            return false;
+        }
+
+    }
+    public static boolean removeNpc(Player player,String playerName){
+        try {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
+                @Override
+                public void run() {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, CurrentNPCs.get(playerName)));
+
+                    }
+                }
+
+            }, 5);
+            CurrentNPCs.remove(playerName);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
     public static EntityPlayer addNpc(int x, int y, int z,Player p) {
         EntityPlayer playerNMS = ((CraftPlayer) p).getHandle();
         String[] a = getFromName(p.getDisplayName());
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer Worldserver = ((CraftWorld) GameLogic.world).getHandle();
-        GameProfile profile = playerNMS.getProfile();
+        GameProfile profile = new GameProfile(UUID.randomUUID(),"NPC");
         profile.getProperties().put("textures", new Property("textures", a[0], a[1]));
         EntityPlayer npc = new EntityPlayer(server, Worldserver, profile, new PlayerInteractManager(Worldserver));
         npc.setPosition(x, y, z);
         for (Player player : Bukkit.getOnlinePlayers()) {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
-            /*Bukkit.getScheduler().scheduleSyncDelayedTask(GameLogic.mainThread, new Runnable() {
-                @Override
-                public void run() {
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc));
-                }
-            }, 5);*/
-
+        }
+        if(!CurrentNPCs.containsKey(p.getDisplayName())){
+            CurrentNPCs.put(p.getDisplayName(),npc);
+        }else{
+            p.sendMessage(ChatColor.RED + "could not insert your instantiated NPC.");
         }
         return npc;
     }
@@ -114,6 +177,9 @@ public class PlayerEntities {
                 }
             }, 5);*/
 
+        }
+        if(!CurrentNPCs.containsKey(playerName)){
+            CurrentNPCs.put(playerName,npc);
         }
         return npc;
     }

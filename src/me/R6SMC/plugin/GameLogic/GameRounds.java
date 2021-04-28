@@ -29,7 +29,9 @@ public class GameRounds {
             return false;
         }
     }
-
+    public static int getCurrentRound(){
+        return CurrentRound;
+    }
     public static boolean CheckToContinueGame(){
         if(BlueTeamRounds + RedTeamRounds == 6){
             IsOvertime = true;

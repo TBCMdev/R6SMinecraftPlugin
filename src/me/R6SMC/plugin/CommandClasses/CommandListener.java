@@ -5,7 +5,11 @@ import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.Overrider;
 import me.R6SMC.plugin.GameLogic.GameInitializer;
 import me.R6SMC.plugin.GameLogic.GameLogic;
+import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHandler;
+import me.R6SMC.plugin.menu.MenuInstances.PickWeaponsMenu;
+import me.R6SMC.plugin.menu.PlayerMenuUtility;
+import me.R6SMC.plugin.menu.PlayerMenus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,7 +32,6 @@ public class CommandListener implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-
         if(cmd.getName().equalsIgnoreCase("defoperator")) {
 
             if(args.length == 0) {
@@ -65,20 +68,14 @@ public class CommandListener implements CommandExecutor {
             if(args[0].equalsIgnoreCase("ash")) {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"ash");
-                GameLogic.ResendTeleportRed();
-                GameLogic.ResendTeleportBlue();
             }
             if(args[0].equalsIgnoreCase("capitao")) {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"capitao");
-                GameLogic.ResendTeleportRed();
-                GameLogic.ResendTeleportBlue();
             }
             if(args[0].equalsIgnoreCase("finka")) {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"finka");
-                GameLogic.ResendTeleportRed();
-                GameLogic.ResendTeleportBlue();
 
             }
 
@@ -124,6 +121,7 @@ public class CommandListener implements CommandExecutor {
         if(cmd.getName().equalsIgnoreCase("start")){
             GameInitializer.Start();
         }
+
         return true;
     }
 }

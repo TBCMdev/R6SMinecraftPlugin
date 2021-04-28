@@ -66,7 +66,7 @@ public class PickDefenseOperatorMenu extends Menu {
             case RED_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
                 //Aruni
-                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Activated Arunis Ability(Not finished)",DevConsole.TESTING);
+                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked Aruni(Not finished)",DevConsole.TESTING);
                 ((Player) e.getWhoClicked()).performCommand("defoperator aruni");
                 break;
         }
@@ -86,6 +86,9 @@ public class PickDefenseOperatorMenu extends Menu {
         DocMeta.setLore(DocItemLore);
         RookMeta.setLore(RookItemLore);
         AruniMeta.setLore(AruniItemLore);
+        Doc.setItemMeta(DocMeta);
+        Rook.setItemMeta(RookMeta);
+        Aruni.setItemMeta(AruniMeta);
         inventory.setItem(0,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
         inventory.setItem(1,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));
         inventory.setItem(2,new ItemStack(Material.GRAY_STAINED_GLASS_PANE,1));

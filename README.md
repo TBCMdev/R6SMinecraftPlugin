@@ -1,10 +1,93 @@
 # R6SMinecraftPlugin
-R6s for minecraft!
+Rainbow Six Siege for minecraft!
 
 
 
 ### Hi! thanks for checking out our new Plugin for Minecraft. Here is where you can get useful info on what the project is about and help with blank errors or problems.
 
+---------------------
+INFO
+---------------------
+
+To start playing the game ater you have installed the required elements([here](https://github.com/deadgunnerYT/R6SMinecraftPlugin/blob/master/README.md#installation))
+use the _/start_ command. if you have other plugins that use this command try using /R6SMC start.
+
+from there each player in the server will be asked to pick a team (defense|attack). then if they pick it they will be immobile and teleported into the pick stage. in this stage you pick an operator you want to play. the current operators in the game are:
+
+1. Doc
+2. Rook
+3. Aruni
+4. Ash
+5. Finka
+6. Capitao
+7. Bandit
+
+after everyone has picked then the game starts. the Round system is in early beta but is the same as Siege. here are all the Operators abilities:
+(NYR = Not Yet Released)
+1. DOC : 3 stim shots that heal himself(in future can heal others).(1 SECOND DELAY)
+2. ROOK : one use Abiitiy that gives Absorbtion to his entire team for the remainding time left in the round.
+3. ARUNI : (Beta) 3 Gadgets that electrify doors and prevent enemies from entering(if enemies run in then they will be damaged and the door will return to normal)
+4. ASH : 3 ability charges that can destroy certain wood.
+5. FINKA : 3 Stims that give the team Absorbtion for a short while.
+6. Capitao : (Beta) shoots a fire bolt that creates a patch of fire on the floor.
+7. BANDIT : (NYR)(Beta) 4 bandit charges that can electrify walls.
+8. DOKKAEBI : (In no stage useable)(NYR)(Beta) 2 Calls that disrupt the enemy with annoying sounds(will stop defenders from going on cams in future)
+
+if for some reason you tried to pick your operator and it did not register, please enter the command _/defoperator OperatorName_ || _/attkoperator OperatorName_
+
+
+
+---------------------
+CAMERAS
+---------------------
+
+in this plugin there is a feature where you can use cameras. when spawned into the game you will recieve an item that is labelled "camera". this will enter a random camera when entered, and when in a camera if you drop the item it will return you to your spot. if you are on a camera and get damaged, you will be teleported back(as it takes some time to leave the camera). if you want to cycle cameras, right click the item in your hand to cycle to the next camera.
+
+cameras can be shot by attackers, and will have particles near them when someone is using a camera.
+
+hopefully when this plugin comes out there will be features or ideas to add drones to it, but that is another giant wall to climb.
+
+planned features for cameras:
+1. _drones_
+2. _being able to look at a player on a camera and scan him, then the defending team knowing his location._
+3. _camera destruction_
+
+
+
+---------------------
+COMMANDS
+---------------------
+
+all commands for the plugin are listed here!:
+    
+    start:
+        usage: /<command>
+            description: starts the game
+      jointeamred:
+        usage: </command>
+        description: joins red team
+    jointeamblue:
+        usage: </command>
+        description: joins blue team
+    ability:
+        usage: </command>
+        description: gives ability obj
+    attkoperator:
+        usage: </command> [ash|capitao|finka]
+        description: picks attack operator of users choice
+    defoperator:
+        usage: </command> [doc|rook|aruni]
+        description: picks defense operator of users choice
+    override:
+        usage: </command> [movement] [true|false]
+        description: overrides a parameter to a given value
+    showPageBlue:
+        usage: </command> [default|doc|rook|Aruni] [1|2|3]
+    showPageRed:
+        usage: </command> [ash|capitao|finka] [1|2|3]
+    tbcm-dc:
+        usage: </command> [KEEPAMMO|TESTING|error_config|class_reload] [true|false|get|className] [className] [indexer]
+        description: a development command used for testing. (IN BETA)
 
 ---------------------
 INSTALLATION
@@ -77,7 +160,16 @@ more info is in the text document link below.
 
 if you run the command to reload a class, and you receive this message:
 
-**_`Reloading class failed. Best course of action is to /reload your server or restart it.`_**`
+**_`Reloading class failed. Best course of action is to /reload your server or restart it.`_**
 
 PLEASE follow the instructions the command gives you.
+
+
+
+-------------------
+Useful info
+-------------------
+
+1. when in game and the _/reload_ command is used, your operator reload commands will NOT WORK. their data has allready been reset from the _/reload_ command and will not be able to get rid of their gadgets. they will unfortunately have to be removed manually.
+
 

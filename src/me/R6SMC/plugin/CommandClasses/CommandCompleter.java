@@ -1,14 +1,19 @@
 package me.R6SMC.plugin.CommandClasses;
 
+import javafx.util.Pair;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.DevConsole.DevConsole;
+import me.R6SMC.plugin.Errors;
+import me.R6SMC.plugin.Sounds.Sounds;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CommandCompleter implements TabCompleter {
     @Override
@@ -32,7 +37,7 @@ public class CommandCompleter implements TabCompleter {
                     }};
                 }
             }
-                if(args[0].equalsIgnoreCase("error_config")){
+            if(args[0].equalsIgnoreCase("error_config")){
                     if(args.length == 2){
                         return new ArrayList<String>(){{add("reload");add("state");add("get");}};
                     }else if(args.length == 3){
@@ -49,6 +54,9 @@ public class CommandCompleter implements TabCompleter {
                                 add("Bandit");
                                 add("Doc");
                                 add("Rook");
+                                add("Camera");
+                                add("Camera_Utility");
+                                add("Camera_Listener");
                             }};
 
                         }
@@ -64,26 +72,32 @@ public class CommandCompleter implements TabCompleter {
                                 add("Bandit");
                                 add("Doc");
                                 add("Rook");
+                                add("Camera");
+                                add("CameraUtility");
+                                add("CameraListener");
                             }};
 
                             for(String st : Operators){
                                 if(args[2].equalsIgnoreCase(st)){
-                                    return new ArrayList<String>() {{
-                                        add("*ABIL_S");
-                                        add("*U_EX");
-                                        add("*R_E");
-                                        add("*ABIL_W");
+                                    List<String> list =  new ArrayList<String>() {{
+                                            Set<Pair<Class,String>> classes = Errors.Errors.keySet();
+                                            for(Pair<Class,String> pair : classes){
+                                                if(pair.getKey().getSimpleName().equalsIgnoreCase(st)){
+                                                    add(pair.getValue());
+                                                }
+                                            }
                                     }};
+                                    return list;
                                 }
                             }
                         }
                     }
                 }
-
             if(args[0].equalsIgnoreCase("npc")) {
                 if (args.length == 2) {
                     List<String> NpcOptions = new ArrayList<String>() {{
                         add("create");
+                        add("remove");
                     }};
                     return NpcOptions;
                 } else if (args.length == 3) {
@@ -110,6 +124,49 @@ public class CommandCompleter implements TabCompleter {
                     }};
                     return PlayerPosZ;
                 }
+            }
+            if(args[0].equalsIgnoreCase("timer")) {
+                if (args.length == 2){
+                    return new ArrayList<String>() {{
+                        add("add");
+                        add("subtract");
+                        add("set");
+                    }};
+                }
+                if(args.length == 3) {
+                    if (args[1].equalsIgnoreCase("set")) {
+                        return new ArrayList<String>() {{
+                            add("*0 < your_value > 5*");
+                        }};
+                    }
+                    if (args[1].equalsIgnoreCase("add")) {
+                        return new ArrayList<String>() {{
+                            add("*0 < your_value > 5*");
+                        }};
+                    }
+                    if (args[1].equalsIgnoreCase("subtract")) {
+                        return new ArrayList<String>() {{
+                            add("*0 < your_value > 5*");
+                        }};
+                    }
+                }
+            }
+            if(args[0].equalsIgnoreCase("access_camera")){
+                return new ArrayList<String>(){{
+                    add("camera int");
+                }};
+
+
+            }
+            if(args[0].equalsIgnoreCase("sound")){
+                if(args.length == 2) {
+                    return new ArrayList<String>() {{
+                        add("play");
+                    }};
+                }else if(args.length == 3){
+                    return new ArrayList<>(Sounds.Playable_Sounds_Str.keySet());
+                }
+
             }
         }
 

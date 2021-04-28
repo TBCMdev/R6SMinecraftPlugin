@@ -1,16 +1,32 @@
 package me.R6SMC.plugin.PlayerLogic;
 
+import javafx.util.Pair;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.GameLogic.GameLogic;
+import me.R6SMC.plugin.PointSystem.PointSystem;
 import me.R6SMC.plugin.Sounds.Sounds;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import javax.swing.plaf.synth.Region;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 
 public class PlayerClass {
+    public enum PointType{
+        Kill ,
+        Team_Kill,
+        Round_Lose,
+        Round_Win,
+        Game_Win,
+        Game_Lose
+    }
+    public static PointType[] getPointTypeValues(){
+        PointType[] pt = PointType.values();
+        return pt;
+    }
+    PointType currentPointType = PointType.Kill;
     public boolean DokkaebiCallDenied = false;
     public boolean DokkaebiCallRecieved = false;
     public Player Player;
@@ -44,6 +60,40 @@ public class PlayerClass {
                 break;
             case 2:
                 Player.sendMessage(ChatColor.BLUE + "+" + points);
+                break;
+
+        }
+    }
+    public void SetPoints(int points,PointType t){
+        Points += points;
+        switch (Team){
+            case 1:
+                Player.sendMessage(ChatColor.RED + "+" + points);
+                break;
+            case 2:
+                Player.sendMessage(ChatColor.BLUE + "+" + points);
+                break;
+
+        }
+        switch (t){
+            case Kill:
+                PointSystem.killSound(Player);
+                break;
+            case Team_Kill:
+                PointSystem.team_KillSound(Player);
+                break;
+            case Round_Lose:
+                PointSystem.round_Lose();
+                break;
+            case Round_Win:
+                PointSystem.round_Win();
+                break;
+            case Game_Win:
+                PointSystem.game_endSound();
+                break;
+            case Game_Lose:
+                PointSystem.game_loseSound();
+                break;
 
         }
     }
