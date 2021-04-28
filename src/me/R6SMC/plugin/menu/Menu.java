@@ -30,7 +30,7 @@ public abstract class Menu implements InventoryHolder {
     public void Open(){
         inventory = Bukkit.createInventory(this,getSlots(),getMenuName());
         this.setMenuItems();
-        DevConsole.SendDevMessage(this.playerMenuUtility.getOwner(), "TSET WINDOW OPENS SUCCESSFULLY",DevConsole.TESTING);
+        DevConsole.SendDevMessage(this.playerMenuUtility.getOwner(), "TEST WINDOW OPENS SUCCESSFULLY",DevConsole.TESTING);
         new BukkitRunnable() {
             @Override
             public void run() {

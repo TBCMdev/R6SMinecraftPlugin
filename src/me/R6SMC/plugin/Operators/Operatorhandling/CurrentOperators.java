@@ -1,6 +1,7 @@
 package me.R6SMC.plugin.Operators.Operatorhandling;
 
 import me.R6SMC.plugin.DevConsole.DevConsole;
+import me.R6SMC.plugin.Errors;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
@@ -29,6 +30,14 @@ public class CurrentOperators {
         }catch (Exception e){
             return false;
         }
+    }
+    public static Operator getPlayerWithOp(Player p){
+        try{
+            return CurrentOperators.get(p);
+        }catch (Exception e){
+            p.sendMessage(Errors.getError(CurrentOperators.class,"GP_WO"/*get player with op*/));
+        }
+        return null;
     }
     private static List<Operator> testOperators = new ArrayList<>();
     private static boolean isRunning = false;

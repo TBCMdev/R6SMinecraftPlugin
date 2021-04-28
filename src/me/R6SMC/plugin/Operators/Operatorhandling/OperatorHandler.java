@@ -3,6 +3,8 @@ package me.R6SMC.plugin.Operators.Operatorhandling;
 import me.R6SMC.plugin.Chat.GameChat;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Main;
+import me.R6SMC.plugin.menu.MenuInstances.PickWeaponsMenu;
+import me.R6SMC.plugin.menu.PlayerMenus;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,6 +17,7 @@ public class OperatorHandler {
 
         public static void PickOperator(String Name, CommandSender sender){
             Player player = (Player)sender;
+
             switch(Name.toLowerCase()) {
                 case "doc":
                     GameLogic.doc = sender.getName().toString();
@@ -82,8 +85,9 @@ public class OperatorHandler {
                     break;
 
             }
-            GameLogic.ResendTeleportRed();
-            GameLogic.ResendTeleportBlue();
+            PickWeaponsMenu menu = new PickWeaponsMenu(PlayerMenus.GetPlayerMenuUtility((Player) sender));
+            menu.Open();
+
         }
 
 }

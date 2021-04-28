@@ -6,6 +6,8 @@ import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.GameLogic.PlayerEntities;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Sounds.Sounds;
+import me.R6SMC.plugin.menu.MenuInstances.KickPlayerMenu;
+import me.R6SMC.plugin.menu.PlayerMenus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -31,7 +33,11 @@ public class DevConsole implements CommandExecutor {
         }
     }
     public static List<String> getCommands(){
-        return new ArrayList<String>(){{add("testing");add("keepammo");add("npc");add("error_config");add("class_reload");add("operator_create");add("sound");}};
+        return new ArrayList<String>(){{add("testing");
+            add("keepammo");add("npc");add("error_config");
+            add("class_reload");add("operator_create");
+            add("sound");
+        }};
     }
     public static boolean GetTester(){
         return TESTING;
@@ -166,13 +172,11 @@ public class DevConsole implements CommandExecutor {
                     if(args[1].equalsIgnoreCase("play")){
                         if(args[2] != null){
                             try{
-                                for(String st : Sounds.Playable_Sounds_Str.keySet()){
-                                    if(st.equalsIgnoreCase(args[2])){
+                                    if(Sounds.Playable_Sounds_Str.containsKey(args[2])){
                                         Sound sound = Sounds.Playable_Sounds_Str.get(args[2]);
                                         ((Player)commandSender).playSound(((Player) commandSender).getLocation(),sound,1,1);
 
                                     }
-                                }
                             }catch (Exception e){
                                 try{
                                     int i = Integer.parseInt(args[2]);
@@ -183,11 +187,15 @@ public class DevConsole implements CommandExecutor {
                                         commandSender.sendMessage(ChatColor.RED + "that sound does not exist. try using a number between 0 and " + Sounds.Playable_Sounds_Int.size());
                                     }
                                 }catch (Exception ex){
-
+                                    commandSender.sendMessage(ChatColor.RED + "error.");
                                 }
                             }
                         }
                     }
+                }
+                if(args[0].equalsIgnoreCase("kill")){
+                    KickPlayerMenu menu = new KickPlayerMenu(PlayerMenus.GetPlayerMenuUtility((Player)commandSender));
+                    menu.Open();
                 }
             }
         }

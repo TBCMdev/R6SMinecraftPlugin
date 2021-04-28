@@ -27,9 +27,10 @@ public class Spectate implements Listener{
             @Override
             public void run() {
                 if(GameLogic.GameStarted) {
+
                     if(CheckToSetTarget(p)) {
                         PlayerEntity.getSpecatorTarget();
-                        PlayerEntity.setSpectatorTarget((Entity) p);
+                        PlayerEntity.setSpectatorTarget((Entity) pS);
                     }else{
                         //p = new player
                         //also if all the players are dead you must cancel the operatotion

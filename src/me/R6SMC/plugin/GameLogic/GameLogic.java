@@ -71,7 +71,7 @@ public class GameLogic implements Listener
             event.getPlayer().teleport(new Location(world,event.getFrom().getBlockX(),event.getFrom().getBlockY(),event.getFrom().getBlockZ(),45.5f,26.5f));
         }
     }
-    public static void TryEndGame(Player p){
+    public static boolean TryEndGame(Player p){
         if(AlivePlayers.contains(p)) {
             AlivePlayers.remove(p);
             DeadPlayers.add(p);
@@ -82,26 +82,36 @@ public class GameLogic implements Listener
 
                 int randPlayer = 0 + (int)(Math.random() * (BlueTeam.size() - 0));
                 p.setSpectatorTarget(BlueTeam.get(randPlayer));
+                return false;
             }else {
                 if(RedTeam.size() > 0 && BlueTeam.size() <= 0 && GameStarted) {
                     EndGame(2);
+                    return true;
                 }else if(BlueTeam.size() > 0 && RedTeam.size() <= 0 && GameStarted){
                     EndGame(1);
+                    return true;
                 }
             }
         }
+        return false;
     }
     @EventHandler
     public void onKill(PlayerDeathEvent event) {
+        boolean setTarget = true;
         if(GameStarted) {
             Bukkit.getLogger().info("Player Has Died");
             Player Killed = event.getEntity();
             Player Killer = event.getEntity().getKiller();
             if (event.getEntityType() == EntityType.PLAYER) {
                 Killed.sendMessage(ChatColor.DARK_RED + "DEATHS " + ChatColor.WHITE + "+1");
-                TryEndGame(Killed);
+                if(TryEndGame(Killed)){
+                    setTarget = false;
+                }else{
+                    setTarget = true;
+                }
             }
             if (event.getEntity().getKiller().getType() == EntityType.PLAYER) {
+                assert Killer != null;
                 if (GameChat.GetPlayerClass(Killer).Team == GameChat.GetPlayerClass(Killed).Team) {
                     Killer.sendMessage(ChatColor.DARK_RED + "DO NOT TEAM KILL!! -100 POINTS");
                     PlayerClasses.get(Killer.getDisplayName()).SetPoints(-100);
@@ -112,6 +122,10 @@ public class GameLogic implements Listener
 
                 }
             }
+            if(setTarget) {
+                Spectate.SetPlayerTarget(event.getEntity().getPlayer(), PlayerClasses.get(event.getEntity().getPlayer().getDisplayName()).GetTeam());
+            }
+            AlivePlayers.remove(event.getEntity().getPlayer());
         }
     }
     public static void EndGame(int WinningTeam){

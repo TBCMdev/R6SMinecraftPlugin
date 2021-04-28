@@ -10,6 +10,7 @@ public abstract class Operator {
     protected Player player;
     protected PlayerClass playerClass;
     protected String Name;
+    public int picked_Loadout = 1;
     public Operator(int abC,Player p,PlayerClass pC, String name){
         this.AbilityCount = abC;
         this.player = p;
@@ -22,6 +23,7 @@ public abstract class Operator {
     public abstract void ResetAbility();
     public abstract void SetAbility();
     public abstract void activateAbility();
+
     public String getName(){
         return this.Name;
     }
