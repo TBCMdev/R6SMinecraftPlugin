@@ -300,18 +300,30 @@ public class GameLogic implements Listener
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.broadcastMessage(ChatColor.RED + "ROUND "  + GameRounds.getCurrentRound());
         InitGame();
+        tryingToTeleportRed = false;
+        tryingToTeleportBlue = false;
+        //these bools are here to ensure that Resending teleportation only occurs when noone else is trying to teleport.
+        //this might not work, so try it and if it doesnt remove lines 302,303,311,309,319,321, and 323.
 
     }
+    private static boolean tryingToTeleportRed = false;
     public static void ResendTeleportRed() {
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-            TeleportTeams(2);
+        if(!tryingToTeleportRed) {
+            if (joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
+                tryingToTeleportRed = true;
+                Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
+                TeleportTeams(2);
+            }
         }
     }
+    private static boolean tryingToTeleportBlue = false;
     public static void ResendTeleportBlue() {
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-            TeleportTeams(1);
+        if(!tryingToTeleportBlue) {
+            if (joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
+                tryingToTeleportBlue = true;
+                Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
+                TeleportTeams(1);
+            }
         }
     }
     public static boolean HasGivenBooks = false;

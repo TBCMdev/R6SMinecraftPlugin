@@ -68,7 +68,10 @@ public class PickWeaponsMenu extends Menu {
                 }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("loadout 2")){
                     CurrentOperators.getPlayerWithOp(playerMenuUtility.getOwner()).picked_Loadout = 2;
 
+                }else{
+                    return;
                 }
+                //the teleporting should happen here
                 GameLogic.ResendTeleportRed();
                 GameLogic.ResendTeleportBlue();
                 break;
