@@ -66,7 +66,6 @@ public class Main extends JavaPlugin implements Listener {
         GameChat.BroadcastMessage("R6S MC loaded.");
         GameLogic.mainThread = this;
         world = Bukkit.getWorld("world");
-
         //ENABLE COMMANDS
         getCommand("tbcm-dc").setExecutor(new DevConsole());
         getCommand("tbcm-dc").setTabCompleter(new CommandCompleter());
@@ -82,129 +81,24 @@ public class Main extends JavaPlugin implements Listener {
 
         }
     }
-
-
-    /*public void onHit(ProjectileHitEvent event,Block hitBlock,Projectile arrow) {
-        Player p = (Player) arrow.getShooter();
-        getLogger().info("you hit soomething");
-        p.sendMessage("nice shot!");
-        Entity entity = event.getEntity();
-
-        Block block = event.getHitBlock();
-        Location loc;
-
-        if(shooter == ash) {
-            if(block.getRelative(BlockFace.NORTH).getType().equals(Material.DARK_OAK_SLAB)) {
-                Block relativeBlock = block.getRelative(BlockFace.NORTH);
-                relativeBlock.setType(Material.AIR);
-            }
-            if(block.getRelative(BlockFace.SOUTH).getType().equals(Material.DARK_OAK_SLAB)) {
-                Block relativeBlock = block.getRelative(BlockFace.SOUTH);
-                relativeBlock.setType(Material.AIR);
-            }
-            if(block.getRelative(BlockFace.EAST).getType().equals(Material.DARK_OAK_SLAB)) {
-                Block relativeBlock = block.getRelative(BlockFace.EAST);
-                relativeBlock.setType(Material.AIR);
-            }
-            if(block.getRelative(BlockFace.WEST).getType().equals(Material.DARK_OAK_SLAB)){
-                Block relativeBlock = block.getRelative(BlockFace.NORTH);
-                relativeBlock.setType(Material.AIR);
-            }
-
-        }
-
-
-
-    }*/
-
-
-
     public static void GameStart(){
         GameLogic.HasGivenBooks = false;
         TextComponent defenseTxt = new TextComponent(ChatColor.BLUE + "*DEFENSE*");
         TextComponent hoverTextDEF = new TextComponent(ChatColor.BLUE +"CLICK TO JOIN THE DEFENDING TEAM");
-
         TextComponent attackTxt = new TextComponent(ChatColor.RED + "*ATTACK*");
         TextComponent hoverTextATTK = new TextComponent(ChatColor.RED + "CLICK TO JOIN THE ATTACKING TEAM");
-
         HoverEvent hoverEventDEF = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextDEF});
         HoverEvent hoverEventATTK = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextATTK});
-
         attackTxt.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/jointeamred"));
         defenseTxt.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/jointeamblue"));
-
         attackTxt.setHoverEvent(hoverEventATTK);
         defenseTxt.setHoverEvent(hoverEventDEF);
-
-
         Bukkit.getServer().spigot().broadcast(defenseTxt);
-
         Bukkit.getServer().spigot().broadcast(attackTxt);
 
     }
-
-
-    //public void equipArmor3(Player p) {
-
-    //if (p.getInventory().getArmorContents() != null) {
-    //	ItemStack[] armor3 = { new ItemStack(Material.DIAMOND_BOOTS),
-    //			new ItemStack(Material.DIAMOND_HELMET),
-    //			new ItemStack(Material.DIAMOND_CHESTPLATE),
-    //			new ItemStack(Material.DIAMOND_LEGGINGS), };
-
-    //	p.getInventory().setArmorContents(armor3);
-    //}
-    //}
-    public void PickOperator(String Name,CommandSender sender){
-        Player player = (Player)sender;
-        switch(Name.toLowerCase()) {
-            case "doc":
-                doc = sender.getName().toString();
-                PlayerOperators.put(doc,(Player) sender);
-                GameLogic.PickedOperators ++;
-                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"doc",PickedOperators,1);
-                getLogger().info("player who has picked doc:" + doc);
-                sender.sendMessage(ChatColor.GREEN + "you have chosen doc! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                GameChat.sendActionbar((Player) sender, ChatColor.BLUE + "click to activate docs healing effect");
-                getLogger().info("operator picked.");
-                PlayersWOP.add(sender.getName().toString());
-                break;
-            case "rook":
-                rook = sender.getName().toString();
-                PlayerOperators.put(rook,(Player) sender);
-                GameLogic.PickedOperators ++;
-                sender.sendMessage(ChatColor.GREEN + "you have chosen rook! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"rook",PickedOperators,1);
-                getLogger().info("operator picked");
-                PlayersWOP.add(sender.getName().toString());
-                break;
-            case "tachanka":
-                tachanka = sender.getName().toString();
-                PlayerOperators.put(tachanka,(Player) sender);
-                GameLogic.PickedOperators ++;
-                sender.sendMessage(ChatColor.GREEN + "you have chosen tachanka! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
-                GameLogic.CreatePlayerClass(player, player.getDisplayName(),"tachanka",PickedOperators,1);
-                getLogger().info("operator picked");
-                PlayersWOP.add(sender.getName().toString());
-                break;
-            default:
-                sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / tachanka]");
-                break;
-        }
-        GameLogic.ResendTeleportRed();
-        GameLogic.ResendTeleportBlue();
-    }
-
     public boolean onCommand(CommandSender sender,Command cmd,String CommandLabel,String[] args) {
-        //if(cmd.getName().equalsIgnoreCase("showpageblue")){
-        //    GameLogic.ShowAvailableOperators();
-        //}
 
         return true;
     }
-
-
-
-
-
 }

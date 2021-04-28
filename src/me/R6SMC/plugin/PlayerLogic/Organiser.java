@@ -16,6 +16,7 @@ import java.util.Locale;
 public class Organiser{
     public static String[] AllPrimaryGuns = new String[]{"MP5A3","M4A1","SVD","M500","M16A4","G3A3","SPAS 12","FN_FAL"};
     public static String[] AllSecondaryGuns = new String[]{"G17","1911","DEAGLE","MAC 10","PM","GLOCK 18"};
+    public static String[] AllAttachments = new String[]{"","","","",};
     public static void Organise(Player p,boolean KeepAmmo){
         new BukkitRunnable() {
             @Override
@@ -26,12 +27,6 @@ public class Organiser{
                     if (i.getType() == Material.AIR) {
                         DevConsole.SendDevMessage(p, "Returned as item is null!", DevConsole.TESTING);
                         return;
-                    }
-                    for(String s : AllPrimaryGuns){
-                        if(i.getItemMeta().getLore().get(i.getItemMeta().getLore().size() - 1).equalsIgnoreCase(s)){
-                            p.sendMessage("found primary gun");
-                        }
-
                     }
                     p.sendMessage("getting item:" + i.getItemMeta());
                     if (i.getType() == Material.CARROT_ON_A_STICK) {

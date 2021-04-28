@@ -87,7 +87,7 @@ public class GameRounds {
     }
     public static void CreateNewRound(int winningTeam) {
         endRound(winningTeam);
-        CurrentOperators.ResetOperators();
+        GameInitializer.ResetForNewRound();
         if (CheckToContinueGame()) {
             for (Player p : GameChat.GetAllPlayers()) {
                 p.getInventory().clear();

@@ -30,5 +30,6 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="org.reflections:reflections:0.9.12" level="project" />
   </component>
 </module>

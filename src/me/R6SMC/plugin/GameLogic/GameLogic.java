@@ -71,6 +71,15 @@ public class GameLogic implements Listener
             event.getPlayer().teleport(new Location(world,event.getFrom().getBlockX(),event.getFrom().getBlockY(),event.getFrom().getBlockZ(),45.5f,26.5f));
         }
     }
+    public static void giveArmorTemplate(){
+        for(Player p : GameChat.GetAllPlayers()){
+            p.getInventory().setArmorContents(new ItemStack[]{
+                    new ItemStack(Material.DIAMOND_BOOTS),
+                    new ItemStack(Material.DIAMOND_LEGGINGS),
+                    new ItemStack(Material.DIAMOND_CHESTPLATE),
+                    new ItemStack(Material.DIAMOND_HELMET),});
+        }
+    }
     public static boolean TryEndGame(Player p){
         if(AlivePlayers.contains(p)) {
             AlivePlayers.remove(p);
@@ -160,27 +169,11 @@ public class GameLogic implements Listener
             joinedPlayers ++;
             RedTeamCount ++;
         }
-        /*String[] AttackOPTextContents = new String[]{"*ASH*","*CAPITAO*","*FINKA*"};
-        String[] AttackHoverContents = new String[]{"CLICK TO USE ASH","CLICK TO USE CAPITAO","CLICK TO USE FINKA"};
-        String[] AttackClickCommands = new String[]{"/attkoperator ash","/attkoperator capitao","/attkoperator finka"};
-
-        TextComponent[] AttackOPTexts = GameChat.CreateTextComponents(new TextComponent[2],AttackOPTextContents,ChatColor.RED);
-
-        GameChat.CreateHoverEvents(HoverEvent.Action.SHOW_TEXT, AttackOPTexts, AttackHoverContents);
-        GameChat.CreateClickEvents(ClickEvent.Action.RUN_COMMAND,AttackOPTexts,AttackClickCommands);
-
-        GameChat.SendAllTextEvents(AttackOPTexts,p);
-        //GIVE THE BOOK
-        //SET POSITIONS AND DISALLOW MOVEMENT
-        */
         GameChat.SendMessage(ChatColor.DARK_RED + "you joined the attacking team!",p);
         TeleportPlayersPickingOPS();
         PickAttackOperatorMenu menu = new PickAttackOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
         menu.Open();
-        if(joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= joinedPlayers) {
-            Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
 
-        }
     }
     public static void InitTeamBlue(Player p) {
         if (RedTeamCount > BlueTeamCount || RedTeamCount == 0 && BlueTeamCount == 0) {
@@ -188,33 +181,6 @@ public class GameLogic implements Listener
             joinedPlayers++;
             Bukkit.getLogger().info("playeradded!!!");
         }
-        //deprecated as i am trying out the inventory window method for Choosing operators.
-
-        /*TextComponent defenseTxtrook = new TextComponent(ChatColor.BLUE + "*ROOK*");
-        TextComponent hoverTextrook = new TextComponent(ChatColor.BLUE + "CLICK TO USE ROOK");
-
-        TextComponent defenseTxtdoc = new TextComponent(ChatColor.BLUE + "*DOC*");
-        TextComponent hoverTextdoc = new TextComponent(ChatColor.BLUE + "CLICK TO USE DOC");
-
-        TextComponent defenseTxtT = new TextComponent(ChatColor.BLUE + "*Aruni*");
-        TextComponent hoverTextT = new TextComponent(ChatColor.BLUE + "CLICK TO USE Aruni");
-
-        HoverEvent hoverEventrook = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextrook});
-        HoverEvent hoverEventdoc = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextdoc});
-        HoverEvent hoverEventT = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{hoverTextT});
-
-        defenseTxtrook.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator rook"));
-        defenseTxtdoc.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator doc"));
-        defenseTxtT.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/defoperator Aruni"));
-
-        defenseTxtrook.setHoverEvent(hoverEventrook);
-        defenseTxtdoc.setHoverEvent(hoverEventdoc);
-        defenseTxtT.setHoverEvent(hoverEventT);
-
-        p.spigot().sendMessage(defenseTxtrook);
-        p.spigot().sendMessage(defenseTxtdoc);
-        p.spigot().sendMessage(defenseTxtT);
-        */
         TeleportPlayersPickingOPS();
         PickDefenseOperatorMenu defMenu = new PickDefenseOperatorMenu(PlayerMenus.GetPlayerMenuUtility(p));
         defMenu.Open();
@@ -304,7 +270,7 @@ public class GameLogic implements Listener
         tryingToTeleportBlue = false;
         //these bools are here to ensure that Resending teleportation only occurs when noone else is trying to teleport.
         //this might not work, so try it and if it doesnt remove lines 302,303,311,309,319,321, and 323.
-
+        giveArmorTemplate();
     }
     private static boolean tryingToTeleportRed = false;
     public static void ResendTeleportRed() {
