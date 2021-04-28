@@ -11,6 +11,7 @@ import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,6 +29,7 @@ public class CurrentOperators {
             CurrentOperators.clear();
             return true;
         }catch (Exception e){
+            Bukkit.getLogger().info("Could not reset operators.");
             return false;
         }
     }

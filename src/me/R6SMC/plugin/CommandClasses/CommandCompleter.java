@@ -97,6 +97,7 @@ public class CommandCompleter implements TabCompleter {
                 if (args.length == 2) {
                     List<String> NpcOptions = new ArrayList<String>() {{
                         add("create");
+                        add("remove");
                     }};
                     return NpcOptions;
                 } else if (args.length == 3) {
@@ -124,12 +125,45 @@ public class CommandCompleter implements TabCompleter {
                     return PlayerPosZ;
                 }
             }
+            if(args[0].equalsIgnoreCase("timer")) {
+                if (args.length == 2){
+                    return new ArrayList<String>() {{
+                        add("add");
+                        add("subtract");
+                        add("set");
+                    }};
+                }
+                if(args.length == 3) {
+                    if (args[1].equalsIgnoreCase("set")) {
+                        return new ArrayList<String>() {{
+                            add("*0 < your_value > 5*");
+                        }};
+                    }
+                    if (args[1].equalsIgnoreCase("add")) {
+                        return new ArrayList<String>() {{
+                            add("*0 < your_value > 5*");
+                        }};
+                    }
+                    if (args[1].equalsIgnoreCase("subtract")) {
+                        return new ArrayList<String>() {{
+                            add("*0 < your_value > 5*");
+                        }};
+                    }
+                }
+            }
+            if(args[0].equalsIgnoreCase("access_camera")){
+                return new ArrayList<String>(){{
+                    add("camera int");
+                }};
+
+
+            }
             if(args[0].equalsIgnoreCase("sound")){
-                if(args.length == 1) {
+                if(args.length == 2) {
                     return new ArrayList<String>() {{
                         add("play");
                     }};
-                }else if(args.length == 2){
+                }else if(args.length == 3){
                     return new ArrayList<>(Sounds.Playable_Sounds_Str.keySet());
                 }
 

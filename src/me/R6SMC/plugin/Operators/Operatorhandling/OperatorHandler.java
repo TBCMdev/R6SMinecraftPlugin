@@ -23,16 +23,15 @@ public class OperatorHandler {
                     GameLogic.doc = sender.getName().toString();
                     Main.PlayerOperators.put(GameLogic.doc,(Player) sender);
                     GameLogic.PickedOperators ++;
-                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"doc",GameLogic.PickedOperators,1);
                     getLogger().info("player who has picked doc:" + GameLogic.doc);
                     sender.sendMessage(ChatColor.GREEN + "you have chosen doc! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
                     GameChat.sendActionbar((Player) sender, ChatColor.BLUE + "click to activate docs healing effect");
                     getLogger().info("operator picked.");
                     Main.PlayersWOP.add(sender.getName().toString());
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"doc",GameLogic.PickedOperators,1);
                     if(!CurrentOperators.CurrentOperators.containsKey(player)){
                         CurrentOperators.Add(player,1);
                     }
-
                     break;
                 case "rook":
                     GameLogic.rook = sender.getName().toString();
@@ -80,8 +79,19 @@ public class OperatorHandler {
                     if(!CurrentOperators.CurrentOperators.containsKey(player)){
                         CurrentOperators.Add(player,5);
                     }
+                case "capitao":
+                    GameLogic.finka = sender.getName();
+                    Main.PlayerOperators.put(GameLogic.finka,(Player) sender);
+                    GameLogic.PickedOperators++;
+                    sender.sendMessage(ChatColor.GREEN + "you have chosen capitao! to use his abilities, please refer to the action bar above your hotbar, when teleported into the game");
+                    GameLogic.CreatePlayerClass(player, player.getDisplayName(),"capitao",GameLogic.PickedOperators,2);
+                    getLogger().info("operator picked");
+                    Main.PlayersWOP.add(sender.getName().toString());
+                    if(!CurrentOperators.CurrentOperators.containsKey(player)){
+                        CurrentOperators.Add(player,5);
+                    }
                 default:
-                    sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [doc / rook / Aruni]");
+                    sender.sendMessage(ChatColor.RED + "*ERROR* " + ChatColor.GRAY + " usage: /defoperator [operator name]");
                     break;
 
             }

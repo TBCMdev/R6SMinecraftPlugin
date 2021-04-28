@@ -60,12 +60,12 @@ public class PickAttackOperatorMenu extends Menu {
                 break;
             case BROWN_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
-                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked Rook by Menu(Not Finished)",DevConsole.TESTING);
+                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked finka by Menu(Not Finished)",DevConsole.TESTING);
                 ((Player) e.getWhoClicked()).performCommand("attkoperator finka");
                 break;
             case GRAY_STAINED_GLASS_PANE:
                 e.getWhoClicked().closeInventory();
-                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked Aruni by Menu(Not Finished)",DevConsole.TESTING);
+                DevConsole.SendDevMessage((Player)e.getWhoClicked(),"Picked capitao by Menu(Not Finished)",DevConsole.TESTING);
                 ((Player) e.getWhoClicked()).performCommand("attkoperator capitao");
                 break;
         }
@@ -85,13 +85,17 @@ public class PickAttackOperatorMenu extends Menu {
         AshMeta.setLore(AshItemLore);
         CapitaoMeta.setLore(CapitaoItemLore);
         FinkaMeta.setLore(FinkaItemLore);
+        Ash.setItemMeta(AshMeta);
+        Finka.setItemMeta(FinkaMeta);
+        Capitao.setItemMeta(CapitaoMeta);
+        inventory.setItem(0,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(1,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(2,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(3,Ash);
         inventory.setItem(4,Capitao);
         inventory.setItem(5,Finka);
-        inventory.setItem(5,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(6,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
         inventory.setItem(7,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
+        inventory.setItem(8,new ItemStack(Material.RED_STAINED_GLASS_PANE,1));
     }
 }

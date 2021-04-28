@@ -18,6 +18,32 @@ public class Timer extends BukkitRunnable {
         Seconds = seconds;
         Bukkit.getLogger().info(ChatColor.RED + "FULL TIME: " + MaxSeconds);
     }
+    public static void SetTimer(float time){
+        if(time < 1){
+            GameLogic.GameTime = time;
+        }else{
+            GameLogic.GameTime = 1;
+        }
+        if(time < MaxSeconds){
+            Seconds = time;
+        }else{
+            Seconds = MaxSeconds;
+        }
+
+    }
+    public static void ChangeTimer(float time){
+        if(GameLogic.GameTime + time <= 1){
+            GameLogic.GameTime += time;
+        }else{
+            GameLogic.GameTime = 1;
+        }
+        if(Seconds + time <= MaxSeconds){
+            Seconds += time;
+        }else{
+            Seconds = MaxSeconds;
+        }
+
+    }
     public void startTimer() {
         GameLogic.GameTime = 1f;
         GameLogic.GameStarted = true;

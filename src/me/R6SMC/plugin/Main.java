@@ -61,6 +61,7 @@ public class Main extends JavaPlugin implements Listener {
         manager.registerEvents(new GameLogic(), this);
         manager.registerEvents(new MenuListener(),this);
         manager.registerEvents(new OperatorAbilityListener(),this);
+        manager.registerEvents(new CameraListener(),this);
         Bukkit.getServer().getLogger().info("plugin `test plugin` is loaded and ready to use!");
         GameChat.BroadcastMessage("R6S MC loaded.");
         GameLogic.mainThread = this;

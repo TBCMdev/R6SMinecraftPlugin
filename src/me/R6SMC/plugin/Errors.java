@@ -5,6 +5,7 @@ import com.sun.istack.internal.NotNull;
 import javafx.util.Pair;
 import me.R6SMC.plugin.Cameras.Camera;
 import me.R6SMC.plugin.Cameras.CameraUtility;
+import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.Listeners.CameraListener;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
@@ -38,14 +39,15 @@ public class Errors {
         put("*U_EX", 4);
         put("*IN_DE", 5);
         put("*IN_AE", 6);
-        put("*CF_L", 7);
-        put("*NP_UC", 8);
-        put("*NPC_C", 9);
-        put("*NPC_R", 10);
-        put("*PN_AC", 11);
-        put("*CL_C", 12);
-        put("GC_BN",13);
-
+        put("*CF_A", 7);;
+        put("*CF_L", 8);
+        put("*NP_UC", 9);
+        put("*NPC_C", 10);
+        put("*NPC_R", 11);
+        put("*PN_AC", 12);
+        put("*CL_C", 13);
+        put("*GC_BN",14);
+        put("*CP_F",15);
     }};
     public static Map<Pair<Class,String>, String> Errors = new HashMap<Pair<Class,String>,String>(){{
         //region ReloadErrors
@@ -78,7 +80,9 @@ public class Errors {
         //endregion
         put(new Pair<>(CurrentOperators.class,"*CG_O"),"Cannot get operator." + r);
         put(new Pair<>(CurrentOperators.class,"*CI_O"),"Cannot instantiate operator.");
-
+        //region devconsole
+        put(new Pair<>(DevConsole.class,"*CP_F"),"DevConsole error. Could not parse float." + r);
+        //endregion
         //region Error_Fails
         put(new Pair<>(Errors.class,"*GN_BN"),"Error class could not retrieve error class by name." + r);
         //end region
@@ -159,9 +163,8 @@ public class Errors {
         try{
             return Errors.get(new Pair<>(type,indexer.toUpperCase())) + " Error Index:" + ErrorIndexes.get(indexer);
         }catch (Exception e){
-
+            return Errors.get(new Pair<Class,String>(Errors.class,"*GN_BN"));
         }
-        return null;
     }
     public static String getError(@NotNull Class type, String indexer,int LineOfExpectedError){
         try{

@@ -32,7 +32,6 @@ public class CommandListener implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
-
         if(cmd.getName().equalsIgnoreCase("defoperator")) {
 
             if(args.length == 0) {
@@ -69,20 +68,14 @@ public class CommandListener implements CommandExecutor {
             if(args[0].equalsIgnoreCase("ash")) {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"ash");
-                GameLogic.ResendTeleportRed();
-                GameLogic.ResendTeleportBlue();
             }
             if(args[0].equalsIgnoreCase("capitao")) {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"capitao");
-                GameLogic.ResendTeleportRed();
-                GameLogic.ResendTeleportBlue();
             }
             if(args[0].equalsIgnoreCase("finka")) {
                 Bukkit.getLogger().info("picking operator...");
                 CheckCommand(sender,args,"finka");
-                GameLogic.ResendTeleportRed();
-                GameLogic.ResendTeleportBlue();
 
             }
 

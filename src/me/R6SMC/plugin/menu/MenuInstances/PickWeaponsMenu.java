@@ -24,24 +24,25 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class PickWeaponsMenu extends Menu {
     static String p = ChatColor.LIGHT_PURPLE.toString();
-    public static HashMap<Class, Pair<String/*name*/, String/*lore*/>> OperatorLoadouts = new HashMap<Class, Pair<String, String>>() {{
-        put(Doc.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1", ChatColor.BLUE + "Contents: \n " + p
-                + "MP5(SMG)\nglock17(SEMI)"));
-        put(Rook.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1", ChatColor.BLUE + "Contents: \n " + p
-                + "MP5(SMG)\ndesert eagle(SEMI)"));
-        put(Aruni.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1", ChatColor.BLUE + "Contents: \n " + p
-                + "M500(Shotgun)\nmac10(FA)"));
-        put(Ash.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1", ChatColor.BLUE + "Contents: \n " + p
-                + "M4(AR)\nglock18(FA)"));
-        put(Capitao.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1", ChatColor.BLUE + "Contents: \n " + p
-                + "g3(DMR/AR)\nglock18(FA)"));
-        put(Finka.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1", ChatColor.BLUE + "Contents: \n " + p
-                + "m16(DMR)\nmakarov(SEMI)"));
+    public static HashMap<Class, Pair<String/*name*/, String[]>> OperatorLoadouts = new HashMap<Class, Pair<String, String[]>>() {{
+        put(Doc.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1",new String[]{ ChatColor.BLUE + "Contents: ",p
+                + "MP5(SMG)",p + "glock17(SEMI)"}));
+        put(Rook.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1",new String[]{ ChatColor.BLUE + "Contents: ", p
+                + "MP5(SMG)",p +"desert eagle(SEMI)"}));
+        put(Aruni.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1",new String[]{ ChatColor.BLUE + "Contents: ", p
+                + "M500(Shotgun)",p +"mac10(FA)"}));
+        put(Ash.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1",new String[]{ ChatColor.BLUE + "Contents: ", p
+                + "M4(AR)",p +"glock18(FA)"}));
+        put(Capitao.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1",new String[]{ ChatColor.BLUE + "Contents: ", p
+                + "g3(DMR/AR)",p +"glock18(FA)"}));
+        put(Finka.class, new Pair<>(ChatColor.DARK_BLUE + "Loadout 1",new String[]{ ChatColor.BLUE + "Contents: ", p
+                + "m16(DMR)",p +"makarov(SEMI)"}));
     }};
 
     public PickWeaponsMenu(PlayerMenuUtility playerMenuUtility) {
@@ -55,7 +56,7 @@ public class PickWeaponsMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return GameChat.GetAllPlayers().size();
+        return 9;
     }
 
     @Override
@@ -63,12 +64,13 @@ public class PickWeaponsMenu extends Menu {
         DevConsole.SendDevMessage((Player) e.getWhoClicked(), "Handling menu", DevConsole.TESTING);
         switch (e.getCurrentItem().getType()) {
             case GREEN_CONCRETE:
-                if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("loadout 1")){
+                if(e.getCurrentItem().getItemMeta().getDisplayName().contains("1")){
                     CurrentOperators.getPlayerWithOp(playerMenuUtility.getOwner()).picked_Loadout = 1;
-                }else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("loadout 2")){
+                }else if(e.getCurrentItem().getItemMeta().getDisplayName().contains("2")){
                     CurrentOperators.getPlayerWithOp(playerMenuUtility.getOwner()).picked_Loadout = 2;
 
                 }else{
+                    DevConsole.SendDevMessage(((Player) e.getWhoClicked()).getPlayer(),"returning out of method...",DevConsole.TESTING);
                     return;
                 }
                 //the teleporting should happen here
@@ -78,12 +80,15 @@ public class PickWeaponsMenu extends Menu {
         }
     }
 
-    public List<Pair<String,String>> getAllOperatorLoadouts(Player p) {
-        List<Pair<String,String>> list = new ArrayList<>();
+    public List<Pair<String,String[]>> getAllOperatorLoadouts(Player p) {
+        List<Pair<String,String[]>> list = new ArrayList<>();
         for(Class c : OperatorLoadouts.keySet()){
             switch (CurrentOperators.getPlayerWithOp(p).getName().toLowerCase()) {
                 case "doc":
                     if(c.getSimpleName().equalsIgnoreCase("doc")){
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + c.getSimpleName());
+                        p.sendMessage(ChatColor.DARK_PURPLE + CurrentOperators.getPlayerWithOp(p).getName().toLowerCase());
+
                         list.add(OperatorLoadouts.get(c));
                     }
                     break;
@@ -120,8 +125,8 @@ public class PickWeaponsMenu extends Menu {
                 case "dokkaebi":
                     if(c.getSimpleName().equalsIgnoreCase("dokkaebi")){
                         list.add(OperatorLoadouts.get(c));
-                    }                    break;
-
+                    }
+                    break;
             }
         }
         return list;
@@ -129,26 +134,19 @@ public class PickWeaponsMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        List<Pair<String,String>> loadouts = getAllOperatorLoadouts(playerMenuUtility.getOwner());
+        List<Pair<String,String[]>> loadouts = getAllOperatorLoadouts(playerMenuUtility.getOwner());
         List<ItemStack> stacks = new ArrayList<>();
-        List<String> contents = new ArrayList<>();
-        List<String> names = new ArrayList<>();
         ItemStack current = new ItemStack(Material.GREEN_CONCRETE,1);
-        for(Pair<String,String> st : loadouts){
-            String str = st.getValue();
-            String stri = st.getKey();
-            contents.add(str);
-            names.add(stri);
-        }
-        for(Pair<String,String> s : loadouts){
-            current = new ItemStack(Material.GREEN_CONCRETE,1);
-            ItemMeta meta = current.getItemMeta();
-            meta.setLore(contents);
-            stacks.add(current);
-        }
-        for(String s : names){
-            current.getItemMeta().setDisplayName(s);
+        ItemMeta meta = current.getItemMeta();
 
+        for(Pair<String,String[]> st : loadouts){
+            String[] str = st.getValue();
+            String s = st.getKey();
+            meta.setLore(Arrays.asList(str.clone()));
+            meta.setDisplayName(s);
+            current.setItemMeta(meta);
+            stacks.add(current);
+            current = new ItemStack(Material.GREEN_CONCRETE,1);
         }
         ItemStack[] i = new ItemStack[stacks.size()];
         stacks.toArray(i);

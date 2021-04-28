@@ -265,13 +265,13 @@ public class GameLogic implements Listener
                     }
                     if (CurrentOperators.Check(EachPlayer, 6)) {
                         Loadouts.GiveAbilityItem(6, EachPlayer);
-
+                    }
                         Location defaultspawn = new Location(world, 767, 10, -628, 90f, 3f);
 
                         PositionList.add(defaultspawn);
                         Bukkit.getLogger().info("red team: " + EachPlayer);
                         EachPlayer.teleport(defaultspawn);
-                    }
+
                 }
                 break;
             case 1:

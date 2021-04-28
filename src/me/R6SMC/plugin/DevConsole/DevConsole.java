@@ -1,13 +1,13 @@
 package me.R6SMC.plugin.DevConsole;
 
+import me.R6SMC.plugin.Cameras.Camera;
 import me.R6SMC.plugin.CommandClasses.Commands;
 import me.R6SMC.plugin.Errors;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.GameLogic.PlayerEntities;
+import me.R6SMC.plugin.GameLogic.Timer;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Sounds.Sounds;
-import me.R6SMC.plugin.menu.MenuInstances.KickPlayerMenu;
-import me.R6SMC.plugin.menu.PlayerMenus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -35,9 +35,8 @@ public class DevConsole implements CommandExecutor {
     public static List<String> getCommands(){
         return new ArrayList<String>(){{add("testing");
             add("keepammo");add("npc");add("error_config");
-            add("class_reload");add("operator_create");
-            add("sound");
-        }};
+            add("class_reload");add("timer");add("access_camera");
+            add("leave_camera");add("create_camera");}};
     }
     public static boolean GetTester(){
         return TESTING;
@@ -61,12 +60,12 @@ public class DevConsole implements CommandExecutor {
         if(args.length > 0) {
             if (command.getName().equalsIgnoreCase("TBCM-DC"))
             {
-                if (args[0].equalsIgnoreCase("TESTING")) {
+                if(args[0].equalsIgnoreCase("TESTING")) {
                     boolean argsResult = Commands.CheckCommandArg(args[1],"true","false");
                     DevConsole.TESTING = argsResult;
                     SendDevMessage(p,"TESTING universal boolean has been set to " + ChatColor.RED + argsResult,TESTING);
                 }
-                if (args[0].equalsIgnoreCase("KEEPAMMO")) {
+                if(args[0].equalsIgnoreCase("KEEPAMMO")) {
                     boolean argsResult = Commands.CheckCommandArg(args[1],"true","false");
                     DevConsole.KEEPAMMO = argsResult;
                     SendDevMessage(p,"Keep Ammo has been set to " + ChatColor.RED + argsResult,TESTING);
@@ -89,8 +88,13 @@ public class DevConsole implements CommandExecutor {
                                     ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: (1)" + ChatColor.GRAY + "/tbcm-dc npc create [Name] L: [X] [Y] [Z]");
                                 }
                             }
-                        }else{
-                            ((Player)commandSender).sendMessage(ChatColor.RED + "*ERROR* Usage: (2)" + ChatColor.GRAY + "/tbcm-dc npc create [Name] L: [X] [Y] [Z]");
+                        }
+                        if(args[1].equalsIgnoreCase("remove")){
+                            try{
+                                PlayerEntities.removeNpc(((Player) commandSender));
+                            }catch (Exception e){
+                                commandSender.sendMessage(ChatColor.RED + "could not remove NPC.");
+                            }
                         }
                     }
                 }
@@ -172,11 +176,13 @@ public class DevConsole implements CommandExecutor {
                     if(args[1].equalsIgnoreCase("play")){
                         if(args[2] != null){
                             try{
-                                    if(Sounds.Playable_Sounds_Str.containsKey(args[2])){
+                                for(String st : Sounds.Playable_Sounds_Str.keySet()){
+                                    if(st.equalsIgnoreCase(args[2])){
                                         Sound sound = Sounds.Playable_Sounds_Str.get(args[2]);
                                         ((Player)commandSender).playSound(((Player) commandSender).getLocation(),sound,1,1);
 
                                     }
+                                }
                             }catch (Exception e){
                                 try{
                                     int i = Integer.parseInt(args[2]);
@@ -187,15 +193,61 @@ public class DevConsole implements CommandExecutor {
                                         commandSender.sendMessage(ChatColor.RED + "that sound does not exist. try using a number between 0 and " + Sounds.Playable_Sounds_Int.size());
                                     }
                                 }catch (Exception ex){
-                                    commandSender.sendMessage(ChatColor.RED + "error.");
+
                                 }
                             }
                         }
                     }
                 }
-                if(args[0].equalsIgnoreCase("kill")){
-                    KickPlayerMenu menu = new KickPlayerMenu(PlayerMenus.GetPlayerMenuUtility((Player)commandSender));
-                    menu.Open();
+                if(args[0].equalsIgnoreCase("timer")){
+                    if(args[1].equalsIgnoreCase("set")){
+                        try{
+                            float sub = Float.parseFloat(args[2]);
+                            Timer.SetTimer(sub);
+                        }catch (Exception e){
+                            commandSender.sendMessage(Errors.getError(DevConsole.class,"CP_F"/*cannot parse float*/));
+                        }
+                    }
+                    if(args[1].equalsIgnoreCase("subtract")){
+                        try{
+                            float sub = Float.parseFloat(args[2]);
+                            Timer.ChangeTimer(-sub);
+                        }catch (Exception e){
+                            commandSender.sendMessage(Errors.getError(DevConsole.class,"CP_F"/*cannot parse float*/));
+                        }
+                    }
+                    if(args[1].equalsIgnoreCase("add")){
+                        try{
+                            float sub = Float.parseFloat(args[2]);
+                            Timer.ChangeTimer(sub);
+                        }catch (Exception e){
+                            commandSender.sendMessage(Errors.getError(DevConsole.class,"CP_F"/*cannot parse float*/));
+                        }
+                    }
+                }
+                if(args[0].equalsIgnoreCase("access_camera")){
+                    if(args[1] != null){
+                        try{
+                            int index = Integer.parseInt(args[1]);
+                            Camera.accessCamera((Player) commandSender,Camera.GetCamera(index).getKey(),index);
+                        }catch (Exception e){
+                            commandSender.sendMessage(Errors.getError(Camera.class,"CF_A"));
+                        }
+                    }
+                }
+                if(args[0].equalsIgnoreCase("leave_camera")){
+                    try{
+                        Camera.leaveCamera((Player) commandSender,Camera.getPlayerUsingCam((Player)commandSender));
+                    }catch (Exception e){
+                        commandSender.sendMessage(Errors.getError(Camera.class,"CF_L"));
+                    }
+                }
+                if(args[0].equalsIgnoreCase("create_camera")){
+                    try{
+                        Camera.createTestCamera(((Player)commandSender).getLocation());
+                    }catch (Exception e){
+
+                    }
                 }
             }
         }

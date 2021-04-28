@@ -32,9 +32,11 @@ commands:
   showPageRed:
     usage: </command> [ash|capitao|finka] [1|2|3]
   tbcm-dc:
-    usage: </command> [KEEPAMMO|TESTING|error_config|class_reload] [true|false|get|className] [className] [indexer]
+    usage: </command> [KEEPAMMO|TESTING|error_config|class_reload|access_camera] [true|false|get|className|camera_index] [className] [indexer]
     description: a development command used for testing. (IN BETA)
-
+  loadout:
+    usage: </command> [primary|secondary]
+    description: picks a loadout.
 
 
 

@@ -16,18 +16,19 @@ public class CameraUtility {
     private float RotYMax;
     private Location CamPos;
     private Block camera;
-    public CameraUtility(int index,int team,Location l){
+    public CameraUtility(int index,int team,float RotYmax,float DefX,float DefY){
         this.index = index;
         this.team = team;
-        initCam(l);
+        RotYMax = RotYmax;
+        DefaultXRot = DefX;
+        DefaultYRot = DefY;
     }
     public void initCam(Location l){
         Block b = l.getBlock();
         camera = b;
         CamPos = l;
-        if(b.getType() == Material.AIR) {
-            b.setType(Material.CHORUS_PLANT);
-        }
+        b.setType(Material.CHORUS_PLANT);
+
     }
     public Location getLocation(){
         return CamPos;
