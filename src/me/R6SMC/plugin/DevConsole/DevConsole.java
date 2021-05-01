@@ -6,6 +6,8 @@ import me.R6SMC.plugin.Errors;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.GameLogic.PlayerEntities;
 import me.R6SMC.plugin.GameLogic.Timer;
+import me.R6SMC.plugin.Operators.OperatorClasses.OperatorAbilities.FragGrenade;
+import me.R6SMC.plugin.Operators.OperatorClasses.OperatorAbilities.Grenade;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
 import me.R6SMC.plugin.Sounds.Sounds;
 import org.bukkit.Bukkit;
@@ -15,6 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -247,6 +250,26 @@ public class DevConsole implements CommandExecutor {
                         Camera.createTestCamera(((Player)commandSender).getLocation());
                     }catch (Exception e){
 
+                    }
+                }
+                if(args[0].equalsIgnoreCase("grenade")){
+                    if(args[1] != null){
+                        if(args[1].equalsIgnoreCase("create")){
+                            if(args[2] != null && args[3] != null && args[4] != null){
+                                for(Grenade.GrenadeType t : Grenade.GrenadeType.values()){
+                                    if(args[2].equalsIgnoreCase(t.toString())){
+                                        switch (t){
+                                            case frag:
+                                                try {
+                                                    FragGrenade frag = new FragGrenade((Player) commandSender, Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]), EntityType.SNOWBALL, ((Player) commandSender).getLocation());
+                                                }catch (Exception e){
+                                                    commandSender.sendMessage(ChatColor.RED + "please enter valid arguments.(" + ChatColor.WHITE + "/grenade create [type(frag)] [damage(int)] [timeBeforeDetonation(long)]]" + ChatColor.RED + ")");
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

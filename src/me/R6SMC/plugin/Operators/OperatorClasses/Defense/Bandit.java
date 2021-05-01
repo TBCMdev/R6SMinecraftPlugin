@@ -80,7 +80,13 @@ public class Bandit extends Operator {
         Location[] nearestDoor = locations.get(0);
         double minvalue = Integer.MAX_VALUE;
         for (Location[] l : SoftWallLocations.values()) {
-            if (null == null) {//CHANGE TO CHECK FOR BANDITS
+            for(Location lo : l) {
+                if(!SoftWallPlaceLocations.containsValue(lo)){
+                    player.sendMessage(ChatColor.RED + "you are not looking at a valid place to use a charge!");
+                    return -1;
+                }
+
+            }
                 Bukkit.getLogger().info(l.toString());
                 double value = Math.sqrt(Math.pow((l[0].getX() - currentPos.getX()), 2) + Math.pow((l[0].getY() - currentPos.getY()), 2) + Math.pow((l[0].getZ() - currentPos.getZ()), 2));
                 if (value < minvalue) {
@@ -88,7 +94,7 @@ public class Bandit extends Operator {
                     nearestDoor = l;
                     player.sendMessage("value: " + ChatColor.GOLD + minvalue + "door index:" + locations.indexOf(nearestDoor));
                 }
-            }
+
 
         }
         if (minvalue < RangeAid) {

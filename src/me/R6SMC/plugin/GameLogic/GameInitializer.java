@@ -10,6 +10,7 @@ import org.bukkit.GameRule;
 public class GameInitializer {
 
     public static void ResetForNewRound(){
+        Operator.OperatorStorage.clear();
         GameLogic.RedTeam.clear();
         GameLogic.BlueTeam.clear();
         GameLogic.ash = "";
@@ -32,6 +33,7 @@ public class GameInitializer {
             CurrentOperators.ResetOperators();
     }
     public static void Start(){
+        Operator.OperatorStorage.clear();
         CurrentOperators.ResetOperators();
         GameLogic.RedTeam.clear();
         GameLogic.BlueTeam.clear();

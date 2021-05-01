@@ -35,8 +35,9 @@ public class BanditCharge {
         return EntityCharge;
     }
     public void Destroy(){
+        EntityCharge.setHealth(0);
         EntityCharge.remove();
-        GameLogic.world.getBlockAt(position).setType(Material.AIR);
+        position.getBlock().setType(Material.AIR);
     }
     public void Place(){
         if(EntityCharge == null){
@@ -53,9 +54,6 @@ public class BanditCharge {
             Owner.PlayerManager.getOwner().sendMessage(ChatColor.YELLOW + "you placed a bandit charge!");
             GameLogic.world.getBlockAt(position).setType(Material.CHORUS_FRUIT);//make texture for bandit charge
             Block data = GameLogic.world.getBlockAt(position);
-
-
         }
-
     }
 }

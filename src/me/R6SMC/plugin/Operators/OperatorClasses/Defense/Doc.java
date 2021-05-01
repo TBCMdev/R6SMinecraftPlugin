@@ -14,8 +14,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Doc extends Operator {
 
-    public Player player;
-    public PlayerClass playerClass;
     public int Stims;
     private boolean CanUseAbility = true;
     public Doc(OperatorUtility ou){

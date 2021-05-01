@@ -5,11 +5,9 @@ import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Finka;
-import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
-import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
-import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
-import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.*;
 import me.R6SMC.plugin.Operators.Operatorhandling.CurrentOperators;
+import me.R6SMC.plugin.Operators.Operatorhandling.Operator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,6 +19,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -150,7 +149,7 @@ public class OperatorAbilityListener implements Listener {
         }
     }
     @EventHandler
-    public void BanditDestroy(EntityDeathEvent e){
+    public void AbilDestroy(EntityDeathEvent e){
         if(e.getEntity().getType() == EntityType.SILVERFISH){
             if(GameLogic.GameStarted){
                 Silverfish charge = (Silverfish) e.getEntity();
@@ -164,6 +163,32 @@ public class OperatorAbilityListener implements Listener {
                         killer.sendMessage(ChatColor.RED + "could not remove the bandit charge.");
                     }
                 }
+            }
+        }
+        if(e.getEntity().getType().equals(EntityType.CAT)){
+            if(GameLogic.GameStarted){
+                Cat banshii = (Cat) e.getEntity();
+                if(banshii.getCustomName().equalsIgnoreCase("banshii")){
+                    Player killer = e.getEntity().getKiller();
+                    GameLogic.PlayerClasses.get(killer.getDisplayName()).SetPoints(10);
+                    Melusi m = (Melusi)CurrentOperators.CurrentOperators.get(Operator.OperatorStorage.get("melusi"));
+                    m.getBanshiiByLoc(e.getEntity().getLocation()).Destroy();
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void AbilHurt(EntityDamageByEntityEvent e){
+        if(GameLogic.GameStarted){
+            try{
+                Player damager = (Player)e.getDamager();
+                if(GameLogic.BlueTeam.contains(damager)) {
+                    damager.sendMessage(ChatColor.DARK_PURPLE + "please try not to break team gadgets!");
+                    e.setDamage(0);
+                    e.setCancelled(true);
+                }
+            }catch (Exception ex){
+
             }
         }
     }

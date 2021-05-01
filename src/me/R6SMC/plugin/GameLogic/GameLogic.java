@@ -214,9 +214,7 @@ public class GameLogic implements Listener
             StartTimer();
         }
     }
-    public static void TeleportTeams(int team) {
-        switch (team) {
-            case 2:
+    public static void TeleportTeams() {
                 for (Player EachPlayer : RedTeam) {
                     AlivePlayers.add(EachPlayer);
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
@@ -233,14 +231,8 @@ public class GameLogic implements Listener
                         Loadouts.GiveAbilityItem(6, EachPlayer);
                     }
                         Location defaultspawn = new Location(world, 767, 10, -628, 90f, 3f);
-
-                        PositionList.add(defaultspawn);
-                        Bukkit.getLogger().info("red team: " + EachPlayer);
                         EachPlayer.teleport(defaultspawn);
-
                 }
-                break;
-            case 1:
                 for (Player EachPlayer : BlueTeam) {
                     AlivePlayers.add(EachPlayer);
                     Bukkit.getLogger().info("player found with name of:" + EachPlayer.getName().toString());
@@ -255,65 +247,30 @@ public class GameLogic implements Listener
                     if (CurrentOperators.Check(EachPlayer, 3)) {
                         Loadouts.GiveAbilityItem(3, EachPlayer);
                     }
-                    //CHECK FOR UNEVEN TEAMS
                     Location defaultspawndef = new Location(world, 723, 15, -662, 0f, 1.2f);
-
-                    Bukkit.getLogger().info("blue team: " + EachPlayer);
                     EachPlayer.teleport(defaultspawndef);
                 }
-                break;
-        }
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.broadcastMessage(ChatColor.RED + "ROUND "  + GameRounds.getCurrentRound());
         InitGame();
-        tryingToTeleportRed = false;
-        tryingToTeleportBlue = false;
-        //these bools are here to ensure that Resending teleportation only occurs when noone else is trying to teleport.
-        //this might not work, so try it and if it doesnt remove lines 302,303,311,309,319,321, and 323.
+        tryingToTeleport = false;
         giveArmorTemplate();
     }
-    private static boolean tryingToTeleportRed = false;
-    public static void ResendTeleportRed() {
-        if(!tryingToTeleportRed) {
+    private static boolean tryingToTeleport = false;
+    public static void ResendTeleportTeams(){
+        if(!tryingToTeleport) {
             if (joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
-                tryingToTeleportRed = true;
+                tryingToTeleport = true;
                 Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-                TeleportTeams(2);
+                TeleportTeams();
             }
         }
     }
-    private static boolean tryingToTeleportBlue = false;
-    public static void ResendTeleportBlue() {
-        if(!tryingToTeleportBlue) {
-            if (joinedPlayers >= GameChat.GetAllPlayers().size() && PickedOperators >= GameChat.GetAllPlayers().size()) {
-                tryingToTeleportBlue = true;
-                Bukkit.getLogger().info("players: " + GameChat.GetAllPlayers().size());
-                TeleportTeams(1);
-            }
-        }
-    }
-    public static boolean HasGivenBooks = false;
-    @Deprecated
-    public static void ShowAvailableOperators(){
-        if(!HasGivenBooks){
-            ItemStack BlueTeamBook = CustomBooks.CreateBlueTeamBook();
-            ItemStack RedTeamBook = CustomBooks.CreateRedTeamBook();
-            for(Player p : BlueTeam){
-                p.getInventory().setItemInMainHand(BlueTeamBook);
-            }
-            for(Player p : RedTeam) {
-                p.getInventory().setItemInMainHand(RedTeamBook);
-            }
-
-        }else{
-            return;
-        }
-}
     public static void StartGame(){
         for(Player p : GameChat.GetAllPlayers()){
             p.setGameMode(GameMode.ADVENTURE);
         }
-}
+    }
     public static long Seconds = 100,MaxSeconds = 100;
     public static void StartTimer(){
     PlayersCanMove = true;

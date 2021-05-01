@@ -3,8 +3,14 @@ package me.R6SMC.plugin.Loadouts;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Ash;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Capitao;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Dokkaebi;
+import me.R6SMC.plugin.Operators.OperatorClasses.Attack.Finka;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Aruni;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Bandit;
 import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Doc;
+import me.R6SMC.plugin.Operators.OperatorClasses.Defense.Rook;
+import me.R6SMC.plugin.Operators.Operatorhandling.Operator;
 import me.R6SMC.plugin.Operators.Operatorhandling.OperatorHolder;
 import me.R6SMC.plugin.PlayerLogic.Organiser;
 import me.R6SMC.plugin.PlayerLogic.PlayerClass;
@@ -14,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,32 +30,125 @@ public class Loadouts {
                     "function give:mp5",
                     "function give:glock17"
             };
+    public static String[] Loadoutdoc2 =
+            {
+                    "function give:",
+                    "function give:glock17"
+            };
     public static String[] LoadoutRook =
             {
                     "function give:mp5",
                     "function give:desert_eagle"
+            };
+    public static String[] LoadoutRook2 =
+            {
+                    "function give:mp5",
+                    "function give:glock17"
             };
     public static String[] LoadoutAruni =
             {
                     "function give:m500",
                     "function give:mac10"
             };
+    public static String[] LoadoutAruni2 =
+            {
+                    "function give:mp5",
+                    "function give:glock17"
+            };
     public static String[] LoadoutAsh =
             {
                     "function give:m4",
                     "function give:glock18"
+            };
+    public static String[] LoadoutAsh2 =
+            {
+                    "function give:mp5",
+                    "function give:glock17"
             };
     public static String[] LoadoutCapitao =
             {
                     "function give:g3",
                     "function give:glock18"
             };
+    public static String[] LoadoutCapitao2 =
+            {
+                    "function give:mp5",
+                    "function give:glock17"
+            };
     public static String[] LoadoutFinka =
             {
                     "function give:m16",
                     "function give:makarov"
             };
-
+    public static String[] LoadoutFinka2 =
+            {
+                    "function give:mp5",
+                    "function give:glock17"
+            };
+    public static List<String> getLoadout(Operator o){
+        List<String> l = new ArrayList<>();
+        if(o instanceof Doc){
+            int loadout = o.picked_Loadout;
+            if(loadout == 1){
+                l.addAll(Arrays.asList(Loadoutdoc));
+            }
+            if(loadout == 2){
+                l.addAll(Arrays.asList(Loadoutdoc2));
+            }
+        }
+        if(o instanceof Aruni){
+            int loadout = o.picked_Loadout;
+            if(loadout == 1){
+                l.addAll(Arrays.asList(LoadoutAruni));
+            }
+            if(loadout == 2){
+                l.addAll(Arrays.asList(LoadoutAruni2));
+            }
+        }
+        if(o instanceof Rook){
+            int loadout = o.picked_Loadout;
+            if(loadout == 1){
+                l.addAll(Arrays.asList(LoadoutRook));
+            }
+            if(loadout == 2){
+                l.addAll(Arrays.asList(LoadoutRook2));
+            }
+        }
+        if(o instanceof Ash){
+            int loadout = o.picked_Loadout;
+            if(loadout == 1){
+                l.addAll(Arrays.asList(LoadoutAsh));
+            }
+            if(loadout == 2){
+                l.addAll(Arrays.asList(LoadoutAsh2));
+            }
+        }
+        if(o instanceof Finka){
+            int loadout = o.picked_Loadout;
+            if(loadout == 1){
+                l.addAll(Arrays.asList(LoadoutFinka));
+            }
+            if(loadout == 2){
+                l.addAll(Arrays.asList(LoadoutFinka2));
+            }
+        }
+        if(o instanceof Capitao){
+            int loadout = o.picked_Loadout;
+            if(loadout == 1){
+                l.addAll(Arrays.asList(LoadoutCapitao));
+            }
+            if(loadout == 2){
+                l.addAll(Arrays.asList(LoadoutCapitao2));
+            }
+        }
+        if(o instanceof Bandit){
+            //no loadouts as of yet.
+        }
+        if(o instanceof Dokkaebi){
+            //no loadouts as of yet.
+        }
+        return l;
+    }
     public static void GiveLoadouts(Map<String, PlayerClass> PlayerOperators) {
         new BukkitRunnable() {
             @Override
@@ -58,7 +158,6 @@ public class Loadouts {
                     Bukkit.getLogger().info("SETTING LOADOUTS");
                     List<PlayerClass> PlayerOperatorValues = new ArrayList<>(PlayerOperators.values());
                     Player CurrentPlayer = PlayerOperatorValues.get(i).getPlayer();
-
                     if (PlayerOperators.containsKey(CurrentPlayer.getDisplayName())) {
                         switch (CheckForClass(PlayerOperators.get(CurrentPlayer.getDisplayName()))) {
                             case 1:

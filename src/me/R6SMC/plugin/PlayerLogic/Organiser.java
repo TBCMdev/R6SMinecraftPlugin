@@ -1,5 +1,6 @@
 package me.R6SMC.plugin.PlayerLogic;
 
+import javafx.util.Pair;
 import me.R6SMC.plugin.DevConsole.DevConsole;
 import me.R6SMC.plugin.GameLogic.GameLogic;
 import org.bukkit.Material;
@@ -10,11 +11,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 public class Organiser{
-    public static String[] AllPrimaryGuns = new String[]{"MP5A3","M4A1","SVD","M500","M16A4","G3A3","SPAS 12","FN_FAL"};
+    public static HashMap<String[], Pair<String[],String[]>> AvailableScopes = new HashMap<String[],Pair<String[],String[]>>(){{
+        put(new String[]{"MP5A3",""/*guns that have the following attachments*/},
+            new Pair<>(new String[]{"acog","holo",""}/*attachments*/,
+            new String[]{"function mgs:attachments acog?","function mgs:attachments holographic?"}
+                    /*commands for each attachments*/));
+    }};
+    public static String[] AllPrimaryGuns = new String[]{"MP5A3","M4A1","SVD","M500","M16A4","G3A3","SPAS 12","FN FAL"};
     public static String[] AllSecondaryGuns = new String[]{"G17","1911","DEAGLE","MAC 10","PM","GLOCK 18"};
     public static String[] AllAttachments = new String[]{"","","","",};
     public static void Organise(Player p,boolean KeepAmmo){
